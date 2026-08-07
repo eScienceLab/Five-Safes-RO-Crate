@@ -25,7 +25,7 @@ _The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "
 
 ## Introduction
 
-What a Five Safes RO-Crate ("Five Safes Crate") is, who it serves (researchers, TRE operators, auditors, the public), how its content evidences the Five Safes framework, and how this specification relates to RO-Crate 1.3, SATRE, and its 0.4 predecessor.
+What a Five Safes RO-Crate ("Five Safes Crate") is, who it serves (researchers, TRE operators, auditors, the public), how its content evidences the Five Safes framework, and how this specification relates to RO-Crate 1.3, SATRE, and so on.
 
 ## Concepts
 
@@ -84,7 +84,7 @@ Working records and snapshots answer different questions. The record's identity 
 A snapshot is not "one run". A single snapshot may contain no runs, one, or many; how finely the work is divided into processes and when the record is frozen are separate choices. When to freeze is the choice of whoever maintains the record, with one expectation: every decision and every exchange refers to a snapshot that exists. This is because an approval that points at nothing preserves nothing. Example moments are when something is submitted, when a result leaves, and when the record closes, meaning no further activity is expected.
 <!-- TODO: Revisit above when we have example processes -->
 
-Snapshots exist to capture provenance. A decision is made about the record as it stood at the time, and the snapshot keeps what was asserted then inspectable later, even though the working record may have moved on and the data it refers to may since have been retired under its own retention rules.
+Snapshots exist to capture provenance. A decision is made about the record as it stood at the time, and the snapshot keeps what was asserted then inspectable later, even though the working record may have moved on and the data it refers to now unavailable under the data access agreement.
 
 ### Snapshots as Messages
 
