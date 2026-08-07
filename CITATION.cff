@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this profile, please cite it as below."
+title: "Five Safes RO-Crate"
+version: "1.0"
+license: MIT
+repository-code: "https://github.com/eScienceLab/Five-Safes-RO-Crate"
+url: "https://w3id.org/5s-crate/1.0"
+authors:
+  - family-names: Hambley
+    given-names: Alexander
+    orcid: "https://orcid.org/0000-0003-1193-6632"
+    affiliation: "The University of Manchester"
+  - family-names: Del-Pinto
+    given-names: Warren
+    orcid: "https://orcid.org/0000-0003-3307-9432"
+    affiliation: "The University of Manchester"
+  - family-names: Lowe
+    given-names: Douglas
+    orcid: "https://orcid.org/0000-0002-1248-3594"
+    affiliation: "The University of Manchester"
+  - family-names: Chadwick
+    given-names: Eli
+    orcid: "https://orcid.org/0000-0002-0035-6475"
+    affiliation: "The University of Manchester"
+  - family-names: Soiland-Reyes
+    given-names: Stian
+    orcid: "https://orcid.org/0000-0001-9842-9718"
+    affiliation: "The University of Manchester"
