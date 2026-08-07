@@ -1,0 +1,18 @@
+site_name: Five Safes RO-Crate
+site_description: An RO-Crate profile for recording and exchanging Trusted Research Environment activity
+repo_url: https://github.com/eScienceLab/Five-Safes-RO-Crate
+theme:
+  name: readthedocs
+nav:
+  - Specification: index.md
+  - Modules:
+      - Cohort Discovery: modules/cohort-discovery.md
+      - SafeTEXT Deidentification: modules/safetext-deidentification.md
+      - Workflow Execution: modules/workflow-execution.md
+plugins:
+  - search
+  - mermaid2
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
