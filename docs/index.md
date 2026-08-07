@@ -62,11 +62,11 @@ Everything in a record belongs to one of three categories:
 
 - Derived data is its own asset: a deidentified copy of a dataset is a different thing from its source, with its own history.
 
-**Processes** are the things that happen, such as an executed query, a workflow run, an output checked, or an applied protocol applied. A completed process records what it consumed and produced, the protocol it followed, when it ran, who was responsible for it, and what software was used, if any. 
+**Processes** are the things that happen, such as an executed query, a workflow run, an output checked, or an applied protocol. A completed process records what it consumed and produced, the protocol it followed, when it ran, who was responsible for it, and what software was used, if any. 
 
 A process can also exist before it happens. For example, a requested analysis awaiting a decision is already in the record, marked as not yet run. It later runs to completion, fails, is withdrawn, or is refused and never runs, the refusal itself being a decision in the record. Some processes may not produce a new asset.
 
-**Context** captures who, what, and under what authority: people, organisations, agreements, and the TRE itself, along with credentials, training, and policies. Whilst processeses do not work on context, signing an agreement, granting a credential, and accrediting a researcher are things that happen, and they appear as processes whose subject is context. Each piece of context is recorded once and referred to wherever needed.
+**Context** captures who, what, and under what authority: people, organisations, agreements, and the TRE itself, along with credentials, training, and policies. Whilst processes do not work on context, signing an agreement, granting a credential, and accrediting a researcher are things that happen, and they appear as processes whose subject is context. Each piece of context is recorded once and referred to wherever needed.
 
 The three categories are also how a record evidences the Five Safes: safe projects in the record itself, through the agreements it runs under and the decisions that admitted the work; safe people and safe settings in context; safe data in assets; and safe outputs in the checking processes that gate what leaves.
 
