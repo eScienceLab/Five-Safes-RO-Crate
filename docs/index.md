@@ -29,62 +29,72 @@ What a Five Safes RO-Crate ("Five Safes Crate") is, who it serves (researchers, 
 
 ## Concepts
 
-Plain-language definitions of the core ideas; nothing in this section should require familiarity with RO-Crate or JSON-LD.
+This section explains the core ideas in plain English. You do not need to know about RO-Crate to understand it.
 
 ### The TRE Activity Record
 
-A Five Safes Crate is a **TRE Activity Record** (from here on, "record"): a versioned account of activity in a TRE, roughly one record per piece of work the TRE governs as a unit, spanning every node that takes part.
+A Five Safes Crate is a **TRE Activity Record**, or "record" for short. It is a versioned account of activity in a TRE. As a rough guide, each record covers one piece of work that the TRE governs as a unit. If the work involves several nodes, the record covers them all.
 
-Both the [working record and each snapshot](#working-record-and-snapshots) are Five Safes Crates. These remain the same kind of document at different moments in the work's life.
+The [working record and each snapshot](#working-record-and-snapshots) are both Five Safes Crates. They are the same kind of document, but they capture the work at different points in its life.
 
-A record accumulates whatever the work produces and requires: queries and analyses, the decisions made about them, the agreements they run under, and the outputs they release. It describes the data the work touches; sensitive data itself stays where it is governed, [referred to but not contained](#structure-of-a-five-safes-crate). One record might hold a single cohort discovery query answered within a minute; another might hold a study spanning months or years. Both are the same kind of thing.
+A record grows as the work progresses. It brings together what the work produces and requires: queries and analyses, decisions about them, the agreements that govern them, and any outputs that are released. It describes the data involved in the work, but sensitive data stays where it is governed. In such a case, the record [refers to that data but does not contain it](#structure-of-a-five-safes-crate). One record may cover a single cohort discovery query answered within a minute; another may cover a study lasting months or years. Both are the same kind of record.
 
-This specification does not prescribe where one record ends and the next begins as TREs are disparate and govern work differently. For example, one TRE may govern work per query in a discovery portal, whereas another per workspace in an analysis environment. The reliable anchor is the agreements: the work that one set of agreements governs together belongs in one record. A record also only holds what its TRE could observe. A portal can record every query as it happens; an interactive workspace may capture only the governance touchpoints around a session, with the analysis between them summarised when outputs leave. Both are valid records.
+This specification does not define exactly where one record ends and another begins because TREs govern work in different ways. For example, one TRE may treat each query in a discovery portal as a separate unit of work, while another may treat an entire workspace in an interactive analysis environment as one unit. 
 
-!!! note 
-    There is deliberately no "project" item in a record. The word means too many things: a grant, a study, a workspace, an access agreement. The specific things "project" can mean appear inside the record as themselves.
+<!-- The agreements provide the most reliable boundary: work governed together under one set of agreements belongs in one record. -->
 
-When work spans several TREs, or several nodes of a federation (the sites and services taking part), the aim is one record of the whole piece of work, with each node's activity appearing in it. Nodes will keep operational logs of their own, as their own regulators require; what this specification asks is that the work itself is reported once, in one place. Who maintains that record - the coordinating service, the lead TRE, the portal - is an open deployment decision.
+A record can include only activity that the TRE could observe. A portal may record every query as it happens. An interactive workspace may capture only the governance points around a session, with the analysis between them summarised when outputs leave. Both are valid records.
+
+!!! note
+    This specification deliberately has no "project" item in a record. The word can mean too many different things: a grant, a study, a workspace, or an access agreement. Instead, the specific things that "project" might refer to appear in the record in their own right.
+
+When work spans several TREs or several nodes in a federated network, the aim is still to keep one record for the whole piece of work. That record includes activity from every node. Each node still keeps any operational logs that its regulators require. This specification asks for the work itself to be reported once, in one place. Who maintains the record - for example, the coordinating service, the lead TRE, or the portal - is a deployment decision.
 
 ### Assets, Processes, Context
 
-Everything in a record belongs to one of three categories: 
+Every item in a record belongs to one of three categories:
 
-- **Assets**. Artefacts that processes consume or produce, such as protocols;
+- **Assets**: artefacts that processes consume or produce, such as protocols.
 
-- **Processes**. Things that happen, including those requested but not yet run;
+- **Processes**: things that happen, including activities that have been requested but have not yet run.
 
-- **Context**. People, organisations, agreements, and the TRE itself.
+- **Context**: people, organisations, agreements, and the TRE itself.
 
-**Assets** are the durable things: datasets and extracts, analysis outputs, trained models, software, and protocol documents. Two rules matter: 
+**Assets** are durable items such as datasets and extracts, analysis outputs, trained models, software, and protocol documents. Two rules are important:
 
-- A protocol (such as a deidentification procedure, a workflow, a standard operating procedure) is an asset rather than a process: it is versioned, approved, and reused. Any occasion of following it is a process. 
+- A protocol, such as a deidentification procedure, workflow, or standard operating procedure, is an asset rather than a process. It can be versioned, approved, and reused. Following the protocol on a particular occasion is a process.
 
-- Derived data is its own asset: a deidentified copy of a dataset is a different thing from its source, with its own history.
+- Derived data is a separate asset. For example, a deidentified copy of a dataset is different from its source and has its own history.
 
-**Processes** are the things that happen, such as an executed query, a workflow run, an output checked, or an applied protocol. A completed process records what it consumed and produced, the protocol it followed, when it ran, who was responsible for it, and what software was used, if any. 
+**Processes** are things that happen. Examples include executing a query, running a workflow, checking an output, and applying a protocol. A completed process records what it consumed and produced, which protocol it followed, when it ran, who was responsible for it, and any software it used.
 
-A process can also exist before it happens. For example, a requested analysis awaiting a decision is already in the record, marked as not yet run. It later runs to completion, fails, is withdrawn, or is refused and never runs, the refusal itself being a decision in the record. Some processes may not produce a new asset.
+A process can appear in the record before it happens. For example, a requested analysis that is awaiting a decision is already part of the record and is marked as not yet run. It may later complete, fail, be withdrawn, or be refused without ever running. The refusal is itself a decision in the record. Some processes may not produce a new asset.
 
-**Context** captures who, what, and under what authority: people, organisations, agreements, and the TRE itself, along with credentials, training, and policies. Whilst processes do not work on context, signing an agreement, granting a credential, and accrediting a researcher are things that happen, and they appear as processes whose subject is context. Each piece of context is recorded once and referred to wherever needed.
+**Context** records who and what are involved, and under what authority: people, organisations, agreements, and the TRE itself, together with credentials, training, and policies. Processes do not operate on context in the same way that they operate on assets. However, context can be the subject of a process. Signing an agreement, granting a credential, and accrediting a researcher are all processes whose subject is context. Each context item is recorded once and referred to wherever it is needed.
 
-The three categories are also how a record evidences the Five Safes: safe projects in the record itself, through the agreements it runs under and the decisions that admitted the work; safe people and safe settings in context; safe data in assets; and safe outputs in the checking processes that gate what leaves.
+These categories also show how a record provides evidence for the Five Safes:
+
+- safe projects are evidenced by the record as a whole, including the agreements governing the work and the decisions that allowed it to proceed;
+
+- safe people and safe settings are evidenced in context;
+
+- safe data is evidenced in assets;
+
+- safe outputs are evidenced by the checking processes that control what may leave.
 
 ### Working Record and Snapshots
 
-The working record changes as activity happens; a snapshot 'freezes' the complete record at a meaningful moment, and the record and each snapshot carry separate and stable identities.
-
-The working record is the current understanding of the work: it changes as queries run, decisions are returned, and outputs appear. A snapshot is a complete copy of the record taken at one moment and never edited afterwards. Each snapshot after the first links to the one before it, so a record's snapshots trace its history. 
+The working record reflects the current understanding of the work. It changes as queries run, decisions are returned, and outputs appear. A snapshot is a complete copy of the record taken at a meaningful moment. It freezes the record as it stood then and is never edited afterwards. The working record and each snapshot have separate, stable identities. Each snapshot after the first links to the previous one, so the snapshots trace the record's history.
 
 <!-- !!! note
     Where several parties contribute in parallel, such as in a federated system, that history can branch and reconverge; merging the branches is the job of whoever maintains the record. -->
 
-The record and its snapshots answer different questions: the record's identity is constant for its whole life and means "this piece of work". A snapshot's identity means "this piece of work, exactly as it stood at that moment". For example, to say what an approval was an approval *of*.
+The working record and its snapshots answer different questions. The working record keeps the same identity throughout its life, meaning "this piece of work". A snapshot has its own identity, meaning "this piece of work, exactly as it stood at that moment". This makes it clear exactly which version an approval applies to.
 
-A snapshot is not "one run". A single snapshot may contain no runs, one, or many; how finely the work is divided into processes and when the record is frozen are separate choices. When to freeze is the choice of whoever maintains the record, with one expectation: every decision and every exchange refers to a snapshot that exists. This is because an approval that points at nothing preserves nothing. Example moments are when something is submitted, when a result leaves, and when the record closes, meaning no further activity is expected.
+A snapshot is not the same as "one run". It may contain no runs, one run, or many runs. How the work is divided into processes and when a snapshot is taken are separate choices. Whoever maintains the record decides when to take a snapshot, with one expectation: every decision and every exchange refers to an existing snapshot. Without a snapshot, an approval has no fixed version to point to, so it preserves no evidence of what was approved. Examples of when to take a snapshot include when something is submitted, when a result leaves, and when the record closes—that is, when no further activity is expected.
 <!-- TODO: Revisit above when we have example processes -->
 
-Snapshots exist to preserve provenance. A decision is made about the record as it stood at the time, and the snapshot keeps what was asserted then inspectable later, even though the working record may have moved on and the data it refers to now unavailable under the data access agreement.
+Snapshots preserve provenance. A decision concerns the record as it stood at the time. The snapshot preserves what the record said then, so that information remains available for later inspection even if the working record has moved on or the data it refers to is no longer available under the data access agreement.
 
 ### Snapshots as Messages
 
