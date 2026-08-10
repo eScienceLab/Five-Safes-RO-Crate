@@ -79,12 +79,12 @@ The working record is the current understanding of the work: it changes as queri
 <!-- !!! note
     Where several parties contribute in parallel, such as in a federated system, that history can branch and reconverge; merging the branches is the job of whoever maintains the record. -->
 
-Working records and snapshots answer different questions. The record's identity is constant for its whole life and means "this piece of work". A snapshot's identity means "this piece of work, exactly as it stood at that moment". For example, to say what an approval was an approval *of*.
+The record and its snapshots answer different questions: the record's identity is constant for its whole life and means "this piece of work". A snapshot's identity means "this piece of work, exactly as it stood at that moment". For example, to say what an approval was an approval *of*.
 
 A snapshot is not "one run". A single snapshot may contain no runs, one, or many; how finely the work is divided into processes and when the record is frozen are separate choices. When to freeze is the choice of whoever maintains the record, with one expectation: every decision and every exchange refers to a snapshot that exists. This is because an approval that points at nothing preserves nothing. Example moments are when something is submitted, when a result leaves, and when the record closes, meaning no further activity is expected.
 <!-- TODO: Revisit above when we have example processes -->
 
-Snapshots exist to capture provenance. A decision is made about the record as it stood at the time, and the snapshot keeps what was asserted then inspectable later, even though the working record may have moved on and the data it refers to now unavailable under the data access agreement.
+Snapshots exist to preserve provenance. A decision is made about the record as it stood at the time, and the snapshot keeps what was asserted then inspectable later, even though the working record may have moved on and the data it refers to now unavailable under the data access agreement.
 
 ### Snapshots as Messages
 
