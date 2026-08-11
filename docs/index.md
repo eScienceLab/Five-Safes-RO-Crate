@@ -142,7 +142,7 @@ The root data entity is this RO-Crate: one representation of the record, either 
 | `license` | MUST | The terms under which this description may be used. This is not the licence of the data the record describes. |
 | `version` | SHOULD | Distinguishes this RO-Crate from other representations of the record. |
 | `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. |
-| `mentions` | SHOULD | The processes recorded in this RO-Crate. |
+| `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See [Processes](#processes). |
 
 An example root, with the RO-Crate's other entities omitted:
 
