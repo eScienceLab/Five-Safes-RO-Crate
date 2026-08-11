@@ -171,7 +171,7 @@ An example root, with the RO-Crate's other entities omitted:
 
 ### Assets, Processes, and Context
 
-The three categories are how this profile talks about a record's contents. They are not structures in the metadata file.
+The three categories are how this profile describes a record's contents. They are not structures in the metadata file.
 
 | Category | Description |
 |---|---|
@@ -192,11 +192,11 @@ Another RO-Crate MAY be held inside a Five Safes Crate, or referred to by its IR
 
 ## Assets
 
-Asset types and their expected metadata, including catalogue entries for sensitive data held within the TRE; protocols as versionable, approvable assets that processes refer to.
+Asset types and their expected metadata, including catalogue entries for sensitive data held within the TRE; protocols as versionable and approvable assets that processes refer to.
 
 ## Processes
 
-The action pattern for recording occurrences - inputs, outputs, instruments, agents, timing, and status - and how governance checks and decisions are typed, with manual versus automated checking expressed through who or what performed the action.
+The "action pattern" for recording occurrences - inputs, outputs, instruments, agents, timing, and status - and how governance checks and decisions are typed, with manual versus automated checking expressed through who or what performed the action.
 
 ## Context
 
@@ -204,22 +204,22 @@ Captures people, organisations, credentials, agreements, working environment, an
 
 ## Versioning and Snapshots
 
-A record exists as a working crate that changes, and as snapshots that do not. This section states how the two are identified and how snapshots relate to one another.
+A record exists as a working RO-Crate that changes, and as snapshots that do not. This section states how the two are identified and how snapshots relate to one another.
 
-### Two identifiers
+### RO-Crate Identifiers
 
-A record has one identifier that never changes. Each crate representing it, whether the working record or a snapshot, has an identifier of its own.
+A record has one identifier that never changes. Each RO-Crate representing it, whether the working record or a snapshot, has an identifier of its own.
 
 | Identifier | Written as | Meaning |
 |---|---|---|
-| Record identifier | `dct:isVersionOf` on the root | The record across its whole life. It is the same in every crate that represents the record. |
-| Crate identifier | `identifier` on the root | This one representation of the record: the working record, or one snapshot. |
+| Record identifier | `dct:isVersionOf` on the root | The record across its whole life. It is the same in every RO-Crate that represents the record. |
+| RO-Crate identifier | `identifier` on the root | This one representation of the record: the working record, or one snapshot. |
 
 Both MUST be absolute IRIs, and MUST NOT be used by their minting authority to identify anything else. Either MAY be a URI that resolves over the web. A TRE that cannot expose resolvable identifiers, such as one with no external network access, still needs stable ones; a UUID URN is sufficient.
 
-The crate identifier MUST be present when the crate is written, since a snapshot cannot be changed afterwards to add one. A crate MAY carry further identifiers, such as a persistent identifier assigned when a snapshot is later deposited somewhere; where that identifier is minted after the snapshot was frozen, it is recorded in a later snapshot rather than in the frozen one.
+The RO-Crate identifier MUST be present when the RO-Crate is written, since a snapshot cannot be changed afterwards to add one. An RO-Crate MAY carry further identifiers, such as a persistent identifier assigned when a snapshot is later deposited somewhere; where that identifier is minted after the snapshot was frozen, it is recorded in a later snapshot rather than in the frozen one.
 
-The following layout is one way to satisfy these rules, and is not required:
+The following approach is one way to satisfy these rules, and is not required:
 
 ```
 https://tre72.example.org/activities/A123             the record
@@ -230,9 +230,9 @@ https://tre72.example.org/activities/A123/versions/2  a later snapshot
 
 ### Snapshots
 
-A snapshot is a complete crate. It describes everything the record described at the moment it was taken, and is not changed afterwards: a correction is made by taking a later snapshot rather than by altering an earlier one.
+A snapshot is a complete RO-Crate. It describes everything the record described at the moment it was taken, and is not changed afterwards: a correction is made by taking a later snapshot rather than by altering an earlier one.
 
-Each snapshot after the first MUST identify the snapshot it follows, using `pav:previousVersion` pointing at that snapshot's crate identifier:
+Each snapshot after the first MUST identify the snapshot it follows, using `pav:previousVersion` pointing at that snapshot's RO-Crate identifier:
 
 ```json
 {
@@ -250,27 +250,23 @@ Each snapshot after the first MUST identify the snapshot it follows, using `pav:
 The first snapshot of a record has no predecessor and omits the property.
 
 !!! note
-    `pav:previousVersion` is a subproperty of `prov:wasRevisionOf`, so a consumer that loads the PAV ontology can infer the PROV revision relationship without this profile defining one.
+    `pav:previousVersion` is a subproperty of `prov:wasRevisionOf`, so a consumer that loads the Provenance, Authoring and Versioning (PAV) ontology can infer the PROV revision relationship without this profile defining one.
 
-### What snapshots are for
+### What Snapshots Are For
 
 A snapshot fixes what a claim was made about. A decision recorded in a record concerns the record as it stood at the time, and without a snapshot there is no fixed version for it to point at.
 
 When to take a snapshot is for whoever maintains the record to decide. This profile does not require snapshots at fixed intervals.
 
-!!! note "Still to be defined"
-    Three things in this area are not yet settled, and are deliberately not stated as requirements here:
+<!-- TODO: Still to be defined:
 
+Three things in this area are not yet settled:
     - How a decision refers to the snapshot it concerns. This needs a property, which will be defined alongside decisions in [Processes](#processes).
-    - What a snapshot must contain when it marks a release. Output checking is defined in [Processes](#processes); until then this profile states no testable release requirement, and implementers should not read one into the text above.
-    - How a snapshot's integrity is demonstrated, and what happens when content must be removed from a record for legal reasons. Removing BagIt removed the checksums that previously carried integrity, and nothing has replaced them yet. These are governance questions as much as technical ones and are being worked through separately.
+    - What a snapshot must contain when it marks a "release". Output checking is defined in [Processes](#processes)
+    - Snapshot integrity and what happens when content must be removed from a record for legal reasons. (Provenance Crate module?) (Removing BagIt removed the checksums) - These are governance questions as much as technical ones -->
 
-### Records that span several TREs
+### Federated TRE Records
 
-A record covers one piece of work, including the parts of it carried out at other TREs or at other nodes of a federation.
-
-!!! note "Still to be defined"
-    How several parties contribute to a single record is not yet settled: who maintains it, how a node contributes activity that its own governance does not permit others to see, and how contributions made at the same time are brought together. The [Common Provenance Model](https://w3id.org/cpm/ro-crate) solves a related problem by giving each organisation its own linked record rather than sharing one; this profile keeps a single record per piece of work, so it needs its own answer to these questions.
 
 ## Conformance and Modules
 
