@@ -307,7 +307,7 @@ A module MAY use further terms for the kinds of check and decision it covers.
 
 ### Decisions and Snapshots
 
-A decision concerns the record as it stood when the decision was made. A decision SHOULD identify the snapshot it concerns, using `prov:used` referring to that snapshot's crate identifier. Where a decision was made outside the record, or before any snapshot existed, it MUST instead identify what it did concern, such as the request or the artefacts submitted.
+A decision concerns the record as it stood when the decision was made. A decision SHOULD identify the snapshot it concerns, using `prov:used` referring to that snapshot's RO-Crate identifier. Where a decision was made outside the record, or before any snapshot existed, it MUST instead identify what it did concern, such as the request or the artefacts submitted.
 
 ```json
 {
@@ -322,16 +322,16 @@ A decision concerns the record as it stood when the decision was made. A decisio
 }
 ```
 
-A decision is always recorded after the snapshot it concerns was frozen, so it appears in a later snapshot, never in the one it refers to.
+!!! tip
+    A decision is always recorded after the snapshot it concerns was frozen, so it appears in a later snapshot, never in the one it refers to.
 
-!!! note "Still to be defined"
-    What a check records about its outcome, beyond approval or refusal, is not settled here. Output checking in particular needs more: real checks pass with conditions, are referred to a second checker, or were carried out under a policy that has since changed. Those belong with the output checking module, together with the vocabulary for them.
+<!-- TODO
+    - What a check records about its outcome, beyond approval or refusal, is not settled here. 
+    - Output checking in particular needs more: checks pass with conditions, are referred to a second checker, or were carried out under a policy that has since changed. Those belong with the output checking module with the vocabulary for them. -->
 
 ## Context
 
-Context records who was involved, where, and under what authority: the people and organisations, the TRE and its nodes, the agreements and policies they worked under, and the credentials they held.
-
-Context is not the material processes work on, which is what assets are. Context can, however, be the subject of a process: signing an agreement, granting a credential, and accrediting a researcher are all things that happen, and each is recorded as a process in the ordinary way.
+Context records who was involved, where, and under what authority: the people and organisations, the TRE and its nodes, the agreements and policies they worked under, and the credentials they held. Context is the subject of a process: signing an agreement, granting a credential, and accrediting a researcher are all things that happen, and each is recorded as a process in the ordinary way.
 
 ### People and Organisations
 
@@ -346,7 +346,7 @@ A `Person` SHOULD carry `affiliation` to the organisation they belong to.
 
 The organisation maintaining the record SHOULD be named with `publisher` on the root data entity. This identifies who keeps the record, and carries no claim about responsibility for the activity it describes, which is recorded process by process as the `agent`.
 
-### The TRE and Its Nodes
+### The TRE and its Nodes
 
 The TRE in which the work took place MUST be identified as an `Organization`, referenced from the processes carried out within it. Where work spans several nodes, each participating node is likewise an `Organization`.
 
@@ -356,14 +356,14 @@ Where the working environment matters to the record, such as a particular worksp
 
 An agreement or policy is a `CreativeWork`. Where it is held in the RO-Crate, it is a single entity typed `["File", "CreativeWork"]` and listed under `hasPart`. Processes carried out under it, such as an approval, reference it with `instrument`.
 
-Where the kind of agreement or the role an organisation holds matters, it SHOULD be given with `additionalType` referring to a published term. The [Data Privacy Vocabulary](https://w3id.org/dpv) covers this ground, for example `https://w3id.org/dpv#DataProcessingAgreement`.
+Where the kind of agreement or the role an organisation holds matters, it SHOULD be given with `additionalType` referring to a published term. The [Data Privacy Vocabulary](https://w3id.org/dpv) covers this, for example `https://w3id.org/dpv#DataProcessingAgreement`.
 
 ### Credentials
 
 Training and qualifications relevant to access are `EducationalOccupationalCredential` entities, referenced from the person with `hasCredential`. A credential SHOULD carry the period for which it is valid, so that a reader can tell whether it was in force when a process ran.
 
-!!! note
-    `hasCredential` and `EducationalOccupationalCredential` are pending terms in schema.org and may change.
+!!! warning
+    `hasCredential` and `EducationalOccupationalCredential` are new terms in schema.org and may change with implementation feedback and adoption.
 
 ## Versioning and Snapshots
 
