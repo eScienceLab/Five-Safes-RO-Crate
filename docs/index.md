@@ -118,12 +118,12 @@ This profile defines no vocabulary of its own, so an RO-Crate conforming to the 
 }
 ```
 
-Terms from other published vocabularies are used as **values**, for example to say what kind of check or agreement something is. These are typically used in modules. Such a term MUST be written as a full absolute IRI, and MUST be given as `{"@id": "..."}` where it is the value of a property. A bare string is read as text rather than as a reference to the term, and a shortened form such as `ex:Thing` will not expand unless its prefix is bound. An RO-Crate SHOULD also describe the term with a contextual entity carrying its name and definition.
+Where a property's value is a term rather than text, whatever vocabulary it comes from and including schema.org's own enumerations, it MUST be written as a full absolute IRI given as `{"@id": "..."}`. A bare string is read as text rather than as a reference to the term, and a shortened form such as `ex:Thing` will not expand unless its prefix is bound. An RO-Crate SHOULD also describe such a term with a contextual entity carrying its published name and definition.
 
 !!! note
-    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`.
+    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`. It declares no type coercions at all, which is why a term written as a bare string becomes text.
 
-A module MAY draw on vocabularies the core profile does not, such as the [Safe Haven Provenance ontology](https://w3id.org/shp) for governance processes. Where a module uses such a vocabulary only for values, the rule above is enough. Where it needs one for property names, the module declares its own context, and an RO-Crate conforming to that module gives both contexts.
+The core profile uses a small number of terms from other published vocabularies as values in this way, and never as property names. A module MAY draw on further vocabularies. Where a module uses one only for values, the rule above is enough. Where it needs one for property names, the module declares its own context, and an RO-Crate conforming to that module gives both contexts.
 
 ### Root Data Entity
 
@@ -192,15 +192,178 @@ Another RO-Crate MAY be held inside a Five Safes Crate, or referred to by its IR
 
 ## Assets
 
-Asset types and their expected metadata, including catalogue entries for sensitive data held within the TRE; protocols as versionable and approvable assets that processes refer to.
+Assets are the things processes consume or produce: datasets and extracts, analysis outputs, trained models, software, and the protocol documents that say how work should be done. Whether an asset is held in the RO-Crate or only described is covered under [What a Five Safes Crate Contains and References](#what-a-five-safes-crate-contains-and-references).
+
+### Kinds of Asset
+
+Every asset MUST be a data entity, reachable from the root through `hasPart`. An asset held in the RO-Crate is a file or directory, and its `@type` MUST include `File` or `Dataset` accordingly. Where an asset is also something else, both types are given in an array.
+
+| Asset | Typed as |
+|---|---|
+| A file, held or described | `File` |
+| A directory or collection of files | `Dataset` |
+| Data governed where it lives | `File` or `Dataset` with an absolute IRI |
+| Software held in the RO-Crate | `["File", "SoftwareSourceCode"]` |
+| Software used but not held | `SoftwareApplication` |
+| A procedure or protocol document, held | `["File", "CreativeWork"]`, and MAY add `HowTo` |
+| A trained model | `File` or `Dataset` |
+
+An asset SHOULD carry `name`. An asset that is versioned, such as a protocol, a piece of software, or a released extract, SHOULD carry `version`.
+
+!!! note
+    Software that a process merely used, such as a published tool, is described as a contextual entity rather than held in the RO-Crate. It is still recorded, as the `instrument` of the process that used it.
+
+### Protocols
+
+A protocol is an asset that sets out how something should be done. It is written once, versioned, approved, and used many times, whereas each occasion of following it is a process.
+
+This profile defines no type for protocols. A process records the protocol it followed with `instrument`, and the same asset MAY be a protocol for one process and an ordinary input to another.
+
+### Derived Data
+
+Data produced by a process MUST be recorded as a separate asset from the data it came from. A deidentified copy of a dataset, an extract, and an aggregate are each their own asset with their own history, and MUST NOT be recorded as a revision of their source.
+
+The process that produced the derived asset records both, as its `object` and its `result`. Where the derivation was observed or attested, the derived asset SHOULD also point at what it came from using `prov:wasDerivedFrom`, so that the relationship survives being read without the process.
+
+!!! note
+    A TRE records only what it can observe or what has been attested to it. Where a derivation happened inside a workspace the TRE did not observe, recording a single process covering the interval is a complete record, not a deficient one. Asserting a derivation that was neither observed nor attested is worse than leaving it out.
+
+### Software and Models
+
+Software and trained models are assets in their own right. Where a TRE holds or produces them, they SHOULD carry `name` and `version`, and SHOULD carry `author` where a person or organisation authored them. Where a model was produced by a process rather than written, the producing process records who was responsible.
+
+!!! note
+    A model trained on sensitive data is an asset that may itself carry disclosure risk. This profile records what a model is and where it came from; whether it may leave a TRE is decided by the same checking processes as any other output.
 
 ## Processes
 
-The "action pattern" for recording occurrences - inputs, outputs, instruments, agents, timing, and status - and how governance checks and decisions are typed, with manual versus automated checking expressed through who or what performed the action.
+Processes are the things that happen: a query executed, a workflow run, a protocol applied, an output checked, an access decision made. Each MUST be a contextual entity, and MUST be referenced from the root's `mentions` so that a reader can find every process in the record.
+
+### The Shape of a Process
+
+Every process MUST be an [Action](http://schema.org/Action) of one of the types below.
+
+| Property | Requirement | Description |
+|---|---|---|
+| `@type` | MUST | See [Kinds of Process](#kinds-of-process). |
+| `agent` | MUST | The person or organisation responsible. Every value MUST be described in the RO-Crate as a `Person` or an `Organization`. |
+| `actionStatus` | MUST | Where the process has got to, written as `{"@id": ...}`. See [Status](#status). |
+| `name` | SHOULD | What happened, in words. |
+| `object` | SHOULD | What the process acted on. For a decision, MUST be what was decided upon. |
+| `result` | MUST for `CreateAction`, otherwise SHOULD | What the process produced. |
+| `instrument` | SHOULD | The protocol it followed, the software it used, and the agreement it was carried out under. |
+| `startTime` | SHOULD | When it began. |
+| `endTime` | MUST where `actionStatus` is `CompletedActionStatus` or `FailedActionStatus`, otherwise SHOULD | When it ended. |
+| `description` | MAY | Further detail, such as the command that was run. |
+
+### Kinds of Process
+
+| Kind | Typed as |
+|---|---|
+| Work that produces something, such as a query, a run, or a protocol applied | `CreateAction` |
+| A check or assessment that reaches no decision by itself | `AssessAction` |
+| A decision that permits something | `AuthorizeAction` |
+| A decision that refuses something | `RejectAction` |
+| A change to the record or the RO-Crate as a whole | `UpdateAction` |
+| Moving something between parties | `SendAction`, `ReceiveAction` |
+
+Approval and refusal are recorded by the type of the decision, so that a reader can tell them apart without reading the `name`. A check that produces a finding but decides nothing is an `AssessAction`, and the decision that follows it is recorded separately.
+
+!!! note
+    RO-Crate recommends `CreateAction` rather than `UpdateAction` for changes to a file within a dataset, with the original as `object` and the new version as `result`. `UpdateAction` is for changes affecting the record as a whole.
+
+### Status
+
+| Value | Meaning |
+|---|---|
+| `PotentialActionStatus` | Requested, and not yet run. |
+| `ActiveActionStatus` | Running. |
+| `CompletedActionStatus` | Finished. |
+| `FailedActionStatus` | Attempted, and did not finish. |
+
+A requested process that is refused or withdrawn never runs and keeps `PotentialActionStatus`. What became of it is recorded by the decision that refused it, which MUST identify the request as its `object`. Without that decision, a request cannot be told apart from one that is still waiting.
+
+!!! note
+    schema.org defines `PotentialActionStatus` as an action that is supported, rather than one that has been requested. This profile uses it for a requested process that has not yet run.
+
+### Who Performed a Process
+
+The `agent` of a process is the person or organisation responsible for it. There MUST be one, whether or not software did the work. Software that carried out the process is recorded under `instrument`.
+
+!!! note
+    PROV allows software to be an agent. This profile requires an accountable person or organisation instead, so that every process has a party answerable for it.
+
+Where naming an individual would itself create a risk, such as identifying the person who refused an output, the `agent` MAY be the organisation, or a `Person` bearing a role and a local identifier rather than a name. A TRE SHOULD NOT identify individual staff in a record that leaves its custody unless the receiving party needs the identity.
+
+### Governance Checks and Decisions
+
+A check or a decision is a process like any other: it has an agent, a time, something it was about, and, for a decision, an outcome carried by its type.
+
+A process MAY carry `additionalType` referring to a published term for the kind of check it was. This profile uses [`https://w3id.org/shp#DisclosureCheck`](https://w3id.org/shp) from the Safe Haven Provenance ontology, for reviewing whether aggregate results may be released without identifying individuals.
+
+Where a term from another vocabulary is used, the RO-Crate SHOULD describe it as a contextual entity of type `rdfs:Class`, carrying the term's published name and definition and a `sameAs` to its documentation. The definition recorded is the one its publisher gives, not a local reading of it.
+
+A module MAY use further terms for the kinds of check and decision it covers.
+
+### Decisions and Snapshots
+
+A decision concerns the record as it stood when the decision was made. A decision SHOULD identify the snapshot it concerns, using `prov:used` referring to that snapshot's crate identifier. Where a decision was made outside the record, or before any snapshot existed, it MUST instead identify what it did concern, such as the request or the artefacts submitted.
+
+```json
+{
+  "@id": "#signoff-9c14",
+  "@type": "AuthorizeAction",
+  "name": "Enquiry approved for the two participating sites",
+  "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+  "object": {"@id": "#enquiry-3f2b"},
+  "prov:used": {"@id": "https://tre72.example.org/activities/A123/versions/1"},
+  "endTime": "2027-03-13T16:40:00Z",
+  "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+}
+```
+
+A decision is always recorded after the snapshot it concerns was frozen, so it appears in a later snapshot, never in the one it refers to.
+
+!!! note "Still to be defined"
+    What a check records about its outcome, beyond approval or refusal, is not settled here. Output checking in particular needs more: real checks pass with conditions, are referred to a second checker, or were carried out under a policy that has since changed. Those belong with the output checking module, together with the vocabulary for them.
 
 ## Context
 
-Captures people, organisations, credentials, agreements, working environment, and the TRE and its nodes.
+Context records who was involved, where, and under what authority: the people and organisations, the TRE and its nodes, the agreements and policies they worked under, and the credentials they held.
+
+Context is not the material processes work on, which is what assets are. Context can, however, be the subject of a process: signing an agreement, granting a credential, and accrediting a researcher are all things that happen, and each is recorded as a process in the ordinary way.
+
+### People and Organisations
+
+| Entity | Typed as |
+|---|---|
+| A person | `Person` |
+| An organisation, including a TRE or one of its nodes | `Organization` |
+
+Where a person or organisation has a persistent identifier, such as an ORCID iD or a ROR identifier, that identifier MUST be used as the entity's `@id`. A locally minted identifier MUST NOT be used for an entity that has one, since local identifiers cannot be reconciled when records from several parties are read together.
+
+A `Person` SHOULD carry `affiliation` to the organisation they belong to.
+
+The organisation maintaining the record SHOULD be named with `publisher` on the root data entity. This identifies who keeps the record, and carries no claim about responsibility for the activity it describes, which is recorded process by process as the `agent`.
+
+### The TRE and Its Nodes
+
+The TRE in which the work took place MUST be identified as an `Organization`, referenced from the processes carried out within it. Where work spans several nodes, each participating node is likewise an `Organization`.
+
+Where the working environment matters to the record, such as a particular workspace or analysis platform, it is described as a contextual entity and referenced from the processes that ran in it.
+
+### Agreements and Policies
+
+An agreement or policy is a `CreativeWork`. Where it is held in the RO-Crate, it is a single entity typed `["File", "CreativeWork"]` and listed under `hasPart`. Processes carried out under it, such as an approval, reference it with `instrument`.
+
+Where the kind of agreement or the role an organisation holds matters, it SHOULD be given with `additionalType` referring to a published term. The [Data Privacy Vocabulary](https://w3id.org/dpv) covers this ground, for example `https://w3id.org/dpv#DataProcessingAgreement`.
+
+### Credentials
+
+Training and qualifications relevant to access are `EducationalOccupationalCredential` entities, referenced from the person with `hasCredential`. A credential SHOULD carry the period for which it is valid, so that a reader can tell whether it was in force when a process ran.
+
+!!! note
+    `hasCredential` and `EducationalOccupationalCredential` are pending terms in schema.org and may change.
 
 ## Versioning and Snapshots
 
@@ -253,6 +416,9 @@ The first snapshot of a record has no predecessor and omits the property.
     `pav:previousVersion` is a subproperty of `prov:wasRevisionOf`, so a consumer that loads the Provenance, Authoring and Versioning (PAV) ontology can infer the PROV revision relationship without this profile defining one.
 
 ### What Snapshots Are For
+
+<!-- TODO: Revisit when we complete Snapshots as Messages section -->
+
 
 A snapshot fixes what a claim was made about. A decision recorded in a record concerns the record as it stood at the time, and without a snapshot there is no fixed version for it to point at.
 
