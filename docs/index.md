@@ -19,87 +19,66 @@ This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for r
 
 _The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [[RFC2119](https://doi.org/10.17487/RFC2119)] [[RFC8174](https://doi.org/10.17487/RFC8174)] when, and only when, they appear in all capitals, as shown here._
 
-!!! note 
+!!! tip
     All references to schema.org types/properties/instances use the prefix `http://schema.org/` (not https) to correspond with their official JSON-LD context.
-
 
 ## Introduction
 
-What a Five Safes RO-Crate ("Five Safes Crate") is, who it serves (researchers, TRE operators, auditors, the public), how its content evidences the Five Safes framework, and how this specification relates to RO-Crate 1.3, SATRE, and so on.
+The [Five Safes](https://doi.org/10.13140/RG.2.1.3661.1604) framework ([Desai, Ritchie and Welpton, 2016](#references)) is an approach to consider safe access to sensitive data across five dimensions: safe projects, safe people, safe settings, safe data, and safe outputs. In TREs, this is applied through governance: work is proposed and approved, researchers are accredited, environments are controlled, data is prepared, and outputs are checked.
+
+A Five Safes RO-Crate records this activity so that it can be retained as provenance, exchanged between systems, and inspected later. This profile specifies how that activity is represented as an RO-Crate.
+
+This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
 ## Concepts
 
-This section explains the core ideas in plain English. You do not need to know about RO-Crate to understand it.
+...
 
 ### The TRE Activity Record
 
-A Five Safes Crate is a **TRE Activity Record**, or "record" for short. It is a versioned account of activity in a TRE. As a rough guide, each record covers one piece of work that the TRE governs as a unit. If the work involves several nodes, the record covers them all.
+A **TRE Activity Record** (“Activity Record”) is a versioned account of activity in a TRE. Each Activity Record covers one piece of work under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one Activity Record captures the whole piece of work.
 
-The [working record and each snapshot](#working-record-and-snapshots) are both Five Safes Crates. They are the same kind of document, but they capture the work at different points in its life.
+An Activity Record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. This Activity Record is represented as a **Five Safes RO-Crate**.
 
-A record grows as the work progresses. It brings together what the work produces and requires: queries and analyses, decisions about them, the agreements that govern them, and any outputs that are released. It describes the data involved in the work, but sensitive data stays where it is governed. In such a case, the record [refers to that data but does not contain it](#structure-of-a-five-safes-crate). One record may cover a single cohort discovery query answered within a minute; another may cover a study lasting months or years. Both are the same kind of record.
+### Observation and Scope
 
-This specification does not define exactly where one record ends and another begins because TREs govern work in different ways. For example, one TRE may treat each query in a discovery portal as a separate unit of work, while another may treat an entire workspace in an interactive analysis environment as one unit. 
+An Activity Record focuses on activity that was observed or attested: this is work in which a system captured the event as it happened, such as a portal logging each query, or work that a person or organisation stated happened, such as a manual output review. 
 
-<!-- The agreements provide the most reliable boundary: work governed together under one set of agreements belongs in one record. -->
-
-A record can include only activity that the TRE could observe. A portal may record every query as it happens. An interactive workspace may capture only the governance points around a session, with the analysis between them summarised when outputs leave. Both are valid records.
-
-!!! note
-    This specification deliberately has no "project" item in a record. The word can mean too many different things: a grant, a study, a workspace, or an access agreement. Instead, the specific things that "project" might refer to appear in the record in their own right.
-
-When work spans several TREs or several nodes in a federated network, the aim is still to keep one record for the whole piece of work. That record includes activity from every node. Each node still keeps any operational logs that its regulators require. This specification asks for the work itself to be reported once, in one place. Who maintains the record - for example, the coordinating service, the lead TRE, or the portal - is a deployment decision.
+A portal may record every query, or an interactive workspace may record only the governance points around a session, with the analysis between them summarised. Both are a valid Activity Record with different scopes. 
 
 ### Assets, Processes, Context
 
-Every item in a record belongs to one of three categories.
+Every entity describing the governed work has one or more of three roles.
 
-| Category | Description |
+| Role | Description |
 |---|---|
-| Assets | Artefacts that processes consume or produce, such as protocols. |
-| Processes | Things that happen, including activities that have been requested but have not yet run. |
+| Assets | Artefacts that processes act on, consume, produce, or follow: datasets and extracts, outputs, models, software, plans, protocols, agreement texts. |
+| Processes | Things that happen: submitting a request, making a decision, running a query, checking an output. |
 | Context | People, organisations, agreements, and the TRE itself. |
 
-**Assets** are durable items such as datasets and extracts, analysis outputs, trained models, software, and protocol documents. Two rules are important:
+The same entity can have more than one role. A protocol or plan is an asset, whilst following it is a process. Derived data is a separate asset with its own history, rather than a version of the original data. If planned work never begins, the request and its refusal or withdrawal still happened and remain in the Activity Record. 
 
-- A protocol, such as a deidentification procedure, workflow, or standard operating procedure, is an asset rather than a process. It can be versioned, approved, and reused. Following the protocol on a particular occasion is a process.
-
-- Derived data is a separate asset. For example, a deidentified copy of a dataset is different from its source and has its own history.
-
-**Processes** are things that happen. Examples include executing a query, running a workflow, checking an output, and applying a protocol. A completed process records what it consumed and produced, which protocol it followed, when it ran, who was responsible for it, and any software it used.
-
-A process can appear in the record before it happens. For example, a requested analysis that is awaiting a decision is already part of the record and is marked as not yet run. It may later complete, fail, be withdrawn, or be refused without ever running. The refusal is itself a decision in the record. Some processes may not produce a new asset.
-
-**Context** records who and what are involved, and under what authority: people, organisations, agreements, and the TRE itself, together with credentials, training, and policies. Processes do not operate on context in the same way that they operate on assets. However, context can be the subject of a process. Signing an agreement, granting a credential, and accrediting a researcher are all processes whose subject is context. Each context item is recorded once and referred to wherever it is needed.
-
-These categories also show how a record provides evidence for the Five Safes. Safe projects are evidenced by the record as a whole, including the agreements governing the work and the decisions that allowed it to proceed; safe people and safe settings are evidenced in context; safe data is evidenced in assets; and safe outputs are evidenced by the checking processes that control what may leave.
+Context can be the subject of a process. For example, signing an agreement or accrediting a researcher are processes. Each context item is recorded once and referred to wherever needed.
 
 ### Working Record and Snapshots
 
-The working record reflects the current understanding of the work. It changes as queries run, decisions are returned, and outputs appear. A snapshot is a complete copy of the record taken at a meaningful moment. It freezes the record as it stood then and is never edited afterwards. The working record and each snapshot have separate, stable identities. Each snapshot after the first links to the previous one, so the snapshots trace the record's history.
+The **Working Record** reflects the current Activity Record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **Snapshot** is a fixed representation of the Working Record taken at a significant moment, and once published, it is never changed; corrections are made by taking a later Snapshot. 
 
-<!-- !!! note
-    Where several parties contribute in parallel, such as in a federated system, that history can branch and reconverge; merging the branches is the job of whoever maintains the record. -->
+The Working Record keeps one identity throughout its life, meaning "this piece of work"; each Snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A Snapshot carries a version number and, after the first, a link to its predecessor; the Working Record carries neither. Together, the Working Record and snapshots form a sequence of activity records. 
 
-The working record and its snapshots answer different questions. The working record keeps the same identity throughout its life, meaning "this piece of work". A snapshot has its own identity, meaning "this piece of work, exactly as it stood at that moment". This makes it clear exactly which version an approval applies to.
+This profile does not prescribe when you should take a Snapshot. However, submitting, exchanging, and closing an Activity Record are reasonable choices.
 
-A snapshot is not the same as "one run". It may contain no runs, one run, or many runs. How the work is divided into processes and when a snapshot is taken are separate choices. Whoever maintains the record decides when to take a snapshot, with one expectation: every decision and every exchange refers to an existing snapshot. Without a snapshot, an approval has no fixed version to point to, so it preserves no evidence of what was approved. Examples of when to take a snapshot include when something is submitted, when a result leaves, and when the record closes; that is, when no further activity is expected.
+### Core and Modules
 
-<!-- TODO: Revisit above when we have example processes -->
-
-Snapshots preserve provenance. A decision concerns the record as it stood at the time. The snapshot preserves what the record said then, so that information remains available for later inspection even if the working record has moved on or the data it refers to is no longer available under the data access agreement.
-
-### Snapshots as Messages
-
-
+Every Five Safes RO-Crate must follow the "core" profile outlined in this document. Additional "modules" add rules for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An Activity Record may follow the core alone or declare any combination of modules.
 
 ## Structure of a Five Safes Crate
 
-A Five Safes Crate is an RO-Crate: a directory, or an archive of one, containing a metadata file that describes its contents. This section states what that metadata file contains for the RO-Crate to be a Five Safes Crate.
+A Five Safes RO-Crate is an RO-Crate that contains a metadata file that describes its contents. The following sections outline the metadata file and structure.
 
 ### Metadata File
 
-The `ro-crate-metadata.json` metadata file MUST conform to [RO-Crate 1.3](https://www.researchobject.org/ro-crate/specification/1.3/), and its descriptor MUST declare the version it conforms to. For RO-Crate 1.3:
+The `ro-crate-metadata.json` metadata file MUST conform to [RO-Crate 1.3](https://www.researchobject.org/ro-crate/specification/1.3/), and its descriptor MUST declare the version it conforms to. 
 
 ```json
 {
@@ -110,7 +89,9 @@ The `ro-crate-metadata.json` metadata file MUST conform to [RO-Crate 1.3](https:
 }
 ```
 
-This profile defines no vocabulary of its own, so an RO-Crate conforming to the core profile needs no further context. The context SHOULD be given in the array form, so that an RO-Crate can extend it:
+### JSON-LD
+
+The core profile defines no vocabulary of its own, so an RO-Crate conforming to this core needs no context beyond RO-Crate. The context SHOULD be given in the array form, so that a module may add to it:
 
 ```json
 { "@context": ["https://w3id.org/ro/crate/1.3/context"],
@@ -118,336 +99,237 @@ This profile defines no vocabulary of its own, so an RO-Crate conforming to the 
 }
 ```
 
-Where a property's value is a term rather than text, whatever vocabulary it comes from and including schema.org's own enumerations, it MUST be written as a full absolute IRI given as `{"@id": "..."}`. A bare string is read as text rather than as a reference to the term, and a shortened form such as `ex:Thing` will not expand unless its prefix is bound. An RO-Crate SHOULD also describe such a term with a contextual entity carrying its published name and definition.
-
-!!! note
-    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`. It declares no type coercions at all, which is why a term written as a bare string becomes text.
-
-The core profile uses a small number of terms from other published vocabularies as values in this way, and never as property names. A module MAY draw on further vocabularies. Where a module uses one only for values, the rule above is enough. Where it needs one for property names, the module declares its own context, and an RO-Crate conforming to that module gives both contexts.
-
-### Root Data Entity
-
-The root data entity is this RO-Crate: one representation of the record, either the working record or one snapshot of it. The record itself is a separate identifier that the RO-Crate refers to. Alongside the properties RO-Crate requires of any root data entity, this profile requires the following.
-
-| Property | Requirement | Description |
-|---|---|---|
-| `@id` | MUST | `./`, as for any attached RO-Crate. |
-| `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
-| `conformsTo` | MUST | Contains this profile's IRI, and the IRI of each module the RO-Crate declares. The array is unordered. Each IRI MUST also have a contextual entity, as RO-Crate requires. See [Conformance and Modules](#conformance-and-modules). |
-| `identifier` | MUST | The stable IRI of this RO-Crate. See [Versioning and Snapshots](#versioning-and-snapshots). |
-| `dct:isVersionOf` | MUST | The stable IRI of the record this RO-Crate represents. |
-| `name` | MUST | Names the record. |
-| `description` | MUST | Describes the work the record covers. |
-| `datePublished` | MUST | When this representation of the record was written. For a snapshot, the moment it was frozen. |
-| `license` | MUST | The terms under which this description may be used. This is not the licence of the data the record describes. |
-| `version` | SHOULD | Distinguishes this RO-Crate from other representations of the record. |
-| `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. |
-| `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See [Processes](#processes). |
-
-An example root, with the RO-Crate's other entities omitted:
+A term used as a property value MUST be written as a full absolute IRI in `{"@id": "..."}` form, whilst a term used in `@type` is written as a plain string:
 
 ```json
 {
-  "@id": "./",
-  "@type": "Dataset",
-  "conformsTo": [
-    {"@id": "https://w3id.org/5s-crate/1.0"},
-    {"@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery"}
-  ],
-  "identifier": {"@id": "https://tre72.example.org/activities/A123/versions/2"},
-  "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
-  "name": "Feasibility enquiry A123 (TRE72)",
-  "description": "Cohort feasibility counts across two participating sites.",
-  "datePublished": "2027-03-14T09:21:00Z",
-  "license": {"@id": "https://spdx.org/licenses/CC-BY-4.0"},
-  "version": "2",
-  "pav:previousVersion": {
-    "@id": "https://tre72.example.org/activities/A123/versions/1"
-  },
-  "hasPart": [{"@id": "query.sql"}],
-  "mentions": [{"@id": "#enquiry-3f2b"}]
-}
-```
-
-### Assets, Processes, and Context
-
-The three categories are how this profile describes a record's contents. They are not structures in the metadata file.
-
-| Category | Description |
-|---|---|
-| Assets | Data entities, reachable from `hasPart`. An asset the RO-Crate holds is a file or directory within it; an asset the RO-Crate refers to is a data entity with an absolute IRI. |
-| Processes | Contextual entities, referenced from the root's `mentions`. |
-| Context | Contextual entities, referenced from wherever they are relevant. |
-
-### What a Five Safes Crate Contains and References 
-
-An RO-Crate MAY hold artefacts that carry the work's governance, such as the text of a query, a protocol document, or a report. These are files within the RO-Crate, listed under `hasPart`.
-
-Data that is governed where it lives MUST NOT be held in the RO-Crate. It is described instead as a [Web-based Data Entity](https://www.researchobject.org/ro-crate/specification/1.3/data-entities.html): a data entity whose `@id` is an absolute IRI, so the RO-Crate describes the data and lists it under `hasPart`, whilst the data itself stays where it is. A record can then travel without the data travelling with it. Whether an artefact may travel with a record is a question of governance.
-
-Another RO-Crate MAY be held inside a Five Safes Crate, or referred to by its IRI. In either case it appears as a `Dataset` in `hasPart` with its own `conformsTo`; a referenced RO-Crate SHOULD declare `conformsTo` of `https://w3id.org/ro/crate`. Its own metadata file is not merged into this RO-Crate's graph, and this RO-Crate MUST NOT redescribe the entities inside it.
-
-!!! note
-    An asset the RO-Crate only refers to is still a first-class asset: processes name it as an input or output in the ordinary way.
-
-## Assets
-
-Assets are the things processes consume or produce: datasets and extracts, analysis outputs, trained models, software, and the protocol documents that say how work should be done. Whether an asset is held in the RO-Crate or only described is covered under [What a Five Safes Crate Contains and References](#what-a-five-safes-crate-contains-and-references).
-
-### Kinds of Asset
-
-Every asset MUST be a data entity, reachable from the root through `hasPart`. An asset held in the RO-Crate is a file or directory, and its `@type` MUST include `File` or `Dataset` accordingly. Where an asset is also something else, both types are given in an array.
-
-| Asset | Typed as |
-|---|---|
-| A file, held or described | `File` |
-| A directory or collection of files | `Dataset` |
-| Data governed where it lives | `File` or `Dataset` with an absolute IRI |
-| Software held in the RO-Crate | `["File", "SoftwareSourceCode"]` |
-| Software used but not held | `SoftwareApplication` |
-| A procedure or protocol document, held | `["File", "CreativeWork"]`, and MAY add `HowTo` |
-| A trained model | `File` or `Dataset` |
-
-An asset SHOULD carry `name`. An asset that is versioned, such as a protocol, a piece of software, or a released extract, SHOULD carry `version`.
-
-!!! note
-    Software that a process merely used, such as a published tool, is described as a contextual entity rather than held in the RO-Crate. It is still recorded, as the `instrument` of the process that used it.
-
-### Protocols
-
-A protocol is an asset that sets out how something should be done. It is written once, versioned, approved, and used many times, whereas each occasion of following it is a process.
-
-This profile defines no type for protocols. A process records the protocol it followed with `instrument`, and the same asset MAY be a protocol for one process and an ordinary input to another.
-
-### Derived Data
-
-Data produced by a process MUST be recorded as a separate asset from the data it came from. A deidentified copy of a dataset, an extract, and an aggregate are each their own asset with their own history, and MUST NOT be recorded as a revision of their source.
-
-The process that produced the derived asset records both, as its `object` and its `result`. Where the derivation was observed or attested, the derived asset SHOULD also point at what it came from using `prov:wasDerivedFrom`, so that the relationship survives being read without the process.
-
-!!! note
-    A TRE records only what it can observe or what has been attested to it. Where a derivation happened inside a workspace the TRE did not observe, recording a single process covering the interval is a complete record, not a deficient one. Asserting a derivation that was neither observed nor attested is worse than leaving it out.
-
-### Software and Models
-
-Software and trained models are assets in their own right. Where a TRE holds or produces them, they SHOULD carry `name` and `version`, and SHOULD carry `author` where a person or organisation authored them. Where a model was produced by a process rather than written, the producing process records who was responsible.
-
-!!! note
-    A model trained on sensitive data is an asset that may itself carry disclosure risk. This profile records what a model is and where it came from; whether it may leave a TRE is decided by the same checking processes as any other output.
-
-## Processes
-
-Processes are the things that happen: a query executed, a workflow run, a protocol applied, an output checked, an access decision made. Each MUST be a contextual entity, and MUST be referenced from the root's `mentions` so that a reader can find every process in the record.
-
-### The Shape of a Process
-
-Every process MUST be an [Action](http://schema.org/Action) of one of the types below.
-
-| Property | Requirement | Description |
-|---|---|---|
-| `@type` | MUST | See [Kinds of Process](#kinds-of-process). |
-| `agent` | MUST | The person or organisation responsible. Every value MUST be described in the RO-Crate as a `Person` or an `Organization`. |
-| `actionStatus` | MUST | Where the process has got to, written as `{"@id": ...}`. See [Status](#status). |
-| `name` | SHOULD | What happened, in words. |
-| `object` | SHOULD | What the process acted on. For a decision, MUST be what was decided upon. |
-| `result` | MUST for `CreateAction`, otherwise SHOULD | What the process produced. |
-| `instrument` | SHOULD | The protocol it followed, the software it used, and the agreement it was carried out under. |
-| `startTime` | SHOULD | When it began. |
-| `endTime` | MUST where `actionStatus` is `CompletedActionStatus` or `FailedActionStatus`, otherwise SHOULD | When it ended. |
-| `description` | MAY | Further detail, such as the command that was run. |
-
-### Kinds of Process
-
-| Kind | Typed as |
-|---|---|
-| Work that produces something, such as a query, a run, or a protocol applied | `CreateAction` |
-| A check or assessment that reaches no decision by itself | `AssessAction` |
-| A decision that permits something | `AuthorizeAction` |
-| A decision that refuses something | `RejectAction` |
-| A change to the record or the RO-Crate as a whole | `UpdateAction` |
-| Moving something between parties | `SendAction`, `ReceiveAction` |
-
-Approval and refusal are recorded by the type of the decision, so that a reader can tell them apart without reading the `name`. A check that produces a finding but decides nothing is an `AssessAction`, and the decision that follows it is recorded separately.
-
-!!! note
-    RO-Crate recommends `CreateAction` rather than `UpdateAction` for changes to a file within a dataset, with the original as `object` and the new version as `result`. `UpdateAction` is for changes affecting the record as a whole.
-
-### Status
-
-| Value | Meaning |
-|---|---|
-| `PotentialActionStatus` | Requested, and not yet run. |
-| `ActiveActionStatus` | Running. |
-| `CompletedActionStatus` | Finished. |
-| `FailedActionStatus` | Attempted, and did not finish. |
-
-A requested process that is refused or withdrawn never runs and keeps `PotentialActionStatus`. What became of it is recorded by the decision that refused it, which MUST identify the request as its `object`. Without that decision, a request cannot be told apart from one that is still waiting.
-
-!!! note
-    schema.org defines `PotentialActionStatus` as an action that is supported, rather than one that has been requested. This profile uses it for a requested process that has not yet run.
-
-### Who Performed a Process
-
-The `agent` of a process is the person or organisation responsible for it. There MUST be one, whether or not software did the work. Software that carried out the process is recorded under `instrument`.
-
-!!! note
-    PROV allows software to be an agent. This profile requires an accountable person or organisation instead, so that every process has a party answerable for it.
-
-Where naming an individual would itself create a risk, such as identifying the person who refused an output, the `agent` MAY be the organisation, or a `Person` bearing a role and a local identifier rather than a name. A TRE SHOULD NOT identify individual staff in a record that leaves its custody unless the receiving party needs the identity.
-
-### Governance Checks and Decisions
-
-A check or a decision is a process like any other: it has an agent, a time, something it was about, and, for a decision, an outcome carried by its type.
-
-A process MAY carry `additionalType` referring to a published term for the kind of check it was. This profile uses [`https://w3id.org/shp#DisclosureCheck`](https://w3id.org/shp) from the Safe Haven Provenance ontology, for reviewing whether aggregate results may be released without identifying individuals.
-
-Where a term from another vocabulary is used, the RO-Crate SHOULD describe it as a contextual entity of type `rdfs:Class`, carrying the term's published name and definition and a `sameAs` to its documentation. The definition recorded is the one its publisher gives, not a local reading of it.
-
-A module MAY use further terms for the kinds of check and decision it covers.
-
-### Decisions and Snapshots
-
-A decision concerns the record as it stood when the decision was made. A decision SHOULD identify the snapshot it concerns, using `prov:used` referring to that snapshot's RO-Crate identifier. Where a decision was made outside the record, or before any snapshot existed, it MUST instead identify what it did concern, such as the request or the artefacts submitted.
-
-```json
-{
-  "@id": "#signoff-9c14",
-  "@type": "AuthorizeAction",
-  "name": "Enquiry approved for the two participating sites",
-  "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-  "object": {"@id": "#enquiry-3f2b"},
-  "prov:used": {"@id": "https://tre72.example.org/activities/A123/versions/1"},
-  "endTime": "2027-03-13T16:40:00Z",
+  "@type": ["CreateAction", "prov:Activity"],
   "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
 }
 ```
 
-!!! tip
-    A decision is always recorded after the snapshot it concerns was frozen, so it appears in a later snapshot, never in the one it refers to.
-
-<!-- TODO
-    - What a check records about its outcome, beyond approval or refusal, is not settled here. 
-    - Output checking in particular needs more: checks pass with conditions, are referred to a second checker, or were carried out under a policy that has since changed. Those belong with the output checking module with the vocabulary for them. -->
-
-## Context
-
-Context records who was involved, where, and under what authority: the people and organisations, the TRE and its nodes, the agreements and policies they worked under, and the credentials they held. Context is the subject of a process: signing an agreement, granting a credential, and accrediting a researcher are all things that happen, and each is recorded as a process in the ordinary way.
-
-### People and Organisations
-
-| Entity | Typed as |
-|---|---|
-| A person | `Person` |
-| An organisation, including a TRE or one of its nodes | `Organization` |
-
-Where a person or organisation has a persistent identifier, such as an ORCID iD or a ROR identifier, that identifier MUST be used as the entity's `@id`. A locally minted identifier MUST NOT be used for an entity that has one, since local identifiers cannot be reconciled when records from several parties are read together.
-
-A `Person` SHOULD carry `affiliation` to the organisation they belong to.
-
-The organisation maintaining the record SHOULD be named with `publisher` on the root data entity. This identifies who keeps the record, and carries no claim about responsibility for the activity it describes, which is recorded process by process as the `agent`.
-
-### The TRE and its Nodes
-
-The TRE in which the work took place MUST be identified as an `Organization`, referenced from the processes carried out within it. Where work spans several nodes, each participating node is likewise an `Organization`.
-
-Where the working environment matters to the record, such as a particular workspace or analysis platform, it is described as a contextual entity and referenced from the processes that ran in it.
-
-### Agreements and Policies
-
-An agreement or policy is a `CreativeWork`. Where it is held in the RO-Crate, it is a single entity typed `["File", "CreativeWork"]` and listed under `hasPart`. Processes carried out under it, such as an approval, reference it with `instrument`.
-
-Where the kind of agreement or the role an organisation holds matters, it SHOULD be given with `additionalType` referring to a published term. The [Data Privacy Vocabulary](https://w3id.org/dpv) covers this, for example `https://w3id.org/dpv#DataProcessingAgreement`.
-
-### Credentials
-
-Training and qualifications relevant to access are `EducationalOccupationalCredential` entities, referenced from the person with `hasCredential`. A credential SHOULD carry the period for which it is valid, so that a reader can tell whether it was in force when a process ran.
+Writing `"actionStatus": "CompletedActionStatus"` instead produces the text `"CompletedActionStatus"`, not a reference to the term. This is because the RO-Crate context does not coerce property values to references.
 
 !!! warning
-    `hasCredential` and `EducationalOccupationalCredential` are new terms in schema.org and may change with implementation feedback and adoption.
+    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`.
 
-## Versioning and Snapshots
+A module MAY require an additional context and further vocabularies; the rules for declaring and describing them are in [Authoring Modules](authoring-modules.md).
 
-A record exists as a working RO-Crate that changes, and as snapshots that do not. This section states how the two are identified and how snapshots relate to one another.
+### Entity Identifiers
 
-### RO-Crate Identifiers
+Every entity described as a separate node in `@graph` MUST have an absolute IRI as its `@id`, with three exceptions: the metadata descriptor (`ro-crate-metadata.json`); the root, and contained `File` or `Dataset` entities (their relative payload paths). A UUID URN is sufficient and need not resolve.
 
-A record has one identifier that never changes. Each RO-Crate representing it, whether the working record or a snapshot, has an identifier of its own.
+### Complete Example
 
-| Identifier | Written as | Meaning |
-|---|---|---|
-| Record identifier | `dct:isVersionOf` on the root | The record across its whole life. It is the same in every RO-Crate that represents the record. |
-| RO-Crate identifier | `identifier` on the root | This one representation of the record: the working record, or one snapshot. |
-
-Both MUST be absolute IRIs, and MUST NOT be used by their minting authority to identify anything else. Either MAY be a URI that resolves over the web. A TRE that cannot expose resolvable identifiers, such as one with no external network access, still needs stable ones; a UUID URN is sufficient.
-
-The RO-Crate identifier MUST be present when the RO-Crate is written, since a snapshot cannot be changed afterwards to add one. An RO-Crate MAY carry further identifiers, such as a persistent identifier assigned when a snapshot is later deposited somewhere; where that identifier is minted after the snapshot was frozen, it is recorded in a later snapshot rather than in the frozen one.
-
-The following approach is one way to satisfy these rules, and is not required:
-
-```
-https://tre72.example.org/activities/A123             the record
-https://tre72.example.org/activities/A123/current     the working record
-https://tre72.example.org/activities/A123/versions/1  a snapshot
-https://tre72.example.org/activities/A123/versions/2  a later snapshot
-```
-
-### Snapshots
-
-A snapshot is a complete RO-Crate. It describes everything the record described at the moment it was taken, and is not changed afterwards: a correction is made by taking a later snapshot rather than by altering an earlier one.
-
-Each snapshot after the first MUST identify the snapshot it follows, using `pav:previousVersion` pointing at that snapshot's RO-Crate identifier:
+The following is a complete, minimal conforming working record of a feasibility query executed in a TRE, with the query and its output held in the RO-Crate. It uses an absolute root `@id`, with the metadata descriptor's `about` set to the same value:
 
 ```json
 {
-  "@id": "./",
-  "@type": "Dataset",
-  "identifier": {"@id": "https://tre72.example.org/activities/A123/versions/2"},
-  "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
-  "version": "2",
-  "pav:previousVersion": {
-    "@id": "https://tre72.example.org/activities/A123/versions/1"
-  }
+  "@context": ["https://w3id.org/ro/crate/1.3/context"],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "about": {"@id": "https://tre72.example.org/activities/A123/current"},
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.3"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/current",
+      "@type": "Dataset",
+      "conformsTo": [{"@id": "https://w3id.org/5s-crate/1.0"}],
+      "identifier": {"@id": "https://tre72.example.org/activities/A123/current"},
+      "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
+      "name": "Feasibility enquiry A123 (TRE72)",
+      "description": "Cohort feasibility counts for the A123 enquiry.",
+      "dateCreated": "2027-03-13T09:00:00Z",
+      "dateModified": "2027-03-14T09:20:31Z",
+      "datePublished": "2027-03-13T09:01:00Z",
+      "license": {"@id": "https://creativecommons.org/publicdomain/zero/1.0/"},
+      "publisher": {"@id": "https://ror.org/027m9bs27"},
+      "hasPart": [{"@id": "query.sql"}, {"@id": "outputs/counts.csv"}],
+      "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0",
+      "@type": ["CreativeWork", "Profile"],
+      "name": "Five Safes RO-Crate profile",
+      "version": "1.0"
+    },
+    {
+      "@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a",
+      "@type": ["CreateAction", "prov:Activity"],
+      "name": "Execute feasibility query",
+      "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "object": {"@id": "query.sql"},
+      "result": {"@id": "outputs/counts.csv"},
+      "startTime": "2027-03-14T09:20:30Z",
+      "endTime": "2027-03-14T09:20:31Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "query.sql",
+      "@type": "File",
+      "name": "Feasibility query",
+      "encodingFormat": "application/sql"
+    },
+    {
+      "@id": "outputs/counts.csv",
+      "@type": "File",
+      "name": "Feasibility counts",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-1825-0097",
+      "@type": "Person",
+      "name": "Example analyst",
+      "affiliation": {"@id": "https://ror.org/027m9bs27"}
+    },
+    {
+      "@id": "https://ror.org/027m9bs27",
+      "@type": "Organization",
+      "name": "TRE72"
+    }
+  ]
 }
 ```
 
-The first snapshot of a record has no predecessor and omits the property.
+To publish a Snapshot, a producer copies the Working Record and changes the root: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the Snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the Snapshot was made available. If the root has an absolute `@id`, it MUST be changed to an absolute IRI identifying the Snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
+
+## Root Data Entity
+
+The root data entity describes this RO-Crate as a single representation of the Activity Record. This profile uses two identifiers: 
+
+- `identifier` is the canonical RO-Crate identifier, and specifies this particular RO-Crate representation; 
+- `dct:isVersionOf` identifies the Activity Record across all its versions.
+
+[Versioning and Snapshots](#versioning-and-snapshots) define both fully.
+
+Alongside the properties RO-Crate requires of any root, this profile requires the following:
+
+| Property | Requirement | Description |
+|---|---|---|
+| `@id` | MUST | Identifies the root data entity. The metadata descriptor's `about` MUST use exactly the same value. |
+| `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
+| `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See [Conformance and Modules](#conformance-and-modules). |
+| `identifier` | MUST, exactly one | The canonical RO-Crate identifier: an absolute IRI in `{"@id": "..."}` form not identifying a [`PropertyValue`](#record-and-ro-crate-identifiers). |
+| `dct:isVersionOf` | MUST, exactly one | The record identifier, an absolute IRI. |
+| `name` | MUST | Names the record. |
+| `description` | MUST | Describes the work the record covers. |
+| `dateCreated` | MUST, exactly one | When this representation was created. |
+| `dateModified` | MUST, exactly one if a working record has changed since creation; <br> <br> MUST NOT on a snapshot | The most recent actual change. |
+| `datePublished` | MUST, exactly one | When this representation was first published. A snapshot becomes immutable at this time. |
+| `license` | SHOULD, on a published RO-Crate | Describes the licence of the output data, either an open licence or restrictive, TRE-specific conditions of access. |
+| `publisher` | SHOULD | The `Organization` that published this representation. |
+| `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See [Representation State](#representation-state). |
+| `pav:previousVersion` | MUST, exactly one on a snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the direct predecessor. |
+| `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. |
+| `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See [Processes](#processes). |
 
 !!! note
-    `pav:previousVersion` is a subproperty of `prov:wasRevisionOf`, so a consumer that loads the Provenance, Authoring and Versioning (PAV) ontology can infer the PROV revision relationship without this profile defining one.
+    The root `@id` does not by itself determine whether an RO-Crate is Attached or Detached; those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
 
-### What Snapshots Are For
+## Assets
 
-<!-- TODO: Revisit when we complete Snapshots as Messages section -->
+Assets are the durable things processes act on, consume, produce, or follow.
 
+### Kinds of Asset
 
-A snapshot fixes what a claim was made about. A decision recorded in a record concerns the record as it stood at the time, and without a snapshot there is no fixed version for it to point at.
+An asset representing a file or dataset MUST be a data entity that is reachable from the root through `hasPart`. An abstract asset, such as a plan, an exact protocol version, or a software application, is instead a contextual entity with an absolute IRI, referenced from the processes for which it is relevant.
 
-When to take a snapshot is for whoever maintains the record to decide. This profile does not require snapshots at fixed intervals.
+| Asset | Described as |
+|---|---|
+| A file held in the RO-Crate | `File`, with its relative payload path as `@id` |
+| A directory held in the RO-Crate | `Dataset`, with its relative payload path as `@id` |
+| Data represented without its payload | `File` or `Dataset` with an absolute IRI |
+| A packaged software source file | `["File", "SoftwareSourceCode"]` |
+| An exact software version referred to by a process | `SoftwareApplication` or `SoftwareSourceCode`, with an absolute IRI |
+| An exact procedure or protocol version | `CreativeWork`, and MAY add `HowTo`, with an absolute IRI |
+| A plan for intended work | `["CreativeWork", "prov:Plan"]`, with an absolute IRI |
+| An exact trained-model version | `File`, `Dataset`, or another appropriate type |
 
-<!-- TODO: Still to be defined:
+An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version`. Software a process used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it.
 
-Three things in this area are not yet settled:
-    - How a decision refers to the snapshot it concerns. This needs a property, which will be defined alongside decisions in [Processes](#processes).
-    - What a snapshot must contain when it marks a "release". Output checking is defined in [Processes](#processes)
-    - Snapshot integrity and what happens when content must be removed from a record for legal reasons. (Provenance Crate module?) (Removing BagIt removed the checksums) - These are governance questions as much as technical ones -->
+A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern). 
 
-### Federated TRE Records
+Whilst governance determines whether a payload is included, an asset only referred to is still a first-class asset that processes name in the ordinary way.
 
+### Referencing Assets from Processes
 
-## Conformance and Modules
+A process refers to the assets it acted on with `object`, `result`, and `instrument`, and to the artefacts it referred to as evidence with `prov:used`. A file or directory held in this RO-Crate MAY be referenced directly by its relative path. 
 
-## Federation
+!!! note
+  A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
 
-## Security and Privacy
+Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. Cases include when:
 
-## Media Type and Signposting
+- it is the `object` of a `SendAction` or `ReceiveAction`;
+- it is identified by a decision, as its `object` or under `prov:used`;
+- or the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the record.
 
-## References
+Within one record sequence, a producer asserting that two descriptions concern the same exact asset and version MUST reuse the same absolute `@id`, and MUST NOT reuse that `@id` for different content or meaning.
 
-Specifications and vocabularies this profile builds on.
+### Packaged Copies of Identified Assets
 
-## Appendix A. Terms and Properties
+An asset with an absolute IRI and a copy of that asset included in the RO-Crate MUST be described as two separate entities:
 
-Every term and property used by this profile that is not plain schema.org, with its source vocabulary and definition.
+```plaintext
+outputs/count-v1.csv
+    └── encodesCreativeWork
+          └── https://tre72.example.org/activities/A123/assets/count/v1
+```
 
-## Appendix B. Changes From 0.4
+A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged directory MUST instead use `exampleOfWork`. In either case, the target MUST identify the exact asset version and MUST be typed as `CreativeWork` or one of its subtypes, such as `Dataset`. The core profile does not define an equivalent relationship for an asset that is not a CreativeWork.
+
+Moving, renaming, or encoding the same asset in another format does not by itself create a new version or asset. Therefore, multiple packaged representations can point to the same absolute IRI. `prov:wasDerivedFrom` MUST NOT be used to connect a packaged representation to the asset it encodes; it is reserved for cases in which a process produced a distinct asset from another asset.
+
+The following fragment shows an output given an absolute identity for a release decision, and an agreement version, each with a packaged copy:
+
+```json
+[
+  {
+    "@id": "https://tre72.example.org/activities/A123/assets/count/v1",
+    "@type": "Dataset",
+    "name": "Cohort count result, version 1",
+    "version": "1"
+  },
+  {
+    "@id": "outputs/count-v1.csv",
+    "@type": ["File", "DataDownload"],
+    "name": "CSV encoding of cohort count result, version 1",
+    "encodingFormat": "text/csv",
+    "encodesCreativeWork": {
+      "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
+    }
+  },
+  {
+    "@id": "https://tre72.example.org/agreements/DUA-42/versions/3",
+    "@type": "CreativeWork",
+    "name": "Data use agreement 42, version 3",
+    "version": "3"
+  },
+  {
+    "@id": "agreements/dua-v3.pdf",
+    "@type": "File",
+    "name": "PDF encoding of data use agreement 42, version 3",
+    "encodingFormat": "application/pdf",
+    "encodesCreativeWork": {
+      "@id": "https://tre72.example.org/agreements/DUA-42/versions/3"
+    }
+  }
+]
+```
+
+### Protocols
+
+A protocol is an asset that sets out how something is intended to be done; each occasion of following it is a separate process instance that records the exact protocol version with the `instrument`, referring to the absolute protocol entity. The same asset may be a protocol for one process and an ordinary input to another.
+
+### Derived Data
+
+Data produced by a process MUST be a separate asset from the data it came from, and MUST NOT be recorded as a revision of its source. 
+
+The producing process records source and product as its `object` and `result`, and where derivation was observed or attested, the derived asset SHOULD also identify its source with `prov:wasDerivedFrom`, so the relationship survives being read without the process. An RO-Crate MUST use `prov:wasDerivedFrom` only on that basis.
+
+### Software and Models
+
+A held or produced software or trained-model asset SHOULD carry `name` and `version`, and `author` where known. A model produced by a recorded process is its `result`; a model assessed or decided upon is that process's `object`. This profile does not determine whether a model may be transferred or released.

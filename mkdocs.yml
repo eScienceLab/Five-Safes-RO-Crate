@@ -3,8 +3,13 @@ site_description: An RO-Crate profile for recording and exchanging Trusted Resea
 repo_url: https://github.com/eScienceLab/Five-Safes-RO-Crate
 theme:
   name: readthedocs
+extra_css:
+  - stylesheets/extra.css
 nav:
-  - Specification: index.md
+  - Specification:
+      - index.md
+      - Authoring Modules: authoring-modules.md
+      - Quick Reference: quick-reference.md
   - Modules:
       - Cohort Discovery: modules/cohort-discovery.md
       - SafeTEXT Deidentification: modules/safetext-deidentification.md
