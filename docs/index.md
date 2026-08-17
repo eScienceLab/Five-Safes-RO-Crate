@@ -36,15 +36,15 @@ This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
 ### The TRE Activity Record
 
-A **TRE Activity Record** (“Activity Record”) is a versioned account of activity in a TRE. Each Activity Record covers one piece of work under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one Activity Record captures the whole piece of work.
+A **TRE Activity Record** ("activity record") is a versioned account of activity in a TRE. Each activity record covers one piece of work under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one activity record captures the whole piece of work.
 
-An Activity Record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. This Activity Record is represented as a **Five Safes RO-Crate**.
+An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. This activity record is represented as a **Five Safes RO-Crate**.
 
 ### Observation and Scope
 
-An Activity Record focuses on activity that was observed or attested: this is work in which a system captured the event as it happened, such as a portal logging each query, or work that a person or organisation stated happened, such as a manual output review. 
+An activity record focuses on activity that was observed or attested: this is work in which a system captured the event as it happened, such as a portal logging each query, or work that a person or organisation stated happened, such as a manual output review. 
 
-A portal may record every query, or an interactive workspace may record only the governance points around a session, with the analysis between them summarised. Both are a valid Activity Record with different scopes. 
+A portal may record every query, or an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records with different scopes. 
 
 ### Assets, Processes, Context
 
@@ -56,21 +56,21 @@ Every entity describing the governed work has one or more of three roles.
 | Processes | Things that happen: submitting a request, making a decision, running a query, checking an output. |
 | Context | People, organisations, agreements, and the TRE itself. |
 
-The same entity can have more than one role. A protocol or plan is an asset, whilst following it is a process. Derived data is a separate asset with its own history, rather than a version of the original data. If planned work never begins, the request and its refusal or withdrawal still happened and remain in the Activity Record. 
+The same entity can have more than one role. A protocol or plan is an asset, whilst following it is a process. Derived data is a separate asset with its own history, rather than a version of the original data. If planned work never begins, the request and its refusal or withdrawal still happened and remain in the activity record. 
 
 Context can be the subject of a process. For example, signing an agreement or accrediting a researcher are processes. Each context item is recorded once and referred to wherever needed.
 
 ### Working Record and Snapshots
 
-The **Working Record** reflects the current Activity Record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **Snapshot** is a fixed representation of the Working Record taken at a significant moment, and once published, it is never changed; corrections are made by taking a later Snapshot. 
+The **working record** reflects the current activity record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **snapshot** is a fixed representation of the working record taken at a significant moment, and once published, it is never changed; corrections are made by taking a later Snapshot. 
 
-The Working Record keeps one identity throughout its life, meaning "this piece of work"; each Snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A Snapshot carries a version number and, after the first, a link to its predecessor; the Working Record carries neither. Together, the Working Record and snapshots form a sequence of activity records. 
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a sequence of activity records. 
 
-This profile does not prescribe when you should take a Snapshot. However, submitting, exchanging, and closing an Activity Record are reasonable choices.
+This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
 ### Core and Modules
 
-Every Five Safes RO-Crate must follow the "core" profile outlined in this document. Additional "modules" add rules for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An Activity Record may follow the core alone or declare any combination of modules.
+Every Five Safes RO-Crate must follow the "core" profile outlined in this document. Additional "modules" add rules for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An activity record may follow the core alone or declare any combination of modules.
 
 ## Structure of a Five Safes Crate
 
@@ -194,14 +194,14 @@ The following is a complete, minimal conforming working record of a feasibility 
 }
 ```
 
-To publish a Snapshot, a producer copies the Working Record and changes the root: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the Snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the Snapshot was made available. If the root has an absolute `@id`, it MUST be changed to an absolute IRI identifying the Snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
+To publish a snapshot, a producer copies the working record and changes the root: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the root has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
 
 ## Root Data Entity
 
-The root data entity describes this RO-Crate as a single representation of the Activity Record. This profile uses two identifiers: 
+The Root Data Entity describes this RO-Crate as a single representation of the activity record. This profile uses two identifiers: 
 
 - `identifier` is the canonical RO-Crate identifier, and specifies this particular RO-Crate representation; 
-- `dct:isVersionOf` identifies the Activity Record across all its versions.
+- `dct:isVersionOf` identifies the activity record across all its versions.
 
 [Versioning and Snapshots](#versioning-and-snapshots) define both fully.
 
@@ -209,13 +209,13 @@ Alongside the properties RO-Crate requires of any root, this profile requires th
 
 | Property | Requirement | Description |
 |---|---|---|
-| `@id` | MUST | Identifies the root data entity. The metadata descriptor's `about` MUST use exactly the same value. |
+| `@id` | MUST | Identifies the Root Data Entity. The metadata descriptor's `about` MUST use exactly the same value. |
 | `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
 | `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See [Conformance and Modules](#conformance-and-modules). |
 | `identifier` | MUST, exactly one | The canonical RO-Crate identifier: an absolute IRI in `{"@id": "..."}` form not identifying a [`PropertyValue`](#record-and-ro-crate-identifiers). |
-| `dct:isVersionOf` | MUST, exactly one | The record identifier, an absolute IRI. |
-| `name` | MUST | Names the record. |
-| `description` | MUST | Describes the work the record covers. |
+| `dct:isVersionOf` | MUST, exactly one | The activity record identifier, an absolute IRI. |
+| `name` | MUST | Names the activity record. |
+| `description` | MUST | Describes the work the activity record covers. |
 | `dateCreated` | MUST, exactly one | When this representation was created. |
 | `dateModified` | MUST, exactly one if a working record has changed since creation; <br> <br> MUST NOT on a snapshot | The most recent actual change. |
 | `datePublished` | MUST, exactly one | When this representation was first published. A snapshot becomes immutable at this time. |
@@ -261,11 +261,7 @@ A process refers to the assets it acted on with `object`, `result`, and `instrum
 !!! note
   A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
 
-Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. Cases include when:
-
-- it is the `object` of a `SendAction` or `ReceiveAction`;
-- it is identified by a decision, as its `object` or under `prov:used`;
-- or the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the record.
+Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. This may be when it is the `object` of a `SendAction` or `ReceiveAction`; it is identified by a decision, as its `object` or under `prov:used`; or when the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the activity record.
 
 Within one record sequence, a producer asserting that two descriptions concern the same exact asset and version MUST reuse the same absolute `@id`, and MUST NOT reuse that `@id` for different content or meaning.
 
@@ -326,10 +322,150 @@ A protocol is an asset that sets out how something is intended to be done; each 
 
 ### Derived Data
 
-Data produced by a process MUST be a separate asset from the data it came from, and MUST NOT be recorded as a revision of its source. 
+Data produced by a process MUST be a separate asset from the data it came from, and MUST NOT be captured as a revision of its source. 
 
-The producing process records source and product as its `object` and `result`, and where derivation was observed or attested, the derived asset SHOULD also identify its source with `prov:wasDerivedFrom`, so the relationship survives being read without the process. An RO-Crate MUST use `prov:wasDerivedFrom` only on that basis.
+The producing process documents source and product as its `object` and `result`, and where derivation was observed or attested, the derived asset SHOULD also identify its source with `prov:wasDerivedFrom`, so the relationship survives being read without the process. An RO-Crate MUST use `prov:wasDerivedFrom` only on that basis.
 
 ### Software and Models
 
 A held or produced software or trained-model asset SHOULD carry `name` and `version`, and `author` where known. A model produced by a recorded process is its `result`; a model assessed or decided upon is that process's `object`. This profile does not determine whether a model may be transferred or released.
+
+## Processes
+
+Processes are the things that happen. For example, a researcher executing an SQL query on some data; software applying a deidentification protocol on free-text data; or an output checker verifying outputs during the disclosure control process. Each MUST be a [Contextual Entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html), referenced from the root's `mentions`.
+
+### Process Shape
+
+Every process MUST be an [Action](http://schema.org/Action) whose `@type` includes one of the types in [Kinds of Process](#kinds-of-process) and also `prov:Activity`.
+
+| Property | Requirement | Description |
+|---|---|---|
+| `@id` | MUST | An absolute IRI identifying this process occurrence. |
+| `@type` | MUST | See [Kinds of Process](#kinds-of-process). |
+| `agent` | MUST | The people or organisations that directly performed or operated the process, each described in the RO-Crate as a `Person` or `Organization`. |
+| `actionStatus` | MUST, exactly one | See [Status](#status); written as `{"@id": ...}`. |
+| `name` | SHOULD | What happened, in words. |
+| `object` | SHOULD | What the process acted on. A decision MUST have at least one value identifying what was decided upon. |
+| `result` | MUST; <br><br> MUST NOT | A `CreateAction` with `CompletedActionStatus` that produced an asset MUST identify it. <br><br> An anticipated, suppressed, or withheld output MUST NOT appear as `result`. |
+| `instrument` | SHOULD, where Assets actually helped perform the process | The exact protocol, software, or other Asset that helped; applicability alone does not make an Asset an instrument. |
+| `provider` | MUST, where the process was carried out within a TRE or one of its nodes | The `Organization` that provided or operated the environment or service. |
+| `prov:atLocation` | MAY | A runtime location (workspace, virtual machine), with an absolute `@id` and `@type` including `Thing` and `prov:Location`. |
+| `startTime` | SHOULD | When the process actually began; never an anticipated time. |
+| `endTime` | MUST, where `actionStatus` is `CompletedActionStatus` or `FailedActionStatus`; <br><br> MUST NOT where `ActiveActionStatus` | When the process ended. |
+| `description` | MAY | Further detail, such as the command run. |
+
+Asset references from `object`, `result`, `instrument`, and `prov:used` follow [Referencing Assets from Processes](#referencing-assets-from-processes).
+
+### Kinds of Process
+
+| Kind | Described as |
+|---|---|
+| Submitting a plan for action | `AskAction` |
+| Work intended to create an asset, such as a query execution or workflow run | `CreateAction` |
+| Work that produces no asset and has no more specific type below | `Action` |
+| A check or assessment that reaches no decision by itself | `AssessAction` |
+| A decision that permits something | `AuthorizeAction` |
+| A decision that refuses something | `RejectAction` |
+| Withdrawing a request before the work begins | `CancelAction` |
+| A change to the record or the RO-Crate as a whole | `UpdateAction` |
+| Moving something between parties | `SendAction`, `ReceiveAction` |
+
+The `@type` array MAY include further, more specific types alongside a listed type. Approval and refusal are distinguished by type. Work that intended to create an artefact, but completed without returning an asset (such as a query whose output was withheld by disclosure control) MUST keep its `CreateAction` type and `CompletedActionStatus` status, MUST record no result, and SHOULD record the outcome in description.
+
+!!! tip
+    `CreateAction` should be used for changes to a file within a dataset, with the original as `object` and the new version as `result`. `UpdateAction` should be used for changes affecting the activity record as a whole.
+
+### Requests, Plans, and Execution
+
+Intended work recorded before it begins MUST be an asset whose `@type` includes `prov:Plan` and has an absolute IRI. A plan submitted for action MUST identify the exact submitted version: a change after submission creates a new plan with a new `@id`, linked to its immediate predecessor with `pav:previousVersion`. 
+
+Submitting a plan MUST be a separate `AskAction` with exactly one object (the plan), exactly one recipient (the person or organisation asked to act, described in the RO-Crate as a `Person` or `Organization`) and `CompletedActionStatus`. 
+
+A decision on the request MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. 
+
+`CancelAction` describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above. 
+
+If the planned work begins, each execution attempt MUST be a separate `Action` with its own identity, status, and times; one plan may have any number of executions. A conforming RO-Crate SHOULD record every observed or attested execution attempt within its [scope](#observation-and-scope). A failed attempt MUST NOT be changed back to active; a retry MUST be a new `Action`.
+
+When planned work is executed, the execution MUST link to the plan through at least one `prov:qualifiedAssociation`. This is a Contextual Entity typed `prov:Association` with exactly one `prov:agent`, which is also an `agent` of the execution, and exactly one `prov:hadPlan` identifying the exact plan version. There should be one association per agent-and-plan pair.
+
+```mermaid
+flowchart LR
+    R["Request<br/>AskAction and prov:Activity"] -->|"object"| P["Submitted plan version<br/>prov:Plan"]
+    D["Decision<br/>AuthorizeAction or RejectAction<br/>and prov:Activity"] -->|"object"| P
+    C["Withdrawal<br/>CancelAction and prov:Activity"] -->|"object"| P
+    D -->|"prov:wasInformedBy"| R
+    C -->|"prov:wasInformedBy"| R
+    D -.->|"prov:used, if consulted"| S["Pre-existing snapshot<br/>artefacts as evidence"]
+    E["Execution attempt<br/>Action and prov:Activity<br/>0..* per plan"] -->|"prov:qualifiedAssociation"| A["Association<br/>prov:Association"]
+    A -->|"prov:hadPlan"| P
+    A -->|"prov:agent"| G["Performer<br/>Person or Organization"]
+```
+
+In the diagram above, the request, decision, withdrawal, and execution are independent claims. Note that the arrows are properties recorded in the metadata and do not imply that all the processes shown occurred.
+
+The following fragment describes a submitted plan, its request, and one execution linked to the plan through an association. The decision answering this request is shown under [Decisions and Snapshots](#decisions-and-snapshots); the person and organisation entities are omitted:
+
+```json
+[
+  {
+    "@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b",
+    "@type": ["CreativeWork", "prov:Plan"],
+    "name": "Analysis plan for enquiry A123"
+  },
+  {
+    "@id": "https://tre72.example.org/activities/A123/requests/enquiry-3f2b",
+    "@type": ["AskAction", "prov:Activity"],
+    "name": "Submit analysis plan",
+    "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "object": {
+      "@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b"
+    },
+    "recipient": {"@id": "https://ror.org/027m9bs27"},
+    "endTime": "2027-03-13T15:00:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://tre72.example.org/activities/A123/runs/run-1",
+    "@type": ["CreateAction", "prov:Activity"],
+    "name": "Execute approved analysis",
+    "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "prov:qualifiedAssociation": {
+      "@id": "urn:uuid:d0f1c2b3-4a5e-4f60-9b7c-8d9e0f1a2b3c"
+    },
+    "result": {"@id": "outputs/analysis-report.html"},
+    "startTime": "2027-03-14T10:00:00Z",
+    "endTime": "2027-03-14T11:30:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "urn:uuid:d0f1c2b3-4a5e-4f60-9b7c-8d9e0f1a2b3c",
+    "@type": "prov:Association",
+    "prov:agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+    "prov:hadPlan": {
+      "@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b"
+    }
+  }
+]
+```
+
+### Status
+
+| Value | Meaning |
+|---|---|
+| `ActiveActionStatus` | The process has begun and is still running. |
+| `CompletedActionStatus` | The process finished. |
+| `FailedActionStatus` | The process began but did not finish successfully. |
+
+Every process MUST have exactly one value from the table above. A completed or failed process MUST carry `endTime`, an active one MUST NOT, and a process keeps its `@id` as it moves from active to completed or failed. 
+
+!!! warning
+    `PotentialActionStatus` MUST NOT be used: a submitted request is a completed `AskAction`, and refusal and withdrawal are completed `RejectAction` and `CancelAction` processes. An execution Action appears only if work begins.
+
+### Who Performed a Process
+
+The `agent` of a process is the person or organisation that directly performed or operated it, as observed or attested in the activity record. A role, account, or pool of people MUST NOT be used as the `agent`. The organisation that provided the environment is the `provider`, whether or not it is also an `agent`. 
+
+Where an automated step is attributed to an operating organisation, `agent` identifies the organisation and the `instrument` (the software).
