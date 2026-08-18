@@ -259,7 +259,7 @@ Whilst governance determines whether a payload is included, an asset only referr
 A process refers to the assets it acted on with `object`, `result`, and `instrument`, and to the artefacts it referred to as evidence with `prov:used`. A file or directory held in this RO-Crate MAY be referenced directly by its relative path. 
 
 !!! note
-  A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
+    A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
 
 Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. This may be when it is the `object` of a `SendAction` or `ReceiveAction`; it is identified by a decision, as its `object` or under `prov:used`; or when the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the activity record.
 
@@ -469,3 +469,23 @@ Every process MUST have exactly one value from the table above. A completed or f
 The `agent` of a process is the person or organisation that directly performed or operated it, as observed or attested in the activity record. A role, account, or pool of people MUST NOT be used as the `agent`. The organisation that provided the environment is the `provider`, whether or not it is also an `agent`. 
 
 Where an automated step is attributed to an operating organisation, `agent` identifies the organisation and the `instrument` (the software).
+
+### Exchange Processes
+
+An exchange records the transfer of one or more exact assets, such as a dataset, an approved output, or a snapshot, from one `Person` or `Organisation` to another. For example, during a federated analysis, one node may send an intermediate result to another node for the next stage of processing.
+
+An exchange process MUST be typed as a `SendAction` or `ReceiveAction`. Each observed or attested dispatch of an asset is a `SendAction`, and each observed or attested delivery is a separate `ReceiveAction`. 
+
+!!! warning
+    Recording either process does not establish that the other occurred, and either MAY therefore appear alone. For example, a sender may know that an asset was sent, without knowing whether delivery was successful.
+
+| Process | Additional requirements |
+|---|---|
+| `SendAction` | <ul> <li> `object` MUST identify one or more exact assets dispatched; </li> <li> `recipient` MUST identify exactly one receiving party, described in the RO-Crate as a `Person` or `Organization`; </li> <li> Dispatches to different recipients MUST be represented with a separate `SendAction`, even when they concern the same assets. </li> </ul>|
+| `ReceiveAction` | <ul> <li> `object` MUST identify one or more exact assets received; </li> <li> `sender` MUST identify exactly one sending party, described in the RO-Crate as a `Person` or `Organization`. </li> </ul> |
+
+Each `object` MUST [identify an exact asset using an absolute IRI](#referencing-assets-from-processes), and an exchange Action MAY have several `object` values only when the assets were transferred as part of the same occurrence. 
+
+The Action’s `actionStatus`, `startTime`, and `endTime` apply to every listed asset. Assets transferred in different occurrences, to or from different senders and recipients, with different statuses, or at different recorded times MUST be represented by separate Actions.
+
+`SendAction` and `ReceiveAction` describe asset transfers. If preparing an export for sending or unpacking a delivery upon receipt produces a new asset, that production MUST be recorded as a separate `CreateAction`.
