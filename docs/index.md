@@ -275,6 +275,9 @@ outputs/count-v1.csv
           └── https://tre72.example.org/activities/A123/assets/count/v1
 ```
 
+!!! tip "Why are there separate entities?"
+    The absolute IRI identifies the asset independently of the RO-Crate. The relative path identifies the copy carried inside this particular RO-Crate. For example, `https://example.org/reports/17` identifies a report, whilst `files/report.pdf` identifies the PDF copy included in the RO-Crate. Keeping these separate allows the same asset to be packaged at different paths or in different formats without incorrectly treating each copy as a new asset version.
+
 A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged directory MUST instead use `exampleOfWork`. In either case, the target MUST identify the exact asset version and MUST be typed as `CreativeWork` or one of its subtypes, such as `Dataset`. The core profile does not define an equivalent relationship for an asset that is not a CreativeWork.
 
 Moving, renaming, or encoding the same asset in another format does not by itself create a new version or asset. Therefore, multiple packaged representations can point to the same absolute IRI. `prov:wasDerivedFrom` MUST NOT be used to connect a packaged representation to the asset it encodes; it is reserved for cases in which a process produced a distinct asset from another asset.
@@ -648,3 +651,75 @@ The following fragment attributes an assessment to an anonymous output checker:
   }
 ]
 ```
+
+### The TRE and its Nodes
+
+A TRE node is a participating organisational unit. A process identifies the node that provided or operated its environment using `provider`. `prov:atLocation` identifies the specific workspace or virtual machine where the process ran, whilst `instrument` identifies the software used to perform the process:
+
+```json
+[
+  {
+    "@id": "urn:uuid:00000000-0000-4000-8000-000000000001",
+    "@type": ["Action", "prov:Activity"],
+    "name": "Interactive analysis session",
+    "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+    "provider": {"@id": "https://example.org/tre/node-a"},
+    "prov:atLocation": {"@id": "urn:uuid:00000000-0000-4000-8000-000000000002"},
+    "instrument": {"@id": "https://example.org/software/jupyterlab-4.2"},
+    "startTime": "2027-03-14T09:00:00Z",
+    "actionStatus": {"@id": "http://schema.org/ActiveActionStatus"}
+  },
+  {
+    "@id": "urn:uuid:00000000-0000-4000-8000-000000000002",
+    "@type": ["Thing", "prov:Location"],
+    "name": "Analysis workspace 7"
+  },
+  {
+    "@id": "https://example.org/software/jupyterlab-4.2",
+    "@type": "SoftwareApplication",
+    "name": "JupyterLab",
+    "version": "4.2"
+  }
+]
+```
+
+### Agreements and Policies
+
+An exact agreement or policy version is a `CreativeWork` with an absolute `@id`, and is both an asset and context. A copy held in the RO-Crate is a separate `File` linked with `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)). An agreement that helped the agent perform a process MAY be its `instrument`; one a process actually used as evidence MAY appear under `prov:used`. Neither property means merely that the agreement applied to or authorised the activity.
+
+Where the kind of agreement matters, it SHOULD be given with `additionalType` referring to a published term.
+
+!!! tip
+    The [Data Privacy Vocabulary](https://w3id.org/dpv) covers many kinds of agreements. For example `https://w3id.org/dpv#DataProcessingAgreement` for processing terms between organisations, or `https://w3id.org/dpv#StatisticalConfidentialityAgreement` for disclosure-control.
+
+### Credentials
+
+Training and qualifications relevant to access are `EducationalOccupationalCredential `entities referenced from the person with `hasCredential`. This identifies the exact credential awarded to that person.
+
+When the credential has exactly one continuous validity period with the start and endpoints known, it SHOULD carry exactly one `dct:valid` value as a closed interval in `start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones, and the start not later than the end. 
+
+A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or endpoints is known. 
+
+!!! note
+    An interval with a start and endpoint is the only form that can establish validity at a time.
+
+```json
+[
+  {
+    "@id": "urn:uuid:79c330fe-2e70-4b0a-917b-c5f6b9cf6521",
+    "@type": "Person",
+    "hasCredential": {
+      "@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0"
+    }
+  },
+  {
+    "@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0",
+    "@type": "EducationalOccupationalCredential",
+    "name": "TRE researcher accreditation",
+    "dct:valid": "2027-01-01/2027-12-31"
+  }
+]
+```
+
+!!! warning
+    `hasCredential` and `EducationalOccupationalCredential` are newer `schema.org` terms and may change with implementation feedback and adoption.
