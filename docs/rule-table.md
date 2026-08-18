@@ -16,5 +16,5 @@
 | `publisher` | SHOULD | The `Organization` that published this representation. | | |
 | `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See [Representation State](https://github.com/eScienceLab/Five-Safes-RO-Crate/blob/1.0/docs/index.md#representation-state). | | |
 | `pav:previousVersion` | MUST, exactly one on a snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the direct predecessor. | | |
-| `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. | | |
+| `hasPart` | MUST | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. | The RO-Crate holds or refers to [data entities](https://www.researchobject.org/ro-crate/specification/1.2/data-entities) | |
 | `mentions` | MUST | References the processes recorded in this RO-Crate. | The `@graph` contains entities representing [processes](https://github.com/eScienceLab/Five-Safes-RO-Crate/blob/1.0/docs/index.md#processes) | |
