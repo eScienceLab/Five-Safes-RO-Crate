@@ -370,7 +370,14 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 | A change to the record or the RO-Crate as a whole | `UpdateAction` |
 | Moving something between parties | `SendAction`, `ReceiveAction` |
 
-The `@type` array MAY include further, more specific types alongside a listed type. Approval and refusal are distinguished by type. Work that intended to create an artefact, but completed without returning an asset (such as a query whose output was withheld by disclosure control) MUST keep its `CreateAction` type and `CompletedActionStatus` status, MUST record no result, and SHOULD record the outcome in description.
+
+The `@type` array MAY include further, more specific types alongside a listed type.
+
+An `AssessAction` records a check or assessment but does not itself assert permission or refusal, and any such decision MUST be recorded as a separate `AuthorizeAction` or `RejectAction`; the outcome is distinguished by that type.
+
+A process MAY carry `additionalType`, referring to the exact IRI of a published term for a more specific kind of process. If the term comes from another vocabulary, its exact published IRI MUST be used and its published meaning MUST NOT be changed. A module MAY define or require terms for the processes it covers.
+
+Work that intended to create an artefact but completed without returning one MUST keep its `CreateAction` type and `CompletedActionStatus`, MUST NOT record a `result`, and SHOULD explain the outcome in `description`.
 
 !!! tip
     `CreateAction` should be used for changes to a file within a dataset, with the original as `object` and the new version as `result`. `UpdateAction` should be used for changes affecting the activity record as a whole.
@@ -404,7 +411,7 @@ flowchart LR
 
 In the diagram above, the request, decision, withdrawal, and execution are independent claims. Note that the arrows are properties recorded in the metadata and do not imply that all the processes shown occurred.
 
-The following fragment describes a submitted plan, its request, and one execution linked to the plan through an association. The decision answering this request is shown under [Decisions and Snapshots](#decisions-and-snapshots); the person and organisation entities are omitted:
+The following fragment describes a submitted plan, its request, and one execution linked to the plan through an association. The decision answering this request is shown under [Decision Subjects and Evidence](#decision-subjects-and-evidence); the person and organisation entities are omitted:
 
 ```json
 [
@@ -548,6 +555,52 @@ The two Actions MAY share an `object` IRI where they concern the same asset and 
     "@id": "https://tre-b.example.org/node",
     "@type": "Organization",
     "name": "TRE node B"
+  }
+]
+```
+
+### Decision Subjects and Evidence
+
+The subject of a decision, the request it answers, and the evidence it used are different relationships.
+
+| Property | Meaning |
+|---|---|
+| `object` | What was decided upon. Every decision MUST have at least one. |
+| `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered. |
+| `prov:used` | Evidence the decision activity actually used. |
+
+An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the exact submitted plan version) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
+
+A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that merely existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced under [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern) and MUST already have been published when the decision ended: where both values are timezone-qualified times from a known common or synchronised clock, the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. A module MAY require decisions of a kind it defines to identify pre-existing snapshots.
+
+The following fragment records an approval that used snapshot version 1 as evidence; the containing root also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
+
+```json
+[
+  {
+    "@id": "https://tre72.example.org/activities/A123/decisions/signoff-9c14",
+    "@type": ["AuthorizeAction", "prov:Activity"],
+    "name": "Enquiry approved for the two participating sites",
+    "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "object": {"@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b"},
+    "prov:wasInformedBy": {
+      "@id": "https://tre72.example.org/activities/A123/requests/enquiry-3f2b"
+    },
+    "prov:used": {
+      "@id": "https://tre72.example.org/activities/A123/versions/1"
+    },
+    "endTime": "2027-03-13T16:40:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://tre72.example.org/activities/A123/versions/1",
+    "@type": "Dataset",
+    "name": "Submission snapshot for enquiry A123",
+    "version": 1,
+    "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
+    "datePublished": "2027-03-13T16:00:00Z",
+    "conformsTo": {"@id": "https://w3id.org/ro/crate"}
   }
 ]
 ```
