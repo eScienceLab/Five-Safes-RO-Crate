@@ -489,3 +489,65 @@ Each `object` MUST [identify an exact asset using an absolute IRI](#referencing-
 The Action’s `actionStatus`, `startTime`, and `endTime` apply to every listed asset. Assets transferred in different occurrences, to or from different senders and recipients, with different statuses, or at different recorded times MUST be represented by separate Actions.
 
 `SendAction` and `ReceiveAction` describe asset transfers. If preparing an export for sending or unpacking a delivery upon receipt produces a new asset, that production MUST be recorded as a separate `CreateAction`.
+
+#### Transferred Snapshots
+
+An exchange's `object` identifies a snapshot only where the complete snapshot RO-Crate was itself transferred. By the end of a completed exchange the transferred asset MUST satisfy the [snapshot requirements](#snapshot-requirements) and [have been published](#representation-dates) (that is, made available as an immutable RO-Crate); first publication may occur during the exchange. 
+
+The snapshot's `datePublished` MUST NOT be later than the exchange's `endTime`, and the transferred snapshot's canonical identifier MUST NOT equal that of the RO-Crate describing the exchange. A later snapshot that records the exchange MUST NOT be identified as its `object`.
+
+#### Correlating Dispatch and Receipt
+
+Where the RO-Crate asserts that a receipt resulted from a particular dispatch, the `ReceiveAction` MUST identify that exact `SendAction` with `prov:wasInformedBy`, as an absolute IRI; the `SendAction` does not need to be described in the same RO-Crate. The link MUST be asserted only where the causal relationship was observed or attested, and a missing counterpart MUST NOT be inferred.
+
+The two Actions MAY share an `object` IRI where they concern the same asset and version; where the received copy is treated as distinct and derivation was observed or attested, it SHOULD identify the sent asset with `prov:wasDerivedFrom`. The `SendAction`’s `startTime` MUST NOT be later than the `ReceiveAction`’s `endTime`.
+
+!!! warning "Time Zones"
+    Care should be taken with `startTime` and `endTime` across systems, particularly in federated environments. Services may record times in their local time, which may make `startTime` and `endTime` appear out of sequence.
+
+```json
+[
+  {
+    "@id": "https://tre-a.example.org/records/R/actions/send-output-17",
+    "@type": ["SendAction", "prov:Activity"],
+    "name": "TRE node A sent output 17 to TRE node B",
+    "agent": {"@id": "https://tre-a.example.org/node"},
+    "provider": {"@id": "https://tre-a.example.org/node"},
+    "recipient": {"@id": "https://tre-b.example.org/node"},
+    "object": {"@id": "https://tre-a.example.org/records/R/assets/output-17"},
+    "startTime": "2027-04-06T14:00:00Z",
+    "endTime": "2027-04-06T14:00:05Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://tre-b.example.org/records/R/actions/receive-output-17",
+    "@type": ["ReceiveAction", "prov:Activity"],
+    "name": "TRE node B received output 17 from TRE node A",
+    "agent": {"@id": "https://tre-b.example.org/node"},
+    "provider": {"@id": "https://tre-b.example.org/node"},
+    "sender": {"@id": "https://tre-a.example.org/node"},
+    "object": {"@id": "https://tre-a.example.org/records/R/assets/output-17"},
+    "prov:wasInformedBy": {
+      "@id": "https://tre-a.example.org/records/R/actions/send-output-17"
+    },
+    "startTime": "2027-04-06T14:00:04Z",
+    "endTime": "2027-04-06T14:00:06Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://tre-a.example.org/records/R/assets/output-17",
+    "@type": "Dataset",
+    "name": "Checked output 17"
+  },
+  {
+    "@id": "https://tre-a.example.org/node",
+    "@type": "Organization",
+    "name": "TRE node A"
+  },
+  {
+    "@id": "https://tre-b.example.org/node",
+    "@type": "Organization",
+    "name": "TRE node B"
+  }
+]
+```
