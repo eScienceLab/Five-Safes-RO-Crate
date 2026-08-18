@@ -64,7 +64,7 @@ Context can be the subject of a process. For example, signing an agreement or ac
 
 The **working record** reflects the current activity record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **snapshot** is a fixed representation of the working record taken at a significant moment, and once published, it is never changed; corrections are made by taking a later Snapshot. 
 
-The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a sequence of activity records. 
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a record sequence. 
 
 This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
@@ -263,7 +263,7 @@ A process refers to the assets it acted on with `object`, `result`, and `instrum
 
 Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. This may be when it is the `object` of a `SendAction` or `ReceiveAction`; it is identified by a decision, as its `object` or under `prov:used`; or when the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the activity record.
 
-Within one record sequence, a producer asserting that two descriptions concern the same exact asset and version MUST reuse the same absolute `@id`, and MUST NOT reuse that `@id` for different content or meaning.
+Reuse of an absolute `@id` across descriptions and representations follows [Identity Across Representations](#identity-across-representations): one IRI names one exact asset and version throughout a record sequence.
 
 ### Packaged Copies of Identified Assets
 
@@ -348,7 +348,7 @@ Every process MUST be an [Action](http://schema.org/Action) whose `@type` includ
 | `object` | SHOULD | What the process acted on. A decision MUST have at least one value identifying what was decided upon. |
 | `result` | MUST; <br><br> MUST NOT | A `CreateAction` with `CompletedActionStatus` that produced an asset MUST identify it. <br><br> An anticipated, suppressed, or withheld output MUST NOT appear as `result`. |
 | `instrument` | SHOULD, where Assets actually helped perform the process | The exact protocol, software, or other Asset that helped; applicability alone does not make an Asset an instrument. |
-| `provider` | MUST, where the process was carried out within a TRE or one of its nodes | The `Organization` that provided or operated the environment or service. |
+| `provider` | MUST, where the process was carried out within a TRE [or one of its nodes](#the-tre-and-its-nodes) | The `Organization` that provided or operated the environment or service. |
 | `prov:atLocation` | MAY | A runtime location (workspace, virtual machine), with an absolute `@id` and `@type` including `Thing` and `prov:Location`. |
 | `startTime` | SHOULD | When the process actually began; never an anticipated time. |
 | `endTime` | MUST, where `actionStatus` is `CompletedActionStatus` or `FailedActionStatus`; <br><br> MUST NOT where `ActiveActionStatus` | When the process ended. |
@@ -601,6 +601,50 @@ The following fragment records an approval that used snapshot version 1 as evide
     "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
     "datePublished": "2027-03-13T16:00:00Z",
     "conformsTo": {"@id": "https://w3id.org/ro/crate"}
+  }
+]
+```
+
+## Context
+
+Context records who was involved, where, and under what authority.
+
+### People and Organisations
+
+A person is a `Person`; an organisation, including a TRE or one of its nodes, is an `Organization`. Each MUST have an absolute IRI as its `@id` identifying the person or organisation described. This should be an external persistent identifier such as an ORCID iD or ROR identifier where appropriate, or a stable opaque IRI such as a UUID URN. The `@id` does not need to resolve or expose a public identifier, and an opaque `Person` identifier still denotes one specific person.
+
+The `@id` MUST NOT denote a role, account, pool of people, or unidentified performer, and a parent organisation’s ROR MUST NOT be used for a distinct TRE, node, or department.
+
+Identity of a person or organisation across representations follows [Identity Across Representations](#identity-across-representations). Independent producers (such as services in federated nodes) may assign different opaque IRIs to the same real-world entity; opaque entities remain separate unless their identity is attested. 
+
+!!! warning
+    Across a federation, the same person or organisation may appear under a different opaque IRI in each node's activity record. Duplicate entities in an
+    aggregated view are therefore expected and should be merged only where identity is attested. Where cross-node identity matters and a public identifier is appropriate, use an external persistent identifier such as an ORCID iD or ROR identifier.
+
+A `Person` MAY carry `affiliation`, referencing the exact `Organization` described in the RO-Crate. An external Web URL whose reference page unambiguously indicates the entity's identity MAY be recorded with `sameAs`; other external identifiers MAY be given under `identifier` as `PropertyValue` entities ([Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers)).
+
+The following fragment attributes an assessment to an anonymous output checker:
+
+```json
+[
+  {
+    "@id": "urn:uuid:0ab2bde1-6979-4bd0-b187-22e56c24ba6a",
+    "@type": ["AssessAction", "prov:Activity"],
+    "name": "Review submitted material",
+    "agent": {"@id": "urn:uuid:79c330fe-2e70-4b0a-917b-c5f6b9cf6521"},
+    "provider": {"@id": "https://example.org/tre/node-a"},
+    "endTime": "2027-03-14T10:30:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "urn:uuid:79c330fe-2e70-4b0a-917b-c5f6b9cf6521",
+    "@type": "Person",
+    "name": "Checker 17"
+  },
+  {
+    "@id": "https://example.org/tre/node-a",
+    "@type": "Organization",
+    "name": "TRE node A"
   }
 ]
 ```
