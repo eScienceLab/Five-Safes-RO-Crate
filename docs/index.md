@@ -624,7 +624,7 @@ Identity of a person or organisation across representations follows [Identity Ac
     Across a federation, the same person or organisation may appear under a different opaque IRI in each node's activity record. Duplicate entities in an
     aggregated view are therefore expected and should be merged only where identity is attested. Where cross-node identity matters and a public identifier is appropriate, use an external persistent identifier such as an ORCID iD or ROR identifier.
 
-A `Person` MAY carry `affiliation`, referencing the exact `Organization` described in the RO-Crate. An external Web URL whose reference page unambiguously indicates the entity's identity MAY be recorded with `sameAs`; other external identifiers MAY be given under `identifier` as `PropertyValue` entities ([Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers)).
+A `Person` MAY carry `affiliation`, referencing the exact `Organization` described in the RO-Crate. An external Web URL whose reference page unambiguously indicates the entity's identity MAY be recorded with `sameAs`; other external identifiers MAY be given under `identifier` as `PropertyValue` entities (see: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers)).
 
 The following fragment attributes an assessment to an anonymous output checker:
 
@@ -723,3 +723,28 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
 
 !!! warning
     `hasCredential` and `EducationalOccupationalCredential` are newer `schema.org` terms and may change with implementation feedback and adoption.
+
+## Versioning and Snapshots
+
+An activity record exists as a working RO-Crate that changes, and as snapshots that do not.
+
+### Record and RO-Crate Identifiers
+
+| Identifier | Written as | Meaning |
+|---|---|---|
+| Record identifier | `dct:isVersionOf` on the root | The activity record across its whole life; the same in every representation. |
+| Canonical RO-Crate identifier | `identifier` on the root | This one representation: the working record, or one snapshot. |
+
+The root MUST have exactly one `identifier` value in `{"@id": "..."}` form whose IRI is absolute and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either MAY resolve on the web, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
+
+| Example IRI | Describes | Appears as |
+|---|---|---|
+| `https://tre72.example.org/activities/A123` | The activity record | `dct:isVersionOf` on every representation |
+| `https://tre72.example.org/activities/A123/current` | The working record | `identifier` on the working record |
+| `https://tre72.example.org/activities/A123/versions/1` | A snapshot | `identifier` on that snapshot |
+| `https://tre72.example.org/activities/A123/versions/2` | A later snapshot | `identifier` on that snapshot |
+
+!!! tip
+    To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each root, and not against the root's `@id`.  Matching on `@id` can seem to work when roots carry absolute IRIs, but it breaks on a `./` root.
+
+The root MAY carry other identifiers the record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. A frozen snapshot MUST NOT be changed to add an identifier assigned later; a later RO-Crate MAY record it as describing the earlier snapshot.
