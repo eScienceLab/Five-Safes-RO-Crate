@@ -117,11 +117,11 @@ A module MAY require an additional context and further vocabularies; the rules f
 
 ### Entity Identifiers
 
-Every entity described as a separate node in `@graph` MUST have an absolute IRI as its `@id`, with three exceptions: the metadata descriptor (`ro-crate-metadata.json`); the root, and contained `File` or `Dataset` entities (their relative payload paths). A UUID URN is sufficient and need not resolve.
+Every entity described as a separate node in `@graph` MUST have an absolute IRI as its `@id`, with three exceptions: the metadata descriptor (`ro-crate-metadata.json`); the Root Data Entity, and contained `File` or `Dataset` entities (their relative payload paths). A UUID URN is sufficient and need not resolve.
 
 ### Complete Example
 
-The following is a complete, minimal conforming working record of a feasibility query executed in a TRE, with the query and its output held in the RO-Crate. It uses an absolute root `@id`, with the metadata descriptor's `about` set to the same value:
+The following is a complete, minimal conforming working record of a feasibility query executed in a TRE, with the query and its output held in the RO-Crate. It uses an absolute `@id` on the Root Data Entity, with the metadata descriptor's `about` set to the same value:
 
 ```json
 {
@@ -194,7 +194,7 @@ The following is a complete, minimal conforming working record of a feasibility 
 }
 ```
 
-To publish a snapshot, a producer copies the working record and changes the root: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the root has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
+To publish a snapshot, a producer copies the working record and changes the Root Data Entity: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
 
 ## Root Data Entity
 
@@ -205,7 +205,7 @@ The Root Data Entity describes this RO-Crate as a single representation of the a
 
 [Versioning and Snapshots](#versioning-and-snapshots) define both fully.
 
-Alongside the properties RO-Crate requires of any root, this profile requires the following:
+Alongside the properties RO-Crate requires of any Root Data Entity, this profile requires the following:
 
 | Property | Requirement | Description |
 |---|---|---|
@@ -223,11 +223,11 @@ Alongside the properties RO-Crate requires of any root, this profile requires th
 | `publisher` | SHOULD | The `Organization` that published this representation. |
 | `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See [Representation State](#representation-state). |
 | `pav:previousVersion` | MUST, exactly one on a snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the direct predecessor. |
-| `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the root through `hasPart`, directly or through nested `Dataset` entities. |
+| `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the Root Data Entity through `hasPart`, directly or through nested `Dataset` entities. |
 | `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See [Processes](#processes). |
 
 !!! note
-    The root `@id` does not by itself determine whether an RO-Crate is Attached or Detached; those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
+    The Root Data Entity's `@id` does not by itself determine whether an RO-Crate is Attached or Detached; those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
 
 ## Assets
 
@@ -235,7 +235,7 @@ Assets are the durable things processes act on, consume, produce, or follow.
 
 ### Kinds of Asset
 
-An asset representing a file or dataset MUST be a data entity that is reachable from the root through `hasPart`. An abstract asset, such as a plan, an exact protocol version, or a software application, is instead a contextual entity with an absolute IRI, referenced from the processes for which it is relevant.
+An asset representing a file or dataset MUST be a data entity that is reachable from the Root Data Entity through `hasPart`. An abstract asset, such as a plan, an exact protocol version, or a software application, is instead a contextual entity with an absolute IRI, referenced from the processes for which it is relevant.
 
 | Asset | Described as |
 |---|---|
@@ -248,7 +248,7 @@ An asset representing a file or dataset MUST be a data entity that is reachable 
 | A plan for intended work | `["CreativeWork", "prov:Plan"]`, with an absolute IRI |
 | An exact trained-model version | `File`, `Dataset`, or another appropriate type |
 
-An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version`. Software a process used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it.
+An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version` as text, using the label the asset already has. Software a process used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it.
 
 A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern). 
 
@@ -335,7 +335,7 @@ A held or produced software or trained-model asset SHOULD carry `name` and `vers
 
 ## Processes
 
-Processes are the things that happen. For example, a researcher executing an SQL query on some data; software applying a deidentification protocol on free-text data; or an output checker verifying outputs during the disclosure control process. Each MUST be a [Contextual Entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html), referenced from the root's `mentions`.
+Processes are the things that happen. For example, a researcher executing an SQL query on some data; software applying a deidentification protocol on free-text data; or an output checker verifying outputs during the disclosure control process. Each MUST be a [Contextual Entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html), referenced from the Root Data Entity's `mentions`.
 
 ### Process Shape
 
@@ -576,7 +576,7 @@ An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactl
 
 A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that merely existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced under [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern) and MUST already have been published when the decision ended: where both values are timezone-qualified times from a known common or synchronised clock, the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. A module MAY require decisions of a kind it defines to identify pre-existing snapshots.
 
-The following fragment records an approval that used snapshot version 1 as evidence; the containing root also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
+The following fragment records an approval that used snapshot version 1 as evidence; the containing Root Data Entity also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
 
 ```json
 [
@@ -732,10 +732,13 @@ An activity record exists as a working RO-Crate that changes, and as snapshots t
 
 | Identifier | Written as | Meaning |
 |---|---|---|
-| Record identifier | `dct:isVersionOf` on the root | The activity record across its whole life; the same in every representation. |
-| Canonical RO-Crate identifier | `identifier` on the root | This one representation: the working record, or one snapshot. |
+| Canonical RO-Crate identifier | `identifier` on the Root Data Entity | This one representation: the working record, or one snapshot. |
+| Activity record identifier | `dct:isVersionOf` on the Root Data Entity | The activity record across its whole life; the same in every representation. |
 
-The root MUST have exactly one `identifier` value in `{"@id": "..."}` form whose IRI is absolute and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either MAY resolve on the web, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
+!!! tip
+    This is similar to Zenodo’s approach, in which a version DOI identifies one exact deposit, and a concept DOI identifies the work more generally, and is shared for every version. This profile specifies `identifier` to point to one RO-Crate, which may be the working record, or a snapshot; `dct:isVersionOf` is comparable to Zenodo’s concept DOI. 
+
+The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}` form whose IRI is absolute and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either may resolve, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
 
 | Example IRI | Describes | Appears as |
 |---|---|---|
@@ -745,6 +748,25 @@ The root MUST have exactly one `identifier` value in `{"@id": "..."}` form whose
 | `https://tre72.example.org/activities/A123/versions/2` | A later snapshot | `identifier` on that snapshot |
 
 !!! tip
-    To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each root, and not against the root's `@id`.  Matching on `@id` can seem to work when roots carry absolute IRIs, but it breaks on a `./` root.
+    To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each Root Data Entity, and not against its `@id`.  Matching on `@id` can seem to work when Root Data Entities carry absolute IRIs, but it breaks when the `@id` is `./`.
 
-The root MAY carry other identifiers the record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. A frozen snapshot MUST NOT be changed to add an identifier assigned later; a later RO-Crate MAY record it as describing the earlier snapshot.
+The Root Data Entity MAY carry other identifiers the record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. A snapshot MUST NOT be changed to add an identifier assigned later; a later RO-Crate MAY record it as describing the earlier snapshot.
+
+### Representation State
+
+The Root Data Entity’s `version` identifies the RO-Crate’s state. Only the following combinations conform:
+
+| Representation | `version` | `pav:previousVersion` |
+|---|---|---|
+| Working record | MUST NOT be present | MUST NOT be present |
+| First snapshot | MUST be the JSON integer `1` | MUST NOT be present |
+| Later snapshot | MUST be a JSON integer greater than `1` | MUST have exactly one absolute IRI value |
+
+Across one activity record, each snapshot MUST have a different positive integer as its `version`. Every snapshot MUST have the same `dct:isVersionOf`. A later snapshot’s `version` MUST be greater than its direct predecessor’s, but does not need to be exactly one greater. Note that `pav:previousVersion` identifies the predecessor, rather than the version number. This specification defines one linear sequence, and a snapshot MUST NOT be the direct predecessor of more than one snapshot of the same record, and branch or merge histories do not conform.
+
+If a snapshot has been imported and the imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
+
+On the Root Data Entity, `version` is the integer ordinal this profile assigns. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern)). Anywhere else, `version` is ordinary text, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
+
+!!! note "Why integers?"
+    JSON parsers read `1.10` as `1.1`, and versions as text would instead require this profile to prescribe how strings such as `"1.10"` and `"1.9"` are ordered. A snapshot's version is an ordinal, not a measure of how much changed. A parallel is Zenodo's deposit versions, which only determine which state is later. 
