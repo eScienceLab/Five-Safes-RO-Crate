@@ -62,15 +62,15 @@ Context can be the subject of a process. For example, signing an agreement or ac
 
 ### Working Record and Snapshots
 
-The **working record** reflects the current activity record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **snapshot** is a fixed representation of the working record taken at a significant moment, and once published, it is never changed; corrections are made by taking a later Snapshot. 
+The **working record** reflects the current activity record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **snapshot** is a fixed copy of the working record taken at a significant moment, and once published, it is never changed. 
 
-The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a record sequence. 
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a record sequence; each is a **representation** of the activity record. 
 
 This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
 ### Core and Modules
 
-Every Five Safes RO-Crate must follow the "core" profile outlined in this document. Additional "modules" add rules for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An activity record may follow the core alone or declare any combination of modules.
+Every Five Safes RO-Crate must follow the **core** profile outlined in this document. Additional **modules** add specifications for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An activity record may follow the core alone or declare any combination of modules.
 
 ## Structure of a Five Safes Crate
 
@@ -211,20 +211,20 @@ Alongside the properties RO-Crate requires of any Root Data Entity, this profile
 |---|---|---|
 | `@id` | MUST | Identifies the Root Data Entity. The metadata descriptor's `about` MUST use exactly the same value. |
 | `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
-| `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See [Conformance and Modules](#conformance-and-modules). |
+| `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See: [Conformance and Modules](#conformance-and-modules). |
 | `identifier` | MUST, exactly one | The canonical RO-Crate identifier: an absolute IRI in `{"@id": "..."}` form not identifying a [`PropertyValue`](#record-and-ro-crate-identifiers). |
 | `dct:isVersionOf` | MUST, exactly one | The activity record identifier, an absolute IRI. |
 | `name` | MUST | Names the activity record. |
 | `description` | MUST | Describes the work the activity record covers. |
 | `dateCreated` | MUST, exactly one | When this representation was created. |
 | `dateModified` | MUST, exactly one if a working record has changed since creation; <br> <br> MUST NOT on a snapshot | The most recent actual change. |
-| `datePublished` | MUST, exactly one | When this representation was first published. A snapshot becomes immutable at this time. |
+| `datePublished` | MUST, exactly one | When this representation was first published. See: [Representation Dates](#representation-dates). |
 | `license` | SHOULD, on a published RO-Crate | Describes the licence of the output data, either an open licence or restrictive, TRE-specific conditions of access. |
 | `publisher` | SHOULD | The `Organization` that published this representation. |
-| `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See [Representation State](#representation-state). |
+| `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See: [Representation State](#representation-state). |
 | `pav:previousVersion` | MUST, exactly one on a snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the direct predecessor. |
 | `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the Root Data Entity through `hasPart`, directly or through nested `Dataset` entities. |
-| `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See [Processes](#processes). |
+| `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See: [Processes](#processes). |
 
 !!! note
     The Root Data Entity's `@id` does not by itself determine whether an RO-Crate is Attached or Detached; those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
@@ -726,7 +726,7 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
 
 ## Versioning and Snapshots
 
-An activity record exists as a working RO-Crate that changes, and as snapshots that do not.
+An activity record exists as a working record that changes, and as snapshots that do not.
 
 ### Record and RO-Crate Identifiers
 
@@ -736,7 +736,7 @@ An activity record exists as a working RO-Crate that changes, and as snapshots t
 | Activity record identifier | `dct:isVersionOf` on the Root Data Entity | The activity record across its whole life; the same in every representation. |
 
 !!! tip
-    This is similar to Zenodo’s approach, in which a version DOI identifies one exact deposit, and a concept DOI identifies the work more generally, and is shared for every version. This profile specifies `identifier` to point to one RO-Crate, which may be the working record, or a snapshot; `dct:isVersionOf` is comparable to Zenodo’s concept DOI. 
+    This is similar to Zenodo’s approach, in which a version DOI identifies one exact deposit, whilst a concept DOI identifies the work more generally and is shared by every version. `identifier` is comparable to the version DOI: it names one RO-Crate, which may be the working record or a snapshot; `dct:isVersionOf` is comparable to the concept DOI.
 
 The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}` form whose IRI is absolute and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either may resolve, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
 
@@ -748,9 +748,9 @@ The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}
 | `https://tre72.example.org/activities/A123/versions/2` | A later snapshot | `identifier` on that snapshot |
 
 !!! tip
-    To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each Root Data Entity, and not against its `@id`.  Matching on `@id` can seem to work when Root Data Entities carry absolute IRIs, but it breaks when the `@id` is `./`.
+    To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each Root Data Entity, and not against its `@id`. Matching on `@id` can seem to work when Root Data Entities carry absolute IRIs, but it breaks when the `@id` is `./`.
 
-The Root Data Entity MAY carry other identifiers the record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. A snapshot MUST NOT be changed to add an identifier assigned later; a later RO-Crate MAY record it as describing the earlier snapshot.
+The Root Data Entity MAY carry other identifiers the activity record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. An identifier assigned later is never added to the snapshot (see: [Snapshot Requirements](#snapshot-requirements)); a later RO-Crate MAY record it as describing the earlier snapshot.
 
 ### Representation State
 
@@ -762,11 +762,27 @@ The Root Data Entity’s `version` identifies the RO-Crate’s state. Only the f
 | First snapshot | MUST be the JSON integer `1` | MUST NOT be present |
 | Later snapshot | MUST be a JSON integer greater than `1` | MUST have exactly one absolute IRI value |
 
-Across one activity record, each snapshot MUST have a different positive integer as its `version`. Every snapshot MUST have the same `dct:isVersionOf`. A later snapshot’s `version` MUST be greater than its direct predecessor’s, but does not need to be exactly one greater. Note that `pav:previousVersion` identifies the predecessor, rather than the version number. This specification defines one linear sequence, and a snapshot MUST NOT be the direct predecessor of more than one snapshot of the same record, and branch or merge histories do not conform.
+Across one activity record, each snapshot MUST have a different positive integer as its `version`. Every snapshot MUST have the same `dct:isVersionOf`. A later snapshot’s `version` MUST be greater than its direct predecessor’s, but does not need to be exactly one greater. A snapshot's `pav:previousVersion` MUST NOT equal its own canonical identifier. Note that `pav:previousVersion` identifies the predecessor, rather than the version number. This specification defines one linear sequence: a snapshot MUST NOT be the direct predecessor of more than one snapshot of the same activity record, and branch or merge histories do not conform.
 
-If a snapshot has been imported and the imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
+If an imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
 
 On the Root Data Entity, `version` is the integer ordinal this profile assigns. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern)). Anywhere else, `version` is ordinary text, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
 
 !!! note "Why integers?"
     JSON parsers read `1.10` as `1.1`, and versions as text would instead require this profile to prescribe how strings such as `"1.10"` and `"1.9"` are ordered. A snapshot's version is an ordinal, not a measure of how much changed. A parallel is Zenodo's deposit versions, which only determine which state is later. 
+
+### Representation Dates
+
+The dates on the Root Data Entity describe this representation and not the activity inside it.
+
+| Property | Working record | Snapshot |
+|---|---|---|
+| `dateCreated` | When the working record was created. Fixed. | When the snapshot was created from the working record. Fixed. |
+| `dateModified` | The most recent actual change, if changed since creation. | MUST NOT be present. |
+| `datePublished` | When first made available as an RO-Crate. Fixed thereafter. | When the completed snapshot was first made available; it becomes immutable at this time, which may be later than `dateCreated`. |
+
+Each date MUST be one ISO 8601 `Date` or `DateTime` string, with a timezone on any `DateTime`. Publication includes availability within a restricted system and does not imply public release; it is not the time the file was last written. A candidate snapshot is not a snapshot until all required metadata, including `datePublished`, is final; later deposit or republication does not change the date of first publication.
+
+### Identity Across Representations
+
+An absolute `@id`, once used for one entity, MUST NOT be used for a different entity anywhere in the same record sequence. A later representation MAY correct a demonstrated misidentification, and SHOULD state that it does so; published snapshots are never altered (see: [Snapshot Requirements](#snapshot-requirements) below).
