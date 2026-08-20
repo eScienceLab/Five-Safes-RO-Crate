@@ -194,7 +194,7 @@ The following is a complete, minimal conforming working record of a feasibility 
 }
 ```
 
-To publish a snapshot, a producer copies the working record and changes the Root Data Entity: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` MUST be changed to match (see [Versioning and Snapshots](#versioning-and-snapshots)).
+To publish a snapshot, a producer copies the working record and changes the Root Data Entity: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` changes with it (see: [Versioning and Snapshots](#versioning-and-snapshots)).
 
 ## Root Data Entity
 
@@ -212,8 +212,8 @@ Alongside the properties RO-Crate requires of any Root Data Entity, this profile
 | `@id` | MUST | Identifies the Root Data Entity. The metadata descriptor's `about` MUST use exactly the same value. |
 | `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
 | `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See: [Conformance and Modules](#conformance-and-modules). |
-| `identifier` | MUST, exactly one | The canonical RO-Crate identifier: an absolute IRI in `{"@id": "..."}` form not identifying a [`PropertyValue`](#record-and-ro-crate-identifiers). |
-| `dct:isVersionOf` | MUST, exactly one | The activity record identifier, an absolute IRI. |
+| `identifier` | MUST, exactly one | The canonical RO-Crate identifier. See: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers). |
+| `dct:isVersionOf` | MUST, exactly one | The activity record identifier. See: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers). |
 | `name` | MUST | Names the activity record. |
 | `description` | MUST | Describes the work the activity record covers. |
 | `dateCreated` | MUST, exactly one | When this representation was created. |
@@ -250,13 +250,13 @@ An asset representing a file or dataset MUST be a data entity that is reachable 
 
 An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version` as text, using the label the asset already has. Software a process used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it.
 
-A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern). 
+A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [Referencing Another RO-Crate](#referencing-another-ro-crate). 
 
 Whilst governance determines whether a payload is included, an asset only referred to is still a first-class asset that processes name in the ordinary way.
 
 ### Referencing Assets from Processes
 
-A process refers to the assets it acted on with `object`, `result`, and `instrument`, and to the artefacts it referred to as evidence with `prov:used`. A file or directory held in this RO-Crate MAY be referenced directly by its relative path. 
+A process refers to the assets it acted on with `object`, `result`, and `instrument`, and to the artefacts it referred to as provenance with `prov:used`. A file or directory held in this RO-Crate MAY be referenced directly by its relative path. 
 
 !!! note
     A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
@@ -406,7 +406,7 @@ flowchart LR
     C["Withdrawal<br/>CancelAction and prov:Activity"] -->|"object"| P
     D -->|"prov:wasInformedBy"| R
     C -->|"prov:wasInformedBy"| R
-    D -.->|"prov:used, if consulted"| S["Pre-existing snapshot<br/>artefacts as evidence"]
+    D -.->|"prov:used, if consulted"| S["Pre-existing snapshot<br/>artefacts as provenance"]
     E["Execution attempt<br/>Action and prov:Activity<br/>0..* per plan"] -->|"prov:qualifiedAssociation"| A["Association<br/>prov:Association"]
     A -->|"prov:hadPlan"| P
     A -->|"prov:agent"| G["Performer<br/>Person or Organization"]
@@ -414,7 +414,7 @@ flowchart LR
 
 In the diagram above, the request, decision, withdrawal, and execution are independent claims. Note that the arrows are properties recorded in the metadata and do not imply that all the processes shown occurred.
 
-The following fragment describes a submitted plan, its request, and one execution linked to the plan through an association. The decision answering this request is shown under [Decision Subjects and Evidence](#decision-subjects-and-evidence); the person and organisation entities are omitted:
+The following fragment describes a submitted plan, its request, and one execution linked to the plan through an association. The decision answering this request is shown under [Decision Subjects and Provenance](#decision-subjects-and-provenance); the person and organisation entities are omitted:
 
 ```json
 [
@@ -502,9 +502,9 @@ The Action’s `actionStatus`, `startTime`, and `endTime` apply to every listed 
 
 #### Transferred Snapshots
 
-An exchange's `object` identifies a snapshot only where the complete snapshot RO-Crate was itself transferred. By the end of a completed exchange the transferred asset MUST satisfy the [snapshot requirements](#snapshot-requirements) and [have been published](#representation-dates) (that is, made available as an immutable RO-Crate); first publication may occur during the exchange. 
+An exchange's `object` identifies a snapshot only where the complete snapshot RO-Crate was itself transferred; the snapshot is referenced as described in [Referencing Another RO-Crate](#referencing-another-ro-crate). By the end of a completed exchange the transferred asset MUST satisfy the [snapshot requirements](#snapshot-requirements) and [have been published](#representation-dates) (that is, made available as an immutable RO-Crate); first publication may occur during the exchange. 
 
-The snapshot's `datePublished` MUST NOT be later than the exchange's `endTime`, and the transferred snapshot's canonical identifier MUST NOT equal that of the RO-Crate describing the exchange. A later snapshot that records the exchange MUST NOT be identified as its `object`.
+The snapshot's `datePublished` MUST NOT be later than the exchange's `endTime`. A later snapshot that records the exchange MUST NOT be identified as its `object`.
 
 #### Correlating Dispatch and Receipt
 
@@ -562,21 +562,21 @@ The two Actions MAY share an `object` IRI where they concern the same asset and 
 ]
 ```
 
-### Decision Subjects and Evidence
+### Decision Subjects and Provenance
 
-The subject of a decision, the request it answers, and the evidence it used are different relationships.
+The subject of a decision, the request it answers, and what it used are different relationships.
 
 | Property | Meaning |
 |---|---|
 | `object` | What was decided upon. Every decision MUST have at least one. |
 | `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered. |
-| `prov:used` | Evidence the decision activity actually used. |
+| `prov:used` | What the decision activity actually used. |
 
 An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the exact submitted plan version) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
 
-A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that merely existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced under [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern) and MUST already have been published when the decision ended: where both values are timezone-qualified times from a known common or synchronised clock, the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. A module MAY require decisions of a kind it defines to identify pre-existing snapshots.
+A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that merely existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced as described in [Referencing Another RO-Crate](#referencing-another-ro-crate) and MUST already have been published when the decision ended: where both values are timezone-qualified times from a known common or synchronised clock, the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. A module MAY require decisions of a kind it defines to identify pre-existing snapshots.
 
-The following fragment records an approval that used snapshot version 1 as evidence; the containing Root Data Entity also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
+The following fragment records an approval that used snapshot version 1; the containing Root Data Entity also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
 
 ```json
 [
@@ -685,7 +685,7 @@ A TRE node is a participating organisational unit. A process identifies the node
 
 ### Agreements and Policies
 
-An exact agreement or policy version is a `CreativeWork` with an absolute `@id`, and is both an asset and context. A copy held in the RO-Crate is a separate `File` linked with `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)). An agreement that helped the agent perform a process MAY be its `instrument`; one a process actually used as evidence MAY appear under `prov:used`. Neither property means merely that the agreement applied to or authorised the activity.
+An exact agreement or policy version is a `CreativeWork` with an absolute `@id`, and is both an asset and context. A copy held in the RO-Crate is a separate `File` linked with `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)). An agreement that helped the agent perform a process MAY be its `instrument`; one a process actually drew on MAY appear under `prov:used`. Neither property means merely that the agreement applied to or authorised the activity.
 
 Where the kind of agreement matters, it SHOULD be given with `additionalType` referring to a published term.
 
@@ -766,7 +766,7 @@ Across one activity record, each snapshot MUST have a different positive integer
 
 If an imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
 
-On the Root Data Entity, `version` is the integer ordinal this profile assigns. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [the referenced-RO-Crate pattern](#the-referenced-ro-crate-pattern)). Anywhere else, `version` is ordinary text, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
+On the Root Data Entity, `version` is the integer ordinal this profile assigns. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [Referencing Another RO-Crate](#referencing-another-ro-crate)). Anywhere else, `version` is ordinary text, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
 
 !!! note "Why integers?"
     JSON parsers read `1.10` as `1.1`, and versions as text would instead require this profile to prescribe how strings such as `"1.10"` and `"1.9"` are ordered. A snapshot's version is an ordinal, not a measure of how much changed. A parallel is Zenodo's deposit versions, which only determine which state is later. 
@@ -786,3 +786,38 @@ Each date MUST be one ISO 8601 `Date` or `DateTime` string, with a timezone on a
 ### Identity Across Representations
 
 An absolute `@id`, once used for one entity, MUST NOT be used for a different entity anywhere in the same record sequence. A later representation MAY correct a demonstrated misidentification, and SHOULD state that it does so; published snapshots are never altered (see: [Snapshot Requirements](#snapshot-requirements) below).
+
+### Snapshot Requirements
+
+A snapshot is a complete RO-Crate that describes the state of the activity record, within its scope, when it was taken. A published snapshot MUST NOT be changed; if a correction is needed, it MUST be done by taking a later snapshot rather than altering an earlier one.
+
+The `pav:previousVersion` requirements are outlined in [Representation State](#representation-state). The fragment below outlines the versioning properties of a later snapshot:
+
+```json
+{
+  "@id": "./",
+  "@type": "Dataset",
+  "identifier": {"@id": "https://tre72.example.org/activities/A123/versions/2"},
+  "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
+  "version": 2,
+  "pav:previousVersion": {
+    "@id": "https://tre72.example.org/activities/A123/versions/1"
+  }
+}
+```
+
+### Referencing Another RO-Crate
+
+A Five Safes RO-Crate references another RO-Crate in three situations: when a [decision identifies a snapshot it used](#decision-subjects-and-provenance); when a [snapshot is exchanged](#transferred-snapshots); and when an [activity record references a federated node's RO-Crate](#node-provenance-ro-crates). The same pattern is used across all three, and the referenced RO-Crate is described as a `Dataset` entity:
+
+| Property | Requirement |
+|---|---|
+| `@id` | MUST be the referenced RO-Crate's canonical `identifier` IRI. |
+| `@type` | MUST include `Dataset`. |
+| Reachability | MUST be reachable from the Root Data Entity through `hasPart`, directly or through nested `Dataset` entities. |
+| `version`, `dct:isVersionOf`, `datePublished` | MUST copy the values present on the referenced Root Data Entity; if the referenced RO-Crate is available, the copies MUST match it. |
+| `conformsTo` | SHOULD include the versionless generic profile `https://w3id.org/ro/crate`; MUST NOT include a version-specific base RO-Crate IRI. Application-profile IRIs MAY be present as hints. |
+
+An RO-Crate cannot reference itself. The referenced RO-Crate’s `@id` MUST NOT match the referencing RO-Crate's own canonical identifier. An RO-Crate MAY independently describe an entity also described inside the referenced RO-Crate, using the same absolute IRI where identity is asserted. Properties of the reference entity describe the referenced RO-Crate as a whole. Referencing an RO-Crate does not import its properties. 
+
+A referenced RO-Crate MAY be inaccessible to a consumer without making the referencing RO-Crate non-conforming. 
