@@ -72,7 +72,7 @@ This profile does not prescribe when you should take a snapshot. However, submit
 
 Every Five Safes RO-Crate must follow the **core** profile outlined in this document. Additional **modules** add specifications for particular kinds of work, such as output checking, cohort discovery, or workflow execution. An activity record may follow the core alone or declare any combination of modules.
 
-## Structure of a Five Safes Crate
+## Structure of a Five Safes RO-Crate
 
 A Five Safes RO-Crate is an RO-Crate that contains a metadata file that describes its contents. The following sections outline the metadata file and structure.
 
@@ -821,3 +821,45 @@ A Five Safes RO-Crate references another RO-Crate in three situations: when a [d
 An RO-Crate cannot reference itself. The referenced RO-Crate’s `@id` MUST NOT match the referencing RO-Crate's own canonical identifier. An RO-Crate MAY independently describe an entity also described inside the referenced RO-Crate, using the same absolute IRI where identity is asserted. Properties of the reference entity describe the referenced RO-Crate as a whole. Referencing an RO-Crate does not import its properties. 
 
 A referenced RO-Crate MAY be inaccessible to a consumer without making the referencing RO-Crate non-conforming. 
+
+## Conformance and Modules
+
+A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.org/ro-crate/specification/1.3/) and to the Five Safes RO-Crate core profile. Base and profile conformance are declared on different entities
+
+| Declaration | Entity | Value |
+|---|---|---|
+| Base RO-Crate | Metadata descriptor | `https://w3id.org/ro/crate/1.3` |
+| Five Safes RO-Crate core | Root Data Entity | `https://w3id.org/5s-crate/1.0` |
+| Selected Five Safes RO-Crate module | Root Data Entity | The module's exact, versioned profile IRI |
+
+The Root Data Entity MUST identify the core and every selected module directly with `conformsTo`. Each profile IRI in the Root Data Entity's `conformsTo` MUST be described by a contextual entity with the same `@id`, whose `@type` includes `Profile` and which has a `name`. A module's entity MUST identify the core with `isProfileOf`.
+
+When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and `MUST NOT` of the core and each selected module. Each working record and snapshot declares its own modules: selections are not inherited from earlier snapshots.
+
+```json
+[
+  {
+    "@id": "./",
+    "@type": "Dataset",
+    "conformsTo": [
+      {"@id": "https://w3id.org/5s-crate/1.0"},
+      {"@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery"}
+    ]
+  },
+  {
+    "@id": "https://w3id.org/5s-crate/1.0",
+    "@type": ["CreativeWork", "Profile"],
+    "name": "Five Safes RO-Crate",
+    "version": "1.0"
+  },
+  {
+    "@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery",
+    "@type": ["CreativeWork", "Profile"],
+    "name": "Five Safes RO-Crate Module: Cohort Discovery",
+    "version": "1.0",
+    "isProfileOf": {"@id": "https://w3id.org/5s-crate/1.0"}
+  }
+]
+```
+
+Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules and Assessing Conformance](authoring-modules.md).
