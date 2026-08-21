@@ -104,6 +104,7 @@ A term used as a property value MUST be written as a full absolute IRI in `{"@id
 
 ```json
 {
+  "@id": "urn:uuid:3c9a5b1e-8f42-4d6a-9e07-b52d81c4a7f6",
   "@type": ["CreateAction", "prov:Activity"],
   "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
 }
@@ -114,11 +115,11 @@ Writing `"actionStatus": "CompletedActionStatus"` instead produces the text `"Co
 !!! warning
     The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`.
 
-A module MAY require an additional context and further vocabularies; the rules for declaring and describing them are in [Authoring Modules](authoring-modules.md).
+A module may require an additional context and further vocabularies; the rules for declaring and describing them are in [Authoring Modules](authoring-modules.md).
 
 ### Entity Identifiers
 
-Every entity described as a separate node in `@graph` MUST have an absolute IRI as its `@id`, with three exceptions: the metadata descriptor (`ro-crate-metadata.json`); the Root Data Entity, and contained `File` or `Dataset` entities (their relative payload paths). A UUID URN is sufficient and need not resolve.
+Every entity described as a separate node in `@graph` MUST have an absolute IRI as its `@id`, with three exceptions: the metadata descriptor (`ro-crate-metadata.json`); the Root Data Entity, and contained `File` or `Dataset` entities (their relative payload paths). A UUID URN is sufficient and does not need to resolve.
 
 ### Complete Example
 
@@ -195,7 +196,9 @@ The following is a complete, minimal conforming working record of a feasibility 
 }
 ```
 
-To publish a snapshot, a producer copies the working record and changes the Root Data Entity: `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed; and `datePublished` is set to when the snapshot was made available. If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` changes with it (see: [Versioning and Snapshots](#versioning-and-snapshots)).
+To publish a snapshot, a producer copies the working record and changes the Root Data Entity. `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed, and `datePublished` is set to when the snapshot was made available. 
+
+If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` changes with it (see: [Versioning and Snapshots](#versioning-and-snapshots)).
 
 ## Root Data Entity
 
@@ -227,8 +230,8 @@ Alongside the properties RO-Crate requires of any Root Data Entity, this profile
 | `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the Root Data Entity through `hasPart`, directly or through nested `Dataset` entities. |
 | `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See: [Processes](#processes). |
 
-!!! note
-    The Root Data Entity's `@id` does not by itself determine whether an RO-Crate is Attached or Detached; those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
+!!! tip
+    The Root Data Entity's `@id` does not by itself determine whether an RO-Crate is Attached or Detached. Those forms depend on how the metadata document and any payload are packaged, [as defined in the RO-Crate 1.3 base profile](https://www.researchobject.org/ro-crate/specification/1.3/root-data-entity.html#root-data-entity-identifier).
 
 ## Assets
 
@@ -236,7 +239,7 @@ Assets are the durable things processes act on, consume, produce, or follow.
 
 ### Kinds of Asset
 
-An asset representing a file or dataset MUST be a data entity that is reachable from the Root Data Entity through `hasPart`. An abstract asset, such as a plan, an exact protocol version, or a software application, is instead a contextual entity with an absolute IRI, referenced from the processes for which it is relevant.
+An asset representing a file or dataset MUST be a [data entity](https://www.researchobject.org/ro-crate/specification/1.3/data-entities.html) that is reachable from the Root Data Entity through `hasPart`. An abstract asset, such as a plan, an exact protocol version, or a software application, is instead a [contextual entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html) with an absolute IRI, referenced from the processes for which it is relevant. The table below outlines a non-exhaustive list of assets, and how they should be described:
 
 | Asset | Described as |
 |---|---|
@@ -254,17 +257,20 @@ An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or
 Software that a process has used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it:
 
 ```json
-{
-  "@type": ["CreateAction", "prov:Activity"],
-  "name": "Deidentification",
-  "instrument": {"@id": "https://example.org/software/deid-tool/2.1"}
-},
-{
-  "@id": "https://example.org/software/deid-tool/2.1",
-  "@type": "SoftwareApplication",
-  "name": "Deidentification Tool",
-  "version": "2.1"
-}
+[
+  {
+    "@id": "urn:uuid:e47d2a90-6b13-4c58-8f2e-a90d5c3b7e14",
+    "@type": ["CreateAction", "prov:Activity"],
+    "name": "Deidentification",
+    "instrument": {"@id": "https://example.org/software/deid-tool/2.1"}
+  },
+  {
+    "@id": "https://example.org/software/deid-tool/2.1",
+    "@type": "SoftwareApplication",
+    "name": "Deidentification Tool",
+    "version": "2.1"
+  }
+]
 ```
 
 A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [Referencing Another RO-Crate](#referencing-another-ro-crate). 
@@ -295,11 +301,12 @@ outputs/count-v1.csv
 !!! tip "Why are there separate entities?"
     The absolute IRI identifies the asset independently of the RO-Crate. The relative path identifies the copy carried inside this particular RO-Crate. For example, `https://example.org/reports/17` identifies a report, whilst `files/report.pdf` identifies the PDF copy included in the RO-Crate. Keeping these separate allows the same asset to be packaged at different paths or in different formats without incorrectly treating each copy as a new asset version.
 
-A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged directory MUST instead use `exampleOfWork`. In either case, the target MUST identify the exact asset version and MUST be typed as `CreativeWork` or one of its subtypes, such as `Dataset`. The core profile does not define an equivalent relationship for an asset that is not a CreativeWork.
+A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged directory MUST instead use `exampleOfWork`. In either case, the target MUST identify the exact asset version and MUST be typed as `CreativeWork` or one of its subtypes, such as `Dataset`. 
+<!-- The core profile does not define an equivalent relationship for an asset that is not a CreativeWork. -->
 
 Moving, renaming, or encoding the same asset in another format does not by itself create a new version or asset. Therefore, multiple packaged representations can point to the same absolute IRI. `prov:wasDerivedFrom` MUST NOT be used to connect a packaged representation to the asset it encodes; it is reserved for cases in which a process produced a distinct asset from another asset.
 
-The following fragment shows an output given an absolute identity for a release decision, and an agreement version, each with a packaged copy:
+The following fragment shows a cohort discovery output given an absolute identity for a release decision, and a data use agreement. These are also given packaged copies:
 
 ```json
 [
@@ -338,7 +345,7 @@ The following fragment shows an output given an absolute identity for a release 
 
 ### Protocols
 
-A protocol is an asset that sets out how something is intended to be done; each occasion of following it is a separate process instance that records the exact protocol version with the `instrument`, referring to the absolute protocol entity. The same asset may be a protocol for one process and an ordinary input to another.
+A protocol is an asset that establishes how something is intended to be done. Each occasion of following it is a separate process instance that records the exact protocol version, with `instrument` referring to the absolute protocol entity. The same asset may be a protocol for one process and an ordinary input to another.
 
 ### Derived Data
 
@@ -348,7 +355,8 @@ The producing process documents source and product as its `object` and `result`,
 
 ### Software and Models
 
-A held or produced software or trained-model asset SHOULD carry `name` and `version`, and `author` where known. A model produced by a recorded process is its `result`; a model assessed or decided upon is that process's `object`. This profile does not determine whether a model may be transferred or released.
+A held or produced software or trained-model asset SHOULD carry `name` and `version`, and `author` where known. A model produced by a recorded process is its `result`; a model assessed or decided upon is that process's `object`. 
+<!-- This profile does not determine whether a model may be transferred or released - module? -->
 
 ## Processes
 
@@ -367,7 +375,7 @@ Every process MUST be an [Action](http://schema.org/Action) whose `@type` includ
 | `name` | SHOULD | What happened, in words. |
 | `object` | SHOULD | What the process acted on. A decision MUST have at least one value identifying what was decided upon. |
 | `result` | MUST; <br><br> MUST NOT | A `CreateAction` with `CompletedActionStatus` that produced an asset MUST identify it. <br><br> An anticipated, suppressed, or withheld output MUST NOT appear as `result`. |
-| `instrument` | SHOULD, where Assets actually helped perform the process | The exact protocol, software, or other Asset that helped; applicability alone does not make an Asset an instrument. |
+| `instrument` | SHOULD, where assets actually helped perform the process | The exact protocol, software, or other asset that helped; applicability alone does not make an asset an instrument. |
 | `provider` | MUST, where the process was carried out within a TRE [or one of its nodes](#the-tre-and-its-nodes) | The `Organization` that provided or operated the environment or service. |
 | `prov:atLocation` | MAY | A runtime location (workspace, virtual machine), with an absolute `@id` and `@type` including `Thing` and `prov:Location`. |
 | `startTime` | SHOULD | When the process actually began; never an anticipated time. |
@@ -408,7 +416,7 @@ Intended work recorded before it begins MUST be an asset whose `@type` includes 
 
 Submitting a plan MUST be a separate `AskAction` with exactly one object (the plan), exactly one recipient (the person or organisation asked to act, described in the RO-Crate as a `Person` or `Organization`) and `CompletedActionStatus`. 
 
-A decision on the request MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. 
+A decision made on the request MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. 
 
 `CancelAction` describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above. 
 
@@ -591,12 +599,18 @@ The subject of a decision, the request it answers, and what it used are differen
 
 An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the exact submitted plan version) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
 
-A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that merely existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced as described in [Referencing Another RO-Crate](#referencing-another-ro-crate) and MUST already have been published when the decision ended: where both values are timezone-qualified times from a known common or synchronised clock, the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. A module MAY require decisions of a kind it defines to identify pre-existing snapshots.
+A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that just existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced as described in [Referencing Another RO-Crate](#referencing-another-ro-crate) and MUST already have been published when the decision ended: the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. 
 
-The following fragment records an approval that used snapshot version 1; the containing Root Data Entity also lists the decision under `mentions` and the referenced snapshot under `hasPart`.
+The following fragment outlines an approval. The Root Data Entity lists the decision under `mentions` and the referenced snapshot under `hasPart`:
 
 ```json
 [
+  {
+    "@id": "./",
+    "@type": "Dataset",
+    "hasPart": [{"@id": "https://tre72.example.org/activities/A123/versions/1"}],
+    "mentions": [{"@id": "https://tre72.example.org/activities/A123/decisions/signoff-9c14"}]
+  },
   {
     "@id": "https://tre72.example.org/activities/A123/decisions/signoff-9c14",
     "@type": ["AuthorizeAction", "prov:Activity"],
@@ -638,8 +652,7 @@ The `@id` MUST NOT denote a role, account, pool of people, or unidentified perfo
 Identity of a person or organisation across representations follows [Identity Across Representations](#identity-across-representations). Independent producers (such as services in federated nodes) may assign different opaque IRIs to the same real-world entity; opaque entities remain separate unless their identity is attested. 
 
 !!! warning
-    Across a federation, the same person or organisation may appear under a different opaque IRI in each node's activity record. Duplicate entities in an
-    aggregated view are therefore expected and should be merged only where identity is attested. Where cross-node identity matters and a public identifier is appropriate, use an external persistent identifier such as an ORCID iD or ROR identifier.
+    Across a federation, the same person or organisation may appear under a different opaque IRI in each [node provenance RO-Crate](#node-provenance-ro-crates). Duplicate entities are therefore expected when information is synthesised across nodes and should be merged only where identity is attested. Where cross-node identity matters and a public identifier is appropriate, use an external persistent identifier such as an ORCID iD or ROR identifier.
 
 A `Person` MAY carry `affiliation`, referencing the exact `Organization` described in the RO-Crate. An external Web URL whose reference page unambiguously indicates the entity's identity MAY be recorded with `sameAs`; other external identifiers MAY be given under `identifier` as `PropertyValue` entities (see: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers)).
 
@@ -702,7 +715,7 @@ A TRE node is a participating organisational unit. A process identifies the node
 
 ### Agreements and Policies
 
-An exact agreement or policy version is a `CreativeWork` with an absolute `@id`, and is both an asset and context. A copy held in the RO-Crate is a separate `File` linked with `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)). An agreement that helped the agent perform a process MAY be its `instrument`; one a process actually drew on MAY appear under `prov:used`. Neither property means merely that the agreement applied to or authorised the activity.
+An exact agreement or policy version is a `CreativeWork` with an absolute `@id`, and is both an asset and context. A copy held in the RO-Crate is a separate `File` linked with `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)). An agreement that helped the agent perform a process MAY be its `instrument`; one a process actually drew on MAY appear under `prov:used`.
 
 Where the kind of agreement matters, it SHOULD be given with `additionalType` referring to a published term.
 
@@ -755,7 +768,7 @@ An activity record exists as a working record that changes, and as snapshots tha
 !!! tip
     This is similar to Zenodo’s approach, in which a version DOI identifies one exact deposit, whilst a concept DOI identifies the work more generally and is shared by every version. `identifier` is comparable to the version DOI: it names one RO-Crate, which may be the working record or a snapshot; `dct:isVersionOf` is comparable to the concept DOI.
 
-The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}` form whose IRI is absolute and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either may resolve, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
+The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}` form with an absolute IRI and does not identify a `PropertyValue`, and exactly one `dct:isVersionOf` with an absolute IRI; either may resolve, and a UUID URN suffices where a resolvable IRI is not appropriate or available.
 
 | Example IRI | Describes | Appears as |
 |---|---|---|
@@ -768,6 +781,30 @@ The Root Data Entity MUST have exactly one `identifier` value in `{"@id": "..."}
     To follow a reference from one RO-Crate to another, the reference IRI should be matched against the `identifier` on each Root Data Entity, and not against its `@id`. Matching on `@id` can seem to work when Root Data Entities carry absolute IRIs, but it breaks when the `@id` is `./`.
 
 The Root Data Entity MAY carry other identifiers the activity record is known by, such as a project reference or an identifier assigned by an archive when a snapshot is deposited, each as a separately described `PropertyValue`. `value` MUST carry the identifier, `propertyID` SHOULD identify its scheme, and `url` SHOULD give its resolvable form where one exists. An identifier assigned later is never added to the snapshot (see: [Snapshot Requirements](#snapshot-requirements)); a later RO-Crate MAY record it as describing the earlier snapshot.
+
+The following fragment shows the working record carrying its canonical identifier and a project reference:
+
+```json
+[
+  {
+    "@id": "./",
+    "@type": "Dataset",
+    "identifier": [
+      {"@id": "https://tre72.example.org/activities/A123/current"},
+      {"@id": "urn:uuid:b8e5f3a2-1c74-4d09-a6bf-53e92d78c410"}
+    ],
+    "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"}
+  },
+  {
+    "@id": "urn:uuid:b8e5f3a2-1c74-4d09-a6bf-53e92d78c410",
+    "@type": "PropertyValue",
+    "name": "TRE 72 project reference",
+    "propertyID": "https://tre72.example.org/schemes/project-reference",
+    "value": "PRJ-2027-041",
+    "url": "https://register.tre72.example.org/projects/PRJ-2027-041"
+  }
+]
+```
 
 ### Representation State
 
@@ -783,14 +820,14 @@ Across one activity record, each snapshot MUST have a different positive integer
 
 If an imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
 
-On the Root Data Entity, `version` is the integer ordinal this profile assigns. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [Referencing Another RO-Crate](#referencing-another-ro-crate)). Anywhere else, `version` is ordinary text, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
+On the Root Data Entity, `version` is an ordinal integer. An entity referencing another RO-Crate copies the integer found on that RO-Crate’s own Root Data Entity (see: [Referencing Another RO-Crate](#referencing-another-ro-crate)). Anywhere else, `version` is a string, and records a label assigned outside this profile, such as a software version (e.g., `"4.2.1"`), or an agreement (e.g., `"3b"`).
 
 !!! note "Why integers?"
-    JSON parsers read `1.10` as `1.1`, and versions as text would instead require this profile to prescribe how strings such as `"1.10"` and `"1.9"` are ordered. A snapshot's version is an ordinal, not a measure of how much changed. A parallel is Zenodo's deposit versions, which only determine which state is later. 
+    JSON parsers read `1.10` as `1.1`, and `version` as a string would instead require this profile to prescribe how strings such as `"1.10"` and `"1.9"` are ordered. A snapshot's `version` is an ordinal integer. A parallel is Zenodo's deposit versions, which are used to determine which state is later. 
 
 ### Representation Dates
 
-The dates on the Root Data Entity describe this representation and not the activity inside it.
+The dates on the Root Data Entity describe the representation and not the activity inside it.
 
 | Property | Working record | Snapshot |
 |---|---|---|
@@ -841,7 +878,7 @@ A referenced RO-Crate MAY be inaccessible to a consumer without making the refer
 
 ## Conformance and Modules
 
-A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.org/ro-crate/specification/1.3/) and to the Five Safes RO-Crate core profile. Base and profile conformance are declared on different entities
+A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.org/ro-crate/specification/1.3/) and to the Five Safes RO-Crate core profile. Base and profile conformance are declared on different entities:
 
 | Declaration | Entity | Value |
 |---|---|---|
@@ -851,7 +888,7 @@ A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.
 
 The Root Data Entity MUST identify the core and every selected module directly with `conformsTo`. Each profile IRI in the Root Data Entity's `conformsTo` MUST be described by a contextual entity with the same `@id`, whose `@type` includes `Profile` and which has a `name`. A module's entity MUST identify the core with `isProfileOf`.
 
-When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and `MUST NOT` of the core and each selected module. Each working record and snapshot declares its own modules: selections are not inherited from earlier snapshots.
+When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and `MUST NOT` of the core and each selected module. Each working record and snapshot declares its own modules, and selections are not inherited from earlier snapshots.
 
 ```json
 [
@@ -879,22 +916,34 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
 ]
 ```
 
-Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules and Assessing Conformance](authoring-modules.md).
+Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules](authoring-modules.md).
 
 ## Federation
 
 Federation enables research to be carried out across several nodes or organisations. For example, software execution may travel to the data, data may be pooled in one environment, or both in combination. The [federated research patterns](https://docs.federated-research.com/federated_research_patterns) outline some of these approaches to federation. 
 
-In Five Safes RO-Crate, the entire federated work has one **federated activity record**, with one record identifier and one linear sequence of snapshots. Federation changes where the detail is kept, with each node keeping the provenance a node produced in its own node provenance RO-Crate(s). The federated activity record references these node provenance RO-Crates rather than containing them. 
+In Five Safes RO-Crate, the entire federated work has one **federated activity record**, with one record identifier and one linear sequence of snapshots. Federation changes where the detail is kept, with each node keeping the provenance a node produced in its own node provenance RO-Crate. The federated activity record references these node provenance RO-Crates rather than containing them. 
 
 ### The Federated Activity Record
 
-Every representation of the federated activity record MUST use the same record identifier with `dct:isVersionOf`, and its snapshots form a single, linear history as outlined in [Representation State](#representation-state). Parallel node activity does not create snapshot branches: a later snapshot MAY add assertions supplied independently by several nodes. Successive snapshots can carry different `publisher` values; the property only identifies who published one representation.
+Every representation of the federated activity record MUST use the same record identifier with `dct:isVersionOf`, and its snapshots form a single, linear history as outlined in [Representation State](#representation-state). Parallel node activity does not create snapshot branches. Successive snapshots may carry different `publisher` values.
 
 !!! tip
     For example, `Snapshot 1` of the federated activity record might be taken and published by Manchester (say, at submission), and `Snapshot 2` taken and published by Dundee after the analysis phase.
 
-A node provenance RO-Crate is a supporting asset, not a representation of the federated activity record: it MUST NOT use the federated activity record's identifier as its own `dct:isVersionOf`. The federated activity record MUST satisfy the core and every declared module using statements in its own graph; it does not inherit conformance or metadata from the provenance it references.
+### Node Provenance RO-Crates
+
+A **node provenance RO-Crate** captures the provenance of an individual node in a federation. Node provenance RO-Crates are aggregated to form a single federated activity record. In other words, a node provenance RO-Crate is a supporting asset and not a representation of the federated activity record. It must not use the federated activity record's identifier as its own `dct:isVersionOf`. 
+
+A node provenance RO-Crate MUST be a fixed, published representation. The federated activity record references each node provenance RO-Crate as described in [Referencing Another RO-Crate](#referencing-another-ro-crate), with two additions:
+
+| Property | Requirement |
+|---|---|
+| `about` | MUST identify the activity record, an exact process, or an exact asset that is subject matter of the node provenance RO-Crate, as absolute IRIs. |
+| `publisher` | SHOULD identify the `Organization` that published the node provenance RO-Crate. |
+
+!!! warning
+    The federated activity record does not inherit conformance or metadata from the provenance it references.
 
 ```mermaid
 flowchart TB
@@ -923,17 +972,6 @@ flowchart TB
 ```
 
 <br>
-
-### Node Provenance RO-Crates
-
-A **node provenance RO-Crate** captures the provenance of an individual node in a federation. Node provenance RO-Crates are aggregated to form a single federated activity record.
-
-A node provenance RO-Crate MUST be a fixed, published representation. The federated activity record references each node provenance RO-Crate as described in [Referencing Another RO-Crate](#referencing-another-ro-crate), with two additions:
-
-| Property | Requirement |
-|---|---|
-| `about` | MUST identify the activity record, an exact process, or an exact asset that is subject matter of the node provenance RO-Crate, as absolute IRIs. |
-| `publisher` | SHOULD identify the `Organization` that published the node provenance RO-Crate. |
 
 ```json
 [
