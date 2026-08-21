@@ -5,8 +5,9 @@ Authors:
 1. Alexander Hambley, The University of Manchester <https://orcid.org/0000-0003-1193-6632>
 2. Warren Del-Pinto, The University of Manchester <https://orcid.org/0000-0003-3307-9432>
 3. Douglas Lowe, The University of Manchester <https://orcid.org/0000-0002-1248-3594>
-4. Eli Chadwick, The University of Manchester <https://orcid.org/0000-0002-0035-6475>
-5. Stian Soiland-Reyes, The University of Manchester <https://orcid.org/0000-0001-9842-9718>
+4. Ettore Murabito, The University of Manchester <https://orcid.org/0000-0002-9308-9889>
+5. Eli Chadwick, The University of Manchester <https://orcid.org/0000-0002-0035-6475>
+6. Stian Soiland-Reyes, The University of Manchester <https://orcid.org/0000-0001-9842-9718>
 
 This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for recording and exchanging the activity of Trusted Research Environments (TREs).
 
@@ -248,7 +249,23 @@ An asset representing a file or dataset MUST be a data entity that is reachable 
 | A plan for intended work | `["CreativeWork", "prov:Plan"]`, with an absolute IRI |
 | An exact trained-model version | `File`, `Dataset`, or another appropriate type |
 
-An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version` as text, using the label the asset already has. Software a process used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it.
+An asset SHOULD carry `name`. A versioned asset such as a protocol, software, or a released extract SHOULD carry `version` as text, using the label the asset already has. 
+
+Software that a process has used is a contextual entity, and SHOULD be recorded as the `instrument` of the process that used it:
+
+```json
+{
+  "@type": ["CreateAction", "prov:Activity"],
+  "name": "Deidentification",
+  "instrument": {"@id": "https://example.org/software/deid-tool/2.1"}
+},
+{
+  "@id": "https://example.org/software/deid-tool/2.1",
+  "@type": "SoftwareApplication",
+  "name": "Deidentification Tool",
+  "version": "2.1"
+}
+```
 
 A data entity represented by reference has an absolute IRI as its `@id`, is listed under `hasPart`, and MUST NOT also use a relative path as though it were a contained file. A referenced RO-Crate follows [Referencing Another RO-Crate](#referencing-another-ro-crate). 
 
@@ -863,3 +880,129 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
 ```
 
 Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules and Assessing Conformance](authoring-modules.md).
+
+## Federation
+
+Federation enables research to be carried out across several nodes or organisations. For example, software execution may travel to the data, data may be pooled in one environment, or both in combination. The [federated research patterns](https://docs.federated-research.com/federated_research_patterns) outline some of these approaches to federation. 
+
+In Five Safes RO-Crate, the entire federated work has one **federated activity record**, with one record identifier and one linear sequence of snapshots. Federation changes where the detail is kept, with each node keeping the provenance a node produced in its own node provenance RO-Crate(s). The federated activity record references these node provenance RO-Crates rather than containing them. 
+
+### The Federated Activity Record
+
+Every representation of the federated activity record MUST use the same record identifier with `dct:isVersionOf`, and its snapshots form a single, linear history as outlined in [Representation State](#representation-state). Parallel node activity does not create snapshot branches: a later snapshot MAY add assertions supplied independently by several nodes. Successive snapshots can carry different `publisher` values; the property only identifies who published one representation.
+
+!!! tip
+    For example, `Snapshot 1` of the federated activity record might be taken and published by Manchester (say, at submission), and `Snapshot 2` taken and published by Dundee after the analysis phase.
+
+A node provenance RO-Crate is a supporting asset, not a representation of the federated activity record: it MUST NOT use the federated activity record's identifier as its own `dct:isVersionOf`. The federated activity record MUST satisfy the core and every declared module using statements in its own graph; it does not inherit conformance or metadata from the provenance it references.
+
+```mermaid
+flowchart TB
+    R["Federated activity record identity"]
+    W["Working record"]
+    S1["Snapshot 1"]
+    S2["Snapshot 2"]
+
+    PA["Node A process"]
+    PB["Node B process"]
+    EA["Exact Node A provenance RO-Crate"]
+    EB["Exact Node B provenance RO-Crate"]
+
+    W -->|"dct:isVersionOf"| R
+    S1 -->|"dct:isVersionOf"| R
+    S2 -->|"dct:isVersionOf"| R
+    S2 -->|"pav:previousVersion"| S1
+
+    S2 -->|"mentions"| PA
+    S2 -->|"mentions"| PB
+    S2 -->|"hasPart"| EA
+    S2 -->|"hasPart"| EB
+
+    EA -.->|"about"| PA
+    EB -.->|"about"| PB
+```
+
+<br>
+
+### Node Provenance RO-Crates
+
+A **node provenance RO-Crate** captures the provenance of an individual node in a federation. Node provenance RO-Crates are aggregated to form a single federated activity record.
+
+A node provenance RO-Crate MUST be a fixed, published representation. The federated activity record references each node provenance RO-Crate as described in [Referencing Another RO-Crate](#referencing-another-ro-crate), with two additions:
+
+| Property | Requirement |
+|---|---|
+| `about` | MUST identify the activity record, an exact process, or an exact asset that is subject matter of the node provenance RO-Crate, as absolute IRIs. |
+| `publisher` | SHOULD identify the `Organization` that published the node provenance RO-Crate. |
+
+```json
+[
+  {
+    "@id": "./",
+    "@type": "Dataset",
+    "identifier": {
+      "@id": "https://federation.example.org/records/R/versions/2"
+    },
+    "dct:isVersionOf": {
+      "@id": "https://federation.example.org/records/R"
+    },
+    "version": 2,
+    "hasPart": [
+      {"@id": "https://node-a.example.org/provenance/R/run-1/versions/4"}
+    ],
+    "mentions": [
+      {"@id": "https://federation.example.org/records/R/processes/node-a-run-1"}
+    ]
+  },
+  {
+    "@id": "https://federation.example.org/records/R/processes/node-a-run-1",
+    "@type": ["Action", "prov:Activity"],
+    "name": "Node A execution",
+    "agent": {"@id": "https://node-a.example.org/tre"},
+    "provider": {"@id": "https://node-a.example.org/tre"},
+    "endTime": "2027-04-06T13:30:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://node-a.example.org/provenance/R/run-1/versions/4",
+    "@type": "Dataset",
+    "name": "Node A provenance for run 1",
+    "conformsTo": {"@id": "https://w3id.org/ro/crate"},
+    "about": {
+      "@id": "https://federation.example.org/records/R/processes/node-a-run-1"
+    },
+    "datePublished": "2027-04-06T13:40:00Z",
+    "publisher": {"@id": "https://node-a.example.org/tre"},
+    "version": 4,
+    "dct:isVersionOf": {
+      "@id": "https://node-a.example.org/provenance/R/run-1"
+    }
+  },
+  {
+    "@id": "https://node-a.example.org/tre",
+    "@type": "Organization",
+    "name": "TRE node A"
+  }
+]
+```
+
+!!! note
+    This design is informed by the [Common Provenance Model](https://zenodo.org/records/4705074), where each organisation maintains its own fixed provenance record connected by shared identifiers.
+
+## Security and Privacy
+
+## Media Type and Signposting
+
+## References
+
+- Desai, T., Ritchie, F. and Welpton, R. (2016). _Five Safes: designing data access for research._ University of the West of England, Economics Working Paper Series 1601. <https://doi.org/10.13140/RG.2.1.3661.1604>
+- Federated Research Patterns. <https://docs.federated-research.com/federated_research_patterns>
+- Standard Architecture for Trusted Research Environments (SATRE): Federation. <https://satre-specification.readthedocs.io/en/stable/specification.html#federation>
+- Wittner, R. et al. (2021). _EOSC-Life Common Provenance Model._ Zenodo. <https://zenodo.org/records/4705074>
+- Wittner, R. et al. (2022). _Lightweight Distributed Provenance Model for Complex Real-world Environments._ Scientific Data 9, 503. <https://doi.org/10.1038/s41597-022-01537-6>
+
+## Appendix A. Terms and Properties
+
+Every term and property used by this profile that is not plain schema.org, with its source vocabulary and definition.
+
+## Appendix B. Changes From 0.4
