@@ -86,3 +86,33 @@ What does this mean?
 | `prov:used`       | MAY               | exist                                                                                                                                                                                                                                    |                                                                                                                                                                |                                                                                                                                                        |
 | `prov:used`       | MUST              | exist                                                                                                                                                                                                                                    | the referenced artefact requires an identity beyond this RO-Crate.                                                                                             |                                                                                                                                                        |
 | `prov:used`       | MUST              | use an absolute`@id`                                                                                                                                                                                                                   | (1) Process →`prov:used`exists;<br />(2) the referenced artefact requires an identity beyond this RO-Crate.                                               |                                                                                                                                                        |
+
+### Plans, Requests, Decisions, Executions, and Associations
+
+**Operational definitions:**
+
+* A **Plan** is an Asset whose `@type` includes `prov:Plan`.
+* A **Submission** is an entity whose `@type` includes `AskAction`.
+* A **Decision** is an entity whose `@type` is either `AuthorizeAction` or `RejectAction`.
+* An **Execution** (attempt) is an entity whose `@type` contains `CreateAction` and `prov:Activity`.
+* An **Association** is an entity whose `@type` is `prov:Association`.
+
+| Property                                                             | Requirements | Description                                                                                                      | Preconditions | Comments                                                                                          |
+| -------------------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| Plan →`@id`                                                       | MUST         | be an absolute IRI                                                                                               |               |                                                                                                   |
+| Submission →`object`                                              | MUST         | exist and reference exactly one Plan                                                                           |               |                                                                                                   |
+| Submission →`recipient`                                           | MUST         | exist and reference exactly one`Person` or `Organization`                                                    |               |                                                                                                   |
+| Submission →`actionStatus`                                        | MUST         | be`CompletedActionStatus`                                                                                      |               |                                                                                                   |
+| Decision →`object`                                                | MUST         | exist and reference only one Plan                                                                               |               |                                                                                                   |
+| Decision →`prov:wasInformedBy`                                    | MUST         | exist and reference only one Submission                                                                          |               | The referenced submission MUST have`object` pointing to the same Plan as Decision → `object` |
+| Execution →`agent`                                                | MUST         | exist and reference exactly one agent (i.e. an entity whose`@type` is either `Person` or `Organization`)   |               |                                                                                                   |
+| Execution →`prov:qualifiedAssociation`                            | MUST         | exist and reference (possibly among others) an Association entity                                                |               |                                                                                                   |
+| Association →`prov:agent`                                        | MUST         | exist and reference exactly one agent (i.e. an entity whose`@type` is either `Person` or `Organization`) |               |                                                                                                   |
+| (1) Execution →`agent`;<br />(2) Association → `prov:agent`; | MUST         | reference the same entity                                                                                        |               |                                                                                                   |
+| Association →`prov:hadPlan`                                      | MUST         | exist, be unique and reference a Plan                                                                            |               |                                                                                                   |
+
+**UNCLEAR TEXT:**
+CancelAction describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above.
+
+**QUESTIONS:**
+It is not clear what the "pattern above" is.
