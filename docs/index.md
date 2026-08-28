@@ -31,13 +31,34 @@ A Five Safes RO-Crate records this activity so that it can be retained as proven
 
 This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
-## Concepts
+## Design Principles
 
-...
+The Five Safes Profile is designed with a focus on TREs. As such, it focuses on three core types of *Thing* that exist within TREs: Assets, Processes and Contexts.
+
+### Assets, Processes, Contexts
+
+Every entity described within a Five Safes RO-Crate falls into one of three types.
+
+| Type        | Description                                                                                                           |
+| ----------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Asset**   | “*Things that are acted on*”<br>**Examples:** datasets, outputs, models, software, plans, protocols, agreement texts. |
+| **Process** | “*Things that happen*”<br>**Examples:** submitting requests, running queries, granting access, checking outputs, ...  |
+| **Context** | “*Things that act / are acted under*”<br>**Examples:** people, organisations, agreements, TREs...                     |
+
+Note that this means there may be several entities corresponding to instances of the same "idea", or related "ideas". For example: 
+- A protocol or plan is an *asset*, whilst an instance of applying or following it is a *process*. 
+- A source dataset is an *asset*, while a dataset derived from it is a separate *asset* with its own history.
+
+Some other examples of these entity types occurring in practice are:
+- A request for access still exists as a *process* that occurred, even if it was declined and work did not proceed.
+- Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*.
+- Each context item is recorded once and referred to wherever needed.
+
+Notably, there is no "*Project*" entity type. This is to avoid making the core Five Safes Profile too prescriptive, since projects can have very different scopes or meanings depending on the organisation(s) involved, or even the timeframe in which work was undertaken. Instead, the root of the profile is based around an *Activity Record*.
 
 ### The TRE Activity Record
 
-A **TRE Activity Record** ("activity record") is a versioned account of activity in a TRE. Each activity record covers one piece of work under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one activity record captures the whole piece of work.
+A **TRE Activity Record** ("activity record") is a versioned account of activity in a TRE. Each activity record covers one piece of **governed work** under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one activity record captures the whole piece of work.
 
 An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. This activity record is represented as a **Five Safes RO-Crate**.
 
@@ -47,19 +68,6 @@ An activity record focuses on activity that was observed or attested: this is wo
 
 A portal may record every query, or an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records with different scopes. 
 
-### Assets, Processes, Context
-
-Every entity describing the governed work has one or more of three roles.
-
-| Role | Description |
-|---|---|
-| Assets | Artefacts that processes act on, consume, produce, or follow: datasets and extracts, outputs, models, software, plans, protocols, agreement texts. |
-| Processes | Things that happen: submitting a request, making a decision, running a query, checking an output. |
-| Context | People, organisations, agreements, and the TRE itself. |
-
-The same entity can have more than one role. A protocol or plan is an asset, whilst following it is a process. Derived data is a separate asset with its own history, rather than a version of the original data. If planned work never begins, the request and its refusal or withdrawal still happened and remain in the activity record. 
-
-Context can be the subject of a process. For example, signing an agreement or accrediting a researcher are processes. Each context item is recorded once and referred to wherever needed.
 
 ### Working Record and Snapshots
 
