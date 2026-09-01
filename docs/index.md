@@ -46,10 +46,12 @@ Every entity described within a Five Safes RO-Crate falls into one of three type
 | **Context** | “*Things that act / are acted under*”<br>**Examples:** people, organisations, agreements, TREs...                     |
 
 Note that this means there may be several entities corresponding to instances of the same "idea", or related "ideas". For example: 
+
 - A protocol or plan is an *asset*, whilst an instance of applying or following it is a *process*. 
 - A source dataset is an *asset*, while a dataset derived from it is a separate *asset* with its own history.
 
 Some other examples of these entity types occurring in practice are:
+
 - A request for access still exists as a *process* that occurred, even if it was declined and work did not proceed.
 - Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*.
 - Each context item is recorded once and referred to wherever needed.
