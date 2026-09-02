@@ -1,4 +1,4 @@
-# Five Safes RO-Crate 1.0
+# Five Safes RO-Crate 1.0-DRAFT
 
 Authors:
 
@@ -11,8 +11,8 @@ Authors:
 
 This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for recording and exchanging the activity of Trusted Research Environments (TREs).
 
-* Permalink: <https://w3id.org/5s-crate/1.0>
-* Version: 1.0
+* Permalink: <https://w3id.org/5s-crate/1.0-DRAFT>
+* Version: 1.0-DRAFT
 * Status: Working Draft
 * Release notes: <https://github.com/eScienceLab/Five-Safes-RO-Crate/releases>
 * Published: 2027-XX-XX
@@ -148,7 +148,7 @@ The following is a complete, minimal conforming working record of a feasibility 
     {
       "@id": "https://tre72.example.org/activities/A123/current",
       "@type": "Dataset",
-      "conformsTo": [{"@id": "https://w3id.org/5s-crate/1.0"}],
+      "conformsTo": [{"@id": "https://w3id.org/5s-crate/1.0-DRAFT"}],
       "identifier": {"@id": "https://tre72.example.org/activities/A123/current"},
       "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
       "name": "Feasibility enquiry A123 (TRE72)",
@@ -162,10 +162,10 @@ The following is a complete, minimal conforming working record of a feasibility 
       "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
     },
     {
-      "@id": "https://w3id.org/5s-crate/1.0",
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
       "@type": ["CreativeWork", "Profile"],
       "name": "Five Safes RO-Crate profile",
-      "version": "1.0"
+      "version": "1.0-DRAFT"
     },
     {
       "@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a",
@@ -893,7 +893,7 @@ A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.
 | Declaration | Entity | Value |
 |---|---|---|
 | Base RO-Crate | Metadata descriptor | `https://w3id.org/ro/crate/1.3` |
-| Five Safes RO-Crate core | Root Data Entity | `https://w3id.org/5s-crate/1.0` |
+| Five Safes RO-Crate core | Root Data Entity | `https://w3id.org/5s-crate/1.0-DRAFT` |
 | Selected Five Safes RO-Crate module | Root Data Entity | The module's exact, versioned profile IRI |
 
 The Root Data Entity MUST identify the core and every selected module directly with `conformsTo`. Each profile IRI in the Root Data Entity's `conformsTo` MUST be described by a contextual entity with the same `@id`, whose `@type` includes `Profile` and which has a `name`. A module's entity MUST identify the core with `isProfileOf`.
@@ -906,22 +906,22 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
     "@id": "./",
     "@type": "Dataset",
     "conformsTo": [
-      {"@id": "https://w3id.org/5s-crate/1.0"},
-      {"@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery"}
+      {"@id": "https://w3id.org/5s-crate/1.0-DRAFT"},
+      {"@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/cohort-discovery"}
     ]
   },
   {
-    "@id": "https://w3id.org/5s-crate/1.0",
+    "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
     "@type": ["CreativeWork", "Profile"],
     "name": "Five Safes RO-Crate",
-    "version": "1.0"
+    "version": "1.0-DRAFT"
   },
   {
-    "@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery",
+    "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/cohort-discovery",
     "@type": ["CreativeWork", "Profile"],
     "name": "Five Safes RO-Crate Module: Cohort Discovery",
-    "version": "1.0",
-    "isProfileOf": {"@id": "https://w3id.org/5s-crate/1.0"}
+    "version": "1.0-DRAFT",
+    "isProfileOf": {"@id": "https://w3id.org/5s-crate/1.0-DRAFT"}
   }
 ]
 ```
