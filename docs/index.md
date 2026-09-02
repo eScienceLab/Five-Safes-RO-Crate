@@ -928,6 +928,8 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
 
 Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules](authoring-modules.md).
 
+## Output Checking
+
 ## Federation
 
 Federation enables research to be carried out across several nodes or organisations. For example, software execution may travel to the data, data may be pooled in one environment, or both in combination. The [federated research patterns](https://docs.federated-research.com/federated_research_patterns) outline some of these approaches to federation. 
