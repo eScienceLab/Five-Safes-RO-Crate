@@ -12,6 +12,7 @@ nav:
       - Quick Reference: quick-reference.md
   - Modules:
       - Cohort Discovery: modules/cohort-discovery.md
+      - Output Checking: modules/output-checking.md
       - SafeTEXT Deidentification: modules/safetext-deidentification.md
       - Workflow Execution: modules/workflow-execution.md
 plugins:

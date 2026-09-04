@@ -8,7 +8,7 @@ This is the 1.0 Working Draft. [Five Safes RO-Crate 0.4](https://w3id.org/5s-cra
 
 * [Profile Specification](docs/index.md)
 * [Quick Reference](docs/quick-reference.md)
-* Modules: [Cohort Discovery](docs/modules/cohort-discovery.md), [SafeTEXT Deidentification](docs/modules/safetext-deidentification.md), [Workflow Execution](docs/modules/workflow-execution.md)
+* Modules: [Cohort Discovery](docs/modules/cohort-discovery.md), [Output Checking](docs/modules/output-checking.md), [SafeTEXT Deidentification](docs/modules/safetext-deidentification.md), [Workflow Execution](docs/modules/workflow-execution.md)
 
 ## Feedback
 
