@@ -940,6 +940,22 @@ Finally, third parties may publish further modules. The requirements on module s
 
 ## Output Checking
 
+Output checking assesses whether outputs may leave the TRE. Checks and decisions on outputs are recorded as separate processes, and this profile does not prescribe how a check is carried out.
+
+### Output Checks
+
+Every occasion of output checking is described as a separate `AssessAction`, and the process records which outputs were examined, by whom, and with what. A check performed by software is attributed as in [Who Performed a Process](#who-performed-a-process).
+
+| Process | Additional requirements |
+|---|---|
+| `AssessAction` | <ul> <li> `object` MUST identify each exact output checked through an entity with an absolute IRI; </li> <li> `additionalType` SHOULD refer to a published term for the kind of check; </li> <li> `instrument` identifies the exact tool or policy version that helped perform the check, where one did; </li> <li> `result` MAY identify a report the check produced. </li> </ul> |
+
+The producer determines how outputs are grouped or separated. Here, "exact" refers to the identity and version of the asset checked. An output may be a single table or a set of related outputs described as one `Dataset`. 
+
+A single file may also contain several separately identified outputs, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
+
+Checking a revised output is a new `AssessAction` on the new asset (see: [Derived Data](#derived-data)).
+
 ## Federation
 
 Federation enables research to be carried out across several nodes or organisations. For example, software execution may travel to the data, data may be pooled in one environment, or both in combination. The [federated research patterns](https://docs.federated-research.com/federated_research_patterns) outline some of these approaches to federation. 
