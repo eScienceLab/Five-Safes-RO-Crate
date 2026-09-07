@@ -940,21 +940,44 @@ Finally, third parties may publish further modules. The requirements on module s
 
 ## Output Checking
 
-Output checking assesses whether outputs may leave the TRE. Checks and decisions on outputs are recorded as separate processes, and this profile does not prescribe how a check is carried out.
+Output checking assesses outputs for possible release from the TRE. A check records what was examined, by whom, and with what. A release decision records what was approved or refused. Checks and decisions are separate processes, and this profile does not prescribe how checks and decisions should be carried out.
 
 ### Output Checks
 
-Every occasion of output checking is described as a separate `AssessAction`, and the process records which outputs were examined, by whom, and with what. A check performed by software is attributed as in [Who Performed a Process](#who-performed-a-process).
+The producer determines what to describe as an output. This may be a single table, a report, or a set of related outputs described as one `Dataset`. Each output is identified as the specific asset and version examined.
+
+Every occasion of output checking is described as a separate `AssessAction`. One check may examine one or more outputs, listed as its `object`. For example, examining three tables together may be recorded as one check with three `object` values. Examining one of those tables again is a separate check.
+
+A check performed by software is attributed as in [Who Performed a Process](#who-performed-a-process).
 
 | Process | Additional requirements |
 |---|---|
-| `AssessAction` | <ul> <li> `object` MUST identify each exact output checked through an entity with an absolute IRI; </li> <li> `additionalType` SHOULD refer to a published term for the kind of check; </li> <li> `instrument` identifies the exact tool or policy version that helped perform the check, where one did; </li> <li> `result` MAY identify a report the check produced. </li> </ul> |
+| `AssessAction` | <ul> <li> `object` MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined; </li> <li> `additionalType` SHOULD refer to a published term for the kind of check; </li> <li> `instrument` identifies the tool or policy version that helped perform the check, where one did; </li> <li> `result` MAY identify a report the check produced. </li> </ul> |
 
-The producer determines how outputs are grouped or separated. Here, "exact" refers to the identity and version of the asset checked. An output may be a single table or a set of related outputs described as one `Dataset`. 
+A single file may contain several separately identified outputs, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
 
-A single file may also contain several separately identified outputs, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
+A revised output is a new asset. Checking it is a new `AssessAction` identifying that new asset (see: [Derived Data](#derived-data)).
 
-Checking a revised output is a new `AssessAction` on the new asset (see: [Derived Data](#derived-data)).
+### Release Decisions
+
+A release decision is recorded separately as an `AuthorizeAction` (approval for release) or a `RejectAction` (refusal). One decision may cover one or more outputs. The release decision identifies those outputs as its `object`, and the checks that informed it with `prov:wasInformedBy`.
+
+A decision applies only to the outputs it identifies. If a collection is represented as one output, a decision identifying it applies to the collection as a whole. To record different decisions for members of that collection, those members should be identified separately.
+
+| Process | Additional requirements |
+|---|---|
+| `AuthorizeAction`, `RejectAction` | <ul> <li> `object` MUST identify each output decided on through an entity with an absolute IRI identifying the asset and version concerned (see: [Referencing Assets from Processes](#referencing-assets-from-processes)); </li> <li> `prov:wasInformedBy` MUST identify each recorded check that informed the decision. </li> </ul> |
+
+The table below outlines a non-exhaustive set of outcomes and how they are recorded:
+
+| Outcome | Recorded as |
+|---|---|
+| Some outputs are approved and others refused | An `AuthorizeAction` listing the approved outputs and a separate `RejectAction` listing the refused outputs, each referring to the check that informed it. |
+| An approval that depends on changing an output, such as rounding or suppressing values | [The changed output is a new asset](#derived-data) and should bechecked and decided on in its own right. The original output should not be approved. |
+| An outcome finer than approval or refusal, such as a conditional approval | Defined in [Module: Output Checking](modules/output-checking.md). |
+| An exception request to release a refused output | An `AskAction` identifying the refused output as its `object` (as in [Requests, Plans, and Execution](#requests-plans-and-execution)). A granted exception is a new decision that reverses the refusal (see: [Decision Subjects and Provenance](#decision-subjects-and-provenance)). |
+
+The release itself, where recorded, is a `SendAction` that identifies the outputs sent and uses the same asset identifiers (see: [Exchange Processes](#exchange-processes)). The RO-Crate should be an [egressed RO-Crate](#ro-crates-and-egress).
 
 ## Federation
 
