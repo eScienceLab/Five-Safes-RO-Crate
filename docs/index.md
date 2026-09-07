@@ -294,7 +294,7 @@ A process refers to the assets it acted on with `object`, `result`, and `instrum
 !!! note
     A relative path always means the copy inside the containing RO-Crate. The same path in a snapshot identifies that snapshot's own copy.
 
-Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. This may be when it is the `object` of a `SendAction` or `ReceiveAction`; it is identified by a decision, as its `object` or under `prov:used`; or when the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the activity record.
+Therefore, an asset MUST be referenced through an entity with an absolute IRI where the exact asset needs an identity beyond this one RO-Crate. This may be when it is the `object` of a `SendAction`, `ReceiveAction`, or [output check](#output-checks); it is identified by a decision, as its `object` or under `prov:used`; or when the producer asserts it is the same asset as one described in another RO-Crate, or across representations of the activity record.
 
 Reuse of an absolute `@id` across descriptions and representations follows [Identity Across Representations](#identity-across-representations): one IRI names one exact asset and version throughout a record sequence.
 
@@ -316,7 +316,7 @@ A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged
 
 Moving, renaming, or encoding the same asset in another format does not by itself create a new version or asset. Therefore, multiple packaged representations can point to the same absolute IRI. `prov:wasDerivedFrom` MUST NOT be used to connect a packaged representation to the asset it encodes; it is reserved for cases in which a process produced a distinct asset from another asset.
 
-The following fragment shows a cohort discovery output given an absolute identity for a release decision, and a data use agreement. These are also given packaged copies:
+The following fragment shows a cohort discovery output given an absolute identity for a [release decision](#release-decisions), and a data use agreement. These are also given packaged copies:
 
 ```json
 [
@@ -398,7 +398,7 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 
 | Kind | Described as |
 |---|---|
-| Submitting a plan for action | `AskAction` |
+| Submitting a plan for action, or asking for a decision on an exact asset | `AskAction` |
 | Work intended to create an asset, such as a query execution or workflow run | `CreateAction` |
 | Work that produces no asset and has no more specific type below | `Action` |
 | A check or assessment that reaches no decision by itself | `AssessAction` |
@@ -427,6 +427,8 @@ Intended work recorded before it begins MUST be an asset whose `@type` includes 
 Submitting a plan MUST be a separate `AskAction` with exactly one object (the plan), exactly one recipient (the person or organisation asked to act, described in the RO-Crate as a `Person` or `Organization`) and `CompletedActionStatus`. 
 
 A decision made on the request MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. 
+
+A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking](#output-checking)).
 
 `CancelAction` describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above. 
 
@@ -604,10 +606,12 @@ The subject of a decision, the request it answers, and what it used are differen
 | Property | Meaning |
 |---|---|
 | `object` | What was decided upon. Every decision MUST have at least one. |
-| `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered. |
+| `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered or the decision being reversed. |
 | `prov:used` | What the decision activity actually used. |
 
-An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the exact submitted plan version) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
+An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
+
+A decision that reverses an earlier decision on the same exact `object` MUST identify that earlier decision with `prov:wasInformedBy`; the earlier decision then no longer stands.
 
 A decision MAY identify a snapshot with `prov:used` only if the snapshot existed and was actually used in reaching it; one that just existed, was created afterwards, or later records the decision MUST NOT be identified, and where no snapshot was used its absence does not make the decision incomplete. A snapshot under `prov:used` is referenced as described in [Referencing Another RO-Crate](#referencing-another-ro-crate) and MUST already have been published when the decision ended: the snapshot's `datePublished` MUST NOT be later than the decision's `endTime`. 
 
@@ -666,7 +670,7 @@ Identity of a person or organisation across representations follows [Identity Ac
 
 A `Person` MAY carry `affiliation`, referencing the exact `Organization` described in the RO-Crate. An external Web URL whose reference page unambiguously indicates the entity's identity MAY be recorded with `sameAs`; other external identifiers MAY be given under `identifier` as `PropertyValue` entities (see: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers)).
 
-The following fragment attributes an assessment to an anonymous output checker:
+The following fragment attributes an assessment to a pseudonymous output checker:
 
 ```json
 [
@@ -869,6 +873,12 @@ The `pav:previousVersion` requirements are outlined in [Representation State](#r
   }
 }
 ```
+
+### RO-Crates and Egress
+
+An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking).
+
+<!-- Stub, needs more detail -->
 
 ### Referencing Another RO-Crate
 
