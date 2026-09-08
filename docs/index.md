@@ -123,7 +123,7 @@ A term used as a property value MUST be written as a full absolute IRI in `{"@id
 Writing `"actionStatus": "CompletedActionStatus"` instead produces the text `"CompletedActionStatus"`, not a reference to the term. This is because the RO-Crate context does not coerce property values to references.
 
 !!! warning
-    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. Note that it binds `dct`, not `dcterms`.
+    The RO-Crate context binds `pav`, `prov` and `dct` among others, so `pav:previousVersion` and `dct:isVersionOf` can be written in short form. In this profile, `hasPart` refers to `schema:hasPart`, which is a different property to `dct:hasPart`.
 
 A module may require an additional context and further vocabularies; the rules for declaring and describing them are in [Authoring Modules](authoring-modules.md).
 
@@ -316,7 +316,7 @@ A packaged file MUST use `encodesCreativeWork` for this relationship. A packaged
 
 Moving, renaming, or encoding the same asset in another format does not by itself create a new version or asset. Therefore, multiple packaged representations can point to the same absolute IRI. `prov:wasDerivedFrom` MUST NOT be used to connect a packaged representation to the asset it encodes; it is reserved for cases in which a process produced a distinct asset from another asset.
 
-The following fragment shows a cohort discovery output given an absolute identity for a [release decision](#release-decisions), and a data use agreement. These are also given packaged copies:
+The following fragment shows a cohort discovery output given an absolute identity for a [release decision](#release-decisions-and-requests), and a data use agreement. These are also given packaged copies:
 
 ```json
 [
@@ -398,10 +398,10 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 
 | Kind | Described as |
 |---|---|
-| Submitting a plan for action, or asking for a decision on an exact asset | `AskAction` |
+| Submitting a plan, asking for a decision, or requesting further action on an asset | `AskAction` |
 | Work intended to create an asset, such as a query execution or workflow run | `CreateAction` |
-| Work that produces no asset and has no more specific type below | `Action` |
-| A check or assessment that reaches no decision by itself | `AssessAction` |
+| An overall process with constituent actions, or other work with no more specific type below | `Action` |
+| A check or assessment of an asset | `AssessAction` |
 | A decision that permits something | `AuthorizeAction` |
 | A decision that refuses something | `RejectAction` |
 | Withdrawing a request before the work begins | `CancelAction` |
@@ -411,7 +411,7 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 
 The `@type` array MAY include further, more specific types alongside a listed type.
 
-An `AssessAction` records a check or assessment but does not itself assert permission or refusal, and any such decision MUST be recorded as a separate `AuthorizeAction` or `RejectAction`; the outcome is distinguished by that type.
+An `AssessAction` records a check or assessment but does not itself assert permission or refusal. Any such decision MUST be recorded as an `AuthorizeAction` or `RejectAction`; the outcome is distinguished by that type. The check and decision may be constituent actions of the same overall process.
 
 A process MAY carry `additionalType`, referring to the exact IRI of a published term for a more specific kind of process. If the term comes from another vocabulary, its exact published IRI MUST be used and its published meaning MUST NOT be changed. A module MAY define or require terms for the processes it covers.
 
@@ -422,11 +422,13 @@ Work that intended to create an artefact but completed without returning one MUS
 
 ### Requests, Plans, and Execution
 
-Intended work recorded before it begins MUST be an asset whose `@type` includes `prov:Plan` and has an absolute IRI. A plan submitted for action MUST identify the exact submitted version: a change after submission creates a new plan with a new `@id`, linked to its immediate predecessor with `pav:previousVersion`. 
+An `AskAction` records a request that was made. It may submit a plan, ask for permission, or request further action such as revisions or clarification. A request for further action on existing assets may describe the requested work directly in `description`, with those assets as its `object`; it does not require a separate plan (see: [Release Decisions and Requests](#release-decisions-and-requests)).
+
+Where intended work is represented as a separate plan before it begins, that plan MUST be an asset whose `@type` includes `prov:Plan` and has an absolute IRI. A plan submitted for action MUST identify the exact submitted version: a change after submission creates a new plan with a new `@id`, linked to its immediate predecessor with `pav:previousVersion`.
 
 Submitting a plan MUST be a separate `AskAction` with exactly one object (the plan), exactly one recipient (the person or organisation asked to act, described in the RO-Crate as a `Person` or `Organization`) and `CompletedActionStatus`. 
 
-A decision made on the request MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. 
+Any permission or refusal in response to a submitted plan MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. A request for revisions or clarification is another `AskAction`; it does not itself grant or refuse permission.
 
 A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking](#output-checking)).
 
@@ -609,7 +611,7 @@ The subject of a decision, the request it answers, and what it used are differen
 | `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered or the decision being reversed. |
 | `prov:used` | What the decision activity actually used. |
 
-An `AuthorizeAction` or `RejectAction` answering an `AskAction` MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify that `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`.
+An `AuthorizeAction` or `RejectAction` answering a submitted plan or a request for a decision on one asset MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify the `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`. Requesting revisions or clarification does not require a permission or refusal to be recorded unless one was actually made.
 
 A decision that reverses an earlier decision on the same exact `object` MUST identify that earlier decision with `prov:wasInformedBy`; the earlier decision then no longer stands.
 
@@ -938,46 +940,233 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
 
 Finally, third parties may publish further modules. The requirements on module specifications are defined in [Authoring Modules](authoring-modules.md).
 
-## Output Checking
+## Output Checking and Release Decisions
 
-Output checking assesses outputs for possible release from the TRE. A check records what was examined, by whom, and with what. A release decision records what was approved or refused. Checks and decisions are separate processes, and this profile does not prescribe how checks and decisions should be carried out.
+An output review considers whether particular outputs may be released from a TRE. An output review may include checks that produce findings and reports, decisions to grant or refuse permission, and requests for revisions or further information. The profile describes the review as a whole and the actions performed within it.
+
+| What is being recorded | Type | Meaning in this profile |
+|---|---|---|
+| The overall review | `Action` | Identifies one review and links to the actions that are part of it. |
+| An output check | `AssessAction` | Records what was assessed and the findings. |
+| Approval to release | `AuthorizeAction` | Records that release of the identified outputs was approved. |
+| Refusal to release | `RejectAction` | Records that release of the identified outputs was refused. |
+| A request for further action | `AskAction` | Records that someone was asked to revise, explain, or provide something. |
+
+For example, finding small counts in a table would be a check finding. Asking the researcher to combine or supress those counts would be a request. Refusing permission to release that table would be a decision.
+
+### The Overall Review
+
+When decisions or requests are recorded as belonging to one review, the review MUST be represented by one overall `Action` and link to its recorded constituent actions with `dct:hasPart`. The overall review and each of its parts follow [Process Shape](#process-shape), including the `prov:Activity` type.
+
+A check may be performed within the review or may have been performed earlier. `dct:hasPart` identifies an action as part of the review. `prov:wasInformedBy` identifies an action that supplied information used by the review, a decision, or a request. An earlier check can therefore inform a review without being one of its parts.
+
+The profile does not prescribe a fixed set or sequence of activities, and a check does not need to lead to a decision or request.
 
 ### Output Checks
 
-The producer determines what to describe as an output. This may be a single table, a report, or a set of related outputs described as one `Dataset`. Each output is identified as the specific asset and version examined.
-
-Every occasion of output checking is described as a separate `AssessAction`. One check may examine one or more outputs, listed as its `object`. For example, examining three tables together may be recorded as one check with three `object` values. Examining one of those tables again is a separate check.
+The producer determines what to describe as an output: for example, a table, a report, or a set of related outputs described as one `Dataset`. An output check is recorded as an `AssessAction`, and one check may assess several outputs, listed as its `object`: examining three tables together can be one check with three `object` values. Findings may be described in `description` or in a report identified by `result`. 
 
 A check performed by software is attributed as in [Who Performed a Process](#who-performed-a-process).
 
-| Process | Additional requirements |
+| Property of the `AssessAction` | Requirement |
 |---|---|
-| `AssessAction` | <ul> <li> `object` MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined; </li> <li> `additionalType` SHOULD refer to a published term for the kind of check; </li> <li> `instrument` identifies the tool or policy version that helped perform the check, where one did; </li> <li> `result` MAY identify a report the check produced. </li> </ul> |
+| `object` | MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined. |
+| `additionalType` | SHOULD refer to a published term for the kind of check. |
+| `prov:wasInformedBy` | MAY identify an earlier check whose findings were used in this check. |
+| `instrument` | SHOULD identify the tool or policy version that helped perform the check, where one did, as specified in [Process Shape](#process-shape). |
+| `result` | MAY identify a report the check produced. |
 
-A single file may contain several separately identified outputs, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
+The `additionalType` value describes the kind of check. For example, a check that identifies, analyses and evaluates risk [can use DPV's `RiskAssessment`](https://w3id.org/dpv/risk#RiskAssessment) (as in the disclosure risk assessment below). Note that this is an example classification and the base profile does not require this term for output checks.
 
-A revised output is a new asset. Checking it is a new `AssessAction` identifying that new asset (see: [Derived Data](#derived-data)).
+A single file may contain several separately identified outputs. For example, a spreadsheet containing several tables. Each table is a separate output, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
 
-### Release Decisions
+A revised output is a new asset. Its derivation from the source output follows [Derived Data](#derived-data). Checking it is a new `AssessAction` whose `object` identifies the new asset.
 
-A release decision is recorded separately as an `AuthorizeAction` (approval for release) or a `RejectAction` (refusal). One decision may cover one or more outputs. The release decision identifies those outputs as its `object`, and the checks that informed it with `prov:wasInformedBy`.
+!!! tip
+    A later examination is always a new `AssessAction`, even if it examines the same outputs.
 
-A decision applies only to the outputs it identifies. If a collection is represented as one output, a decision identifying it applies to the collection as a whole. To record different decisions for members of that collection, those members should be identified separately.
+### Release Decisions and Requests
 
-| Process | Additional requirements |
-|---|---|
-| `AuthorizeAction`, `RejectAction` | <ul> <li> `object` MUST identify each output decided on through an entity with an absolute IRI identifying the asset and version concerned (see: [Referencing Assets from Processes](#referencing-assets-from-processes)); </li> <li> `prov:wasInformedBy` MUST identify each recorded check that informed the decision. </li> </ul> |
+Release approval is recorded with `AuthorizeAction` when granted and `RejectAction` when refused. `AskAction` describes a request for further action, and can accompany a refusal, but a refusal is recorded only if one was made. 
 
-The table below outlines a non-exhaustive set of outcomes and how they are recorded:
+These actions identify the outputs they concern and the checks that informed them:
 
-| Outcome | Recorded as |
-|---|---|
-| Some outputs are approved and others refused | An `AuthorizeAction` listing the approved outputs and a separate `RejectAction` listing the refused outputs, each referring to the check that informed it. |
-| An approval that depends on changing an output, such as rounding or suppressing values | [The changed output is a new asset](#derived-data) and should bechecked and decided on in its own right. The original output should not be approved. |
-| An outcome finer than approval or refusal, such as a conditional approval | Defined in [Module: Output Checking](modules/output-checking.md). |
-| An exception request to release a refused output | An `AskAction` identifying the refused output as its `object` (as in [Requests, Plans, and Execution](#requests-plans-and-execution)). A granted exception is a new decision that reverses the refusal (see: [Decision Subjects and Provenance](#decision-subjects-and-provenance)). |
+| Property | Applies to | Requirement |
+|---|---|---|
+| `object` | Decisions and requests | MUST identify each output concerned through an entity with an absolute IRI identifying the asset and version concerned. |
+| `prov:wasInformedBy` | Decisions and requests | MUST identify each recorded check that informed the decision or request. |
+| `recipient` | Requests for further action | MUST identify at least one person or organisation asked to act, described as a `Person` or `Organization`. |
+| `description` | Requests for further action | SHOULD explain the work requested for the outputs concerned. |
 
-The release itself, where recorded, is a `SendAction` that identifies the outputs sent and uses the same asset identifiers (see: [Exchange Processes](#exchange-processes)). The RO-Crate should be an [egressed RO-Crate](#ro-crates-and-egress).
+A decision applies to its identified outputs. If its `object` is a collection represented as one output, the decision concerns that collection as a whole. Different decisions about members of a collection identify those members separately. Any limits on permission, such as embargos or restricted use, SHOULD be described. A refusal concerns the identified version and release context; a revised output may receive a different decision.
+
+A review may permit release of one output, refuse another, and request revisions to a third. These decisions and requests are recorded as parts of the same overall review and linked with `dct:hasPart`.
+
+For a request, `agent` identifies the asking party and `recipient` identifies who was asked. A separate plan is not required solely to describe the requested work. `CompletedActionStatus` means the request was made, not that the work was completed. A later check or decision identifies the output version it concerns, including a new asset identifier if the output was revised. Submitted plans and exception requests follow [Requests, Plans, and Execution](#requests-plans-and-execution) and any reversals follow [Decision Subjects and Provenance](#decision-subjects-and-provenance).
+
+Further, release approval does not imply that an output was released. An RO-Crate (and any egressed outputs or references) released from the TRE should follow [RO-Crates and Egress](#ro-crates-and-egress).
+
+### Worked Example: One Review of Three Outputs
+
+In this example, Output Check 1 assessed the disclosure risk of outputs A, B, and C using a statistical disclosure control software tool. Later, a person considered its findings in Review 42, and permitted release of A, refused release of B, and requested revisions to C. Review 42 is the overall `Action`, and Output Check 1 is an earlier `AssessAction` that informed it. The two decisions and the request are parts of Review 42:
+
+```mermaid
+flowchart TD
+    R["Review 42<br/>Action"]
+
+    R -->|"dct:hasPart"| A["Release permitted<br/>AuthorizeAction"]
+    R -->|"dct:hasPart"| B["Release refused<br/>RejectAction"]
+    R -->|"dct:hasPart"| C["Revisions requested<br/>AskAction"]
+
+    A -->|"object"| OA["Output A, version 1"]
+    B -->|"object"| OB["Output B, version 1"]
+    C -->|"object"| OC["Output C, version 1"]
+
+    C -->|"recipient"| P["Researcher"]
+
+    R -.->|"prov:wasInformedBy"| K["Earlier Output Check 1<br/>AssessAction"]
+```
+<br>
+
+The following JSON-LD fragment represents the entities and relationships shown in the diagram above:
+
+```json
+{
+  "@context": ["https://w3id.org/ro/crate/1.3/context"],
+  "@graph": [
+    {
+      "@id": "https://tre72.example.org/activities/A123/reviews/42",
+      "@type": ["Action", "prov:Activity"],
+      "name": "Review 42",
+      "agent": {"@id": "https://tre72.example.org/staff/0417"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "object": [
+        {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
+        {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
+        {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"}
+      ],
+      "dct:hasPart": [
+        {"@id": "https://tre72.example.org/activities/A123/decisions/release-7a1e"},
+        {"@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f"},
+        {"@id": "https://tre72.example.org/activities/A123/requests/revise-count-by-age"}
+      ],
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "startTime": "2027-03-15T09:00:00Z",
+      "endTime": "2027-03-15T09:14:00Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/decisions/release-7a1e",
+      "@type": ["AuthorizeAction", "prov:Activity"],
+      "name": "Cohort count result approved for release",
+      "agent": {"@id": "https://tre72.example.org/staff/0417"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "object": {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "endTime": "2027-03-15T09:10:00Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f",
+      "@type": ["RejectAction", "prov:Activity"],
+      "name": "Cohort count by site refused",
+      "description": "Release of site-level counts was refused under the TRE's release policy.",
+      "agent": {"@id": "https://tre72.example.org/staff/0417"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "endTime": "2027-03-15T09:12:00Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/requests/revise-count-by-age",
+      "@type": ["AskAction", "prov:Activity"],
+      "name": "Request revisions to cohort counts by age",
+      "description": "Combine the small age categories and submit a revised table for review.",
+      "agent": {"@id": "https://tre72.example.org/staff/0417"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"},
+      "recipient": {"@id": "https://orcid.org/0000-0002-1825-0097"},
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "endTime": "2027-03-15T09:14:00Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/checks/check-1",
+      "@type": ["AssessAction", "prov:Activity"],
+      "additionalType": {"@id": "https://w3id.org/dpv/risk#RiskAssessment"},
+      "name": "Output check 1: automated disclosure risk assessment",
+      "agent": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "instrument": {"@id": "https://doi.org/10.5281/zenodo.18456450"},
+      "object": [
+        {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
+        {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
+        {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"}
+      ],
+      "result": {"@id": "checks/check-1/results.json"},
+      "startTime": "2027-03-14T14:00:00Z",
+      "endTime": "2027-03-14T14:00:12Z",
+      "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count/v1",
+      "@type": "Dataset",
+      "name": "Cohort count result, version 1",
+      "version": "1"
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1",
+      "@type": "Dataset",
+      "name": "Cohort count by site, version 1",
+      "version": "1"
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1",
+      "@type": "Dataset",
+      "name": "Cohort count by age, version 1",
+      "version": "1"
+    },
+    {
+      "@id": "checks/check-1/results.json",
+      "@type": "File",
+      "name": "ACRO results for check 1",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.18456450",
+      "@type": "SoftwareApplication",
+      "name": "ACRO",
+      "version": "0.4.12",
+      "url": "https://github.com/AI-SDC/ACRO"
+    },
+    {
+      "@id": "https://tre72.example.org/staff/0417",
+      "@type": "Person",
+      "name": "Example output checker",
+      "affiliation": {"@id": "https://ror.org/027m9bs27"}
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-1825-0097",
+      "@type": "Person",
+      "name": "Example researcher"
+    },
+    {
+      "@id": "https://ror.org/027m9bs27",
+      "@type": "Organization",
+      "name": "TRE72"
+    }
+  ]
+}
+```
 
 ## Federation
 
@@ -1089,8 +1278,6 @@ flowchart TB
     This design is informed by the [Common Provenance Model](https://zenodo.org/records/4705074), where each organisation maintains its own fixed provenance record connected by shared identifiers.
 
 ## Security and Privacy
-
-## Media Type and Signposting
 
 ## References
 
