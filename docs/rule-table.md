@@ -127,3 +127,35 @@ CancelAction describes future work that will no longer happen, such as withdrawi
 | `ReceiveAction` → `prov:wasInformedBy` | MUST         | exist and point to the corresponding`SendAction` through an absolute IRI (this `SendAction` does not need to be described in the same RO-Crate).  | The RO-Crate asserts that a receipt resulted from a particular dispatch                 | How can we check this programmatically? What does such an assertion looks like? |
 
 **NOTE:** other rules pertaining to the asset being transferred through an exchange are listed in the rule table pertaining to Assets.
+
+### Decisions
+
+| Property                                                                                    | Requirement    | Description                                                                                                          | Preconditions                                                                                     | Comments                               |
+| ------------------------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `AuthorizeAction` → `object` / `RejectAction` → `object`                         | MUST, only one | reference a submitted plan version (i.e. a plan also referenced by an`AskAction` through its `object` property) |                                                                                                   |                                        |
+| `AuthorizeAction` → `prov:wasInformedBy` / `RejectAction` → `prov:wasInformedBy` | MUST, only one | reference the`AskAction`that in turn references the same Plan of the decision through its `object` property     | `AuthorizeAction`  / `RejectAction` → `object`is the same as `AskAction` → `object` |                                        |
+| `prov:used`                                                                               | MAY            | exist and point to a snapshot                                                                                        | the snapshot existed AND was used to reach the decision                                          | How do we check for the preconditions? |
+| `endTime`                                                                                 | MUST           | be posterior to the snapshot's`datePublished`                                                                      | `prov:used`points to a snapshot                                                                 |                                        |
+
+### Context
+
+| Property                       | Requirement | Description                                | Prerequisites                         | Comments                                                                                                                                |
+| ------------------------------ | ----------- | ------------------------------------------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `Person`→ `@id`           | MUST        | be an absolute IRI                         |                                       | This should be an external persistent identifier such as an ORCID iD where appropriate, or a stable opaque IRI such as a UUID URN       |
+| `Organization`→ `@id`     | MUST        | be an absolute IRI                         |                                       | This should be an external persistent identifier such as a ROR identifier where appropriate, or a stable opaque IRI such as a UUID URN |
+| `Person` → `affiliation` | MUST        | Reference an`Organization` entity        | `Person` → `affiliation` exists |                                                                                                                                         |
+| `Organization`→ `sameAs`  | MAY         | exist                                      |                                       |                                                                                                                                         |
+| `Organization`→ `sameAs`  | MUST        | be unique and point to an external Web URL | `Organization`→ `sameAs` exists  |                                                                                                                                         |
+
+### TRE and Nodes
+
+See ruleset table for **Processes**.
+
+### Agreements and Policies
+
+We need an operative definition of what an Agreemend/policy is (does being of type `CreativeWork` and having an absolute`@id` suffice?). Otherwise some of the rules that apply to them cannot be properly expressed / encoded.
+
+| Property                              | Requirement | Description                                                                                                      | Prerequisites                               | Comments                                                                  |
+| ------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
+| `File` → `encodesCreativeWork` | MUST        | reference a`CreativeWork`which has an absolute IRI                                                             | `File` → `encodesCreativeWork`exists |                                                                           |
+| Agreement →`additionalType`       | SHOULD      | refer to a published term (for example from[w3c-cg.github.io/dpv/2.3/dpv](https://w3c-cg.github.io/dpv/2.3/dpv/)) | the kind of agreement matter                | (We need to defined agreement somehow from an operational point of view)) |
