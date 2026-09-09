@@ -159,3 +159,11 @@ We need an operative definition of what an Agreemend/policy is (does being of ty
 | ------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
 | `File` → `encodesCreativeWork` | MUST        | reference a`CreativeWork`which has an absolute IRI                                                             | `File` → `encodesCreativeWork`exists |                                                                           |
 | Agreement →`additionalType`       | SHOULD      | refer to a published term (for example from[w3c-cg.github.io/dpv/2.3/dpv](https://w3c-cg.github.io/dpv/2.3/dpv/)) | the kind of agreement matter                | (We need to defined agreement somehow from an operational point of view)) |
+
+### Credentials
+
+**Operational definition:** A credential is an entity whose `@type` is `EducationalOccupationalCredential`.
+
+| Property      | Requirement        | Decription                                                                                                                                                                                | Preconditions | Comments                                               |
+| ------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------ |
+| `dct:valid` | MUST, at least one | exist and have a value in`start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones |               | Example:<br />`"dct:valid": "2027-01-01/2027-12-31"` |
