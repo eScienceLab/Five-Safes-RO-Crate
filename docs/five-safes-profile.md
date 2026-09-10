@@ -25,7 +25,7 @@ _The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "
 
 ## Introduction
 
-The [Five Safes](https://doi.org/10.13140/RG.2.1.3661.1604) framework ([Desai, Ritchie and Welpton, 2016](#references)) is an approach to consider safe access to sensitive data across five dimensions: safe projects, safe people, safe settings, safe data, and safe outputs. In TREs, this is applied through governance: work is proposed and approved, researchers are accredited, environments are controlled, data is prepared, and outputs are checked.
+The [Five Safes](https://doi.org/10.13140/RG.2.1.3661.1604) framework ([Desai, Ritchie and Welpton, 2016](#references)) is an approach to consider safe access to sensitive data across five dimensions: safe projects, safe people, safe settings, safe data, and safe outputs. In Trusted Research Environments (TREs), this is applied through governance: work is proposed and approved, researchers are accredited, environments are controlled, data is prepared, and outputs are checked.
 
 A Five Safes RO-Crate records this activity so that it can be retained as provenance, exchanged between systems, and inspected later. This profile specifies how that activity is represented as an RO-Crate.
 
@@ -33,11 +33,16 @@ This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
 ## Design Principles
 
-The Five Safes Profile is designed with a focus on TREs. As such, it focuses on three core types of *Thing* that exist within TREs: Assets, Processes and Contexts.
+The Five Safes Profile is designed with a focus on TREs. The core aims of the Five Safes Profile are:
 
-### Assets, Processes, Contexts
+- Help describe what happened within a TRE, *without* dictating how it must operate
+- Provide a conceptually simple, concise base profile that emphasises clarity & readability
+- Enable building on the base profile to support additional "plug and play" functionality
 
-Every entity described within a Five Safes RO-Crate falls into one of three types.
+Here we describe the base Five Safes RO-Crate Profile. Extensions of this profile for specific domains and use cases are described in the material on *Modules*.
+### The Three Things: Assets, Processes, Contexts
+
+The conceptual basis of the Five Safes RO-Crate Profile is formed of three types of entity: *Assets*, *Processes* and *Contexts*.  Every entity within a Five Safes RO-Crate falls into one of these three types.
 
 | Type        | Description                                                                                                           |
 | ----------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -50,13 +55,23 @@ Note that this means there may be several entities corresponding to instances of
 - A protocol or plan is an *asset*, whilst an instance of applying or following it is a *process*. 
 - A source dataset is an *asset*, while a dataset derived from it is a separate *asset* with its own history.
 
-Some other examples of these entity types occurring in practice are:
+Some examples of these entity types occurring in practice are:
 
 - A request for access still exists as a *process* that occurred, even if it was declined and work did not proceed.
 - Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*.
 - Each context item is recorded once and referred to wherever needed.
 
-Notably, there is no "*Project*" entity type. This is to avoid making the core Five Safes Profile too prescriptive, since projects can have very different scopes or meanings depending on the organisation(s) involved, or even the timeframe in which work was undertaken. Instead, the root of the profile is based around an *Activity Record*.
+### The Scope of a Five Safes RO-Crate
+
+In many cases, it may make sense to consider a Five Safes RO-Crate to correspond to one *project* within a TRE. However, this profile does not prescribe what a project must be since this has many possible definitions, such as:
+
+- A short term task, such as exploratory cohort discovery work.
+- A fixed term research grant spanning a few years.
+- An open ended workspace, capturing research that has no definite end date.
+
+Prescribing a specific one of these as the basis for a Five Safes RO-Crate would mean dictating how a TRE must function. 
+
+Instead, the root of the profile is based around an *Activity Record*. This Activity Record may sit at the level of a "project", but the exact scope and meaning is left up to the TRE / organisation to decide.
 
 ### The TRE Activity Record
 
