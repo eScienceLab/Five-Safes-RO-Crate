@@ -7,7 +7,7 @@ extra_css:
   - stylesheets/extra.css
 nav:
   - Specification:
-      - index.md
+      - five-safes-profile.md
       - Authoring Modules: authoring-modules.md
       - Quick Reference: quick-reference.md
   - Modules:
