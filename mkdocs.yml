@@ -7,14 +7,18 @@ extra_css:
   - stylesheets/extra.css
 nav:
   - Specification:
-      - five-safes-profile.md
+      - index.md
       - Authoring Modules: authoring-modules.md
       - Quick Reference: quick-reference.md
   - Modules:
-      - Cohort Discovery: modules/cohort-discovery.md
-      - Output Checking: modules/output-checking.md
-      - SafeTEXT Deidentification: modules/safetext-deidentification.md
-      - Workflow Execution: modules/workflow-execution.md
+      - Data Preparation:
+          - Free-Text Deidentification: modules/free-text-deidentification.md
+      - Execution:
+          - Cohort Discovery: modules/cohort-discovery.md
+          - Workflow Execution: modules/workflow-execution.md
+      - Output Checking:
+          - Statistical Outputs: modules/statistical-output-checking.md
+          - Trained Models: modules/trained-model-output-checking.md
 plugins:
   - search
   - mermaid2
