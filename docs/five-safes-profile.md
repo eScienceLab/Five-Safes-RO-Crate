@@ -31,32 +31,34 @@ A Five Safes RO-Crate records this activity so that it can be retained as proven
 
 This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
-## Scope and Terminology
+## Design Principles
 
-The Five Safes profile aims to describe activity within a TRE, adhering to the following:
+The Five Safes profile describes activity within a TRE. It is designed to:
 
-- Help describe what happened within a TRE, *without* dictating how it must operate
-- Provide a conceptually simple, concise base profile that emphasises clarity & readability
-- Enable building on the base profile to support additional "plug and play" functionality
-- Be flexible enough to describe TRE activity at different scales
+- describe what happened within a TRE, *without* dictating how it must operate
+- provide a conceptually simple, concise base profile that emphasises clarity and readability
+- enable modules to build on the base profile to support additional "plug and play" functionality
+- describe TRE activity at different scales
 
-On the last point, many TREs orient their activities around "projects". However, we do not prescribe what a project must be since this has many possible definitions, such as:
+Many TREs orient their activities around "projects". However, this profile does not prescribe what a project must be, since the term has many possible meanings, such as:
 
 - A short term task, such as exploratory cohort discovery work.
 - A fixed term research grant spanning a few years.
 - An open ended workspace, capturing research that has no definite end date.
 
-Prescribing one of these as a fixed scope for the activities to be described would mean dictating how a TRE must function. This would make implementation and adoption more challenging, so instead this profile takes a different approach.
+Prescribing one of these as the fixed scope of a record would mean dictating how a TRE must function. Instead, the TRE or federation decides how much work one activity record covers.
 
-We emphasise flexibility by assuming the TRE will define this scope of activity they want to capture according to their needs, and we refer to this scope as the **TRE Activity Record** ("activity record"). The activity record effectively acts as an umbrella under which the activity to be captured occurs, and the Five Safes Profile is oriented around capturing the provenance of that activity within that scope. This might map neatly to a "project" as defined by that TRE or federation, or it might not. 
+### The TRE Activity Record
 
-This abstract concept of an activity record can be represented in data as two components: a **working record** which represents the "live" state of the record as things change, and versioned, immutable **snapshots** which preserve the state of the record at a particular point in time. These parts are represented as **Five Safes RO-Crates**; this profile describes their structure.
+A **TRE Activity Record** ("activity record") is the account of one piece of governed work in a TRE. Its **scope**, the work it covers, might match a "project" as that TRE defines it, or it might not. An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released.
 
-An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. The level of detail can vary - a portal may record every query, or an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records with different scopes. 
+An activity record is represented in data as two kinds of component: a **working record**, which holds the "live" state of the record as things change, and versioned, immutable **snapshots**, which preserve the state of the record at particular points in time. Each of these is a **representation** of the activity record, and together they form its **record sequence**. Every representation is a **Five Safes RO-Crate**; this profile describes their structure.
 
-## The Five Safes Profile
+### Observation and Scope
 
-Here we describe the base Five Safes RO-Crate Profile. Extensions of this profile for specific domains and use cases are described in the material on *Modules*.
+Within its scope, an activity record holds activity that was **observed or attested**: captured by a system as it happened, such as a portal logging each query, or stated by a person or organisation, such as a manual output review.
+
+The level of detail can vary. A portal may record every query, while an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records.
 
 ### The Three Things: Assets, Processes, Contexts
 
@@ -76,7 +78,7 @@ Note that this means there may be several entities corresponding to instances of
 Some examples of these entity types occurring in practice are:
 
 - A request for access exists as a *process* that occurred, even if it was declined and work did not proceed.
-- Contexts can be the subjects of processes. For example, accrediting a researcher is a *process* where the person (researcher) is the context it is applied to.
+- Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*, and the researcher is a *context*.
 
 ### Core and Modules
 
@@ -773,7 +775,7 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
 
 An activity record exists as a working record that changes, and as snapshots that do not.
 
-The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a record sequence; each is a **representation** of the activity record. 
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither.
 
 This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
@@ -1289,8 +1291,6 @@ flowchart TB
 - Standard Architecture for Trusted Research Environments (SATRE): Federation. <https://satre-specification.readthedocs.io/en/stable/specification.html#federation>
 - Wittner, R. et al. (2021). _EOSC-Life Common Provenance Model._ Zenodo. <https://zenodo.org/records/4705074>
 - Wittner, R. et al. (2022). _Lightweight Distributed Provenance Model for Complex Real-world Environments._ Scientific Data 9, 503. <https://doi.org/10.1038/s41597-022-01537-6>
-
-## Glossary
 
 ## Appendix A. Terms and Properties
 
