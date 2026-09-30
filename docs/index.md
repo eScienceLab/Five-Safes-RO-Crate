@@ -54,6 +54,8 @@ A **TRE Activity Record** ("activity record") is the account of one piece of gov
 
 An activity record is represented in data as two kinds of component: a **working record**, which holds the "live" state of the record as things change, and versioned, immutable **snapshots**, which preserve the state of the record at particular points in time. Each of these is a **representation** of the activity record, and together they form its **record sequence**. Every representation is a **Five Safes RO-Crate**; this profile describes their structure.
 
+The service or person that writes a representation is its **producer**. Anything that reads one, such as a service withiin a receiving TRE or a validator, is a **consumer**.
+
 ### Observation and Scope
 
 Within its scope, an activity record holds activity that was **observed or attested**: captured by a system as it happened, such as a portal logging each query, or stated by a person or organisation, such as a manual output review.
@@ -745,7 +747,7 @@ Training and qualifications relevant to access are `EducationalOccupationalCrede
 
 When the credential has exactly one continuous validity period with the start and endpoints known, it SHOULD carry exactly one `dct:valid` value as a closed interval in `start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones, and the start not later than the end. 
 
-A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or endpoints is known. 
+A producer must not infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or endpoints is known. 
 
 !!! note
     An interval with a start and endpoint is the only form that can establish validity at a time.
