@@ -612,7 +612,7 @@ The subject of a decision, the request it answers, and what it used are differen
 | `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered or the decision being reversed. |
 | `prov:used` | What the decision activity actually used. |
 
-An `AuthorizeAction` or `RejectAction` answering a submitted plan or a request for a decision on one asset MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify the `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`. Requesting revisions or clarification does not require a permission or refusal to be recorded unless one was actually made.
+An `AuthorizeAction` or `RejectAction` answering a submitted plan or a request for a decision on one asset MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify the `AskAction` with `prov:wasInformedBy`. An `AuthorizeAction` or `RejectAction` that does not answer a submitted plan or a request for a decision on one asset identifies what it decided upon as its `object`. Requesting revisions or clarification does not require a permission or refusal to be recorded unless one was actually made.
 
 A decision that reverses an earlier decision on the same exact `object` MUST identify that earlier decision with `prov:wasInformedBy`; the earlier decision then no longer stands.
 
@@ -741,7 +741,7 @@ Where the kind of agreement matters, it SHOULD be given with `additionalType` re
 
 ### Credentials
 
-Training and qualifications relevant to access are `EducationalOccupationalCredential `entities referenced from the person with `hasCredential`. This identifies the exact credential awarded to that person.
+Training and qualifications relevant to access are `EducationalOccupationalCredential` entities referenced from the person with `hasCredential`. This identifies the exact credential awarded to that person.
 
 When the credential has exactly one continuous validity period with the start and endpoints known, it SHOULD carry exactly one `dct:valid` value as a closed interval in `start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones, and the start not later than the end. 
 
@@ -749,6 +749,8 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
 
 !!! note
     An interval with a start and endpoint is the only form that can establish validity at a time.
+
+Where the decision that awarded a credential was observed or attested, it is an `AuthorizeAction` whose `object` is the person and whose `result` is the credential. A refusal is a `RejectAction` with the person as its `object` and no `result`. The following fragment shows an output checker, the accreditation they hold, and the decision that awarded it:
 
 ```json
 [
@@ -762,8 +764,24 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
   {
     "@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0",
     "@type": "EducationalOccupationalCredential",
-    "name": "TRE researcher accreditation",
+    "name": "TRE output checker accreditation",
     "dct:valid": "2027-01-01/2027-12-31"
+  },
+  {
+    "@id": "urn:uuid:5e2f7c1a-3b8d-4e6f-9a0b-1c2d3e4f5a6b",
+    "@type": ["AuthorizeAction", "prov:Activity"],
+    "name": "Output checker accreditation approved",
+    "agent": {"@id": "https://example.org/tre/node-a"},
+    "provider": {"@id": "https://example.org/tre/node-a"},
+    "object": {"@id": "urn:uuid:79c330fe-2e70-4b0a-917b-c5f6b9cf6521"},
+    "result": {"@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0"},
+    "endTime": "2026-12-15T11:00:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://example.org/tre/node-a",
+    "@type": "Organization",
+    "name": "TRE node A"
   }
 ]
 ```
