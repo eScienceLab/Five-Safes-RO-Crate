@@ -431,7 +431,7 @@ Submitting a plan MUST be a separate `AskAction` with exactly one object (the pl
 
 Any permission or refusal in response to a submitted plan MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. A request for revisions or clarification is another `AskAction`; it does not itself grant or refuse permission.
 
-A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking](#output-checking)).
+A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking and Release Decisions](#output-checking-and-release-decisions)).
 
 `CancelAction` describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above. 
 
@@ -883,7 +883,7 @@ The `pav:previousVersion` requirements are outlined in [Representation State](#r
 
 ### RO-Crates and Egress
 
-An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking).
+An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking-and-release-decisions).
 
 <!-- Stub, needs more detail -->
 
