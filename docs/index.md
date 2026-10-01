@@ -747,7 +747,7 @@ Training and qualifications relevant to access are `EducationalOccupationalCrede
 
 When the credential has exactly one continuous validity period with the start and endpoints known, it SHOULD carry exactly one `dct:valid` value as a closed interval in `start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones, and the start not later than the end. 
 
-A producer must not infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or endpoints is known. 
+A producer must not infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or an endpoint is known. 
 
 !!! note
     An interval with a start and endpoint is the only form that can establish validity at a time.
