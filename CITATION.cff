@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this profile, please cite it as below."
 title: "Five Safes RO-Crate"
-version: "1.0"
+version: "1.0-DRAFT"
 license: MIT
 repository-code: "https://github.com/eScienceLab/Five-Safes-RO-Crate"
-url: "https://w3id.org/5s-crate/1.0"
+url: "https://w3id.org/5s-crate/1.0-DRAFT"
 authors:
   - family-names: Hambley
     given-names: Alexander
