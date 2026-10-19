@@ -1,4 +1,4 @@
-# Five Safes RO-Crate 1.0
+# Five Safes RO-Crate 1.0-DRAFT
 
 Authors:
 
@@ -11,8 +11,8 @@ Authors:
 
 This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for recording and exchanging the activity of Trusted Research Environments (TREs).
 
-* Permalink: <https://w3id.org/5s-crate/1.0>
-* Version: 1.0
+* Permalink: <https://w3id.org/5s-crate/1.0-DRAFT>
+* Version: 1.0-DRAFT
 * Status: Working Draft
 * Release notes: <https://github.com/eScienceLab/Five-Safes-RO-Crate/releases>
 * Published: 2027-XX-XX
@@ -25,7 +25,7 @@ _The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "
 
 ## Introduction
 
-The [Five Safes](https://doi.org/10.13140/RG.2.1.3661.1604) framework ([Desai, Ritchie and Welpton, 2016](#references)) is an approach to consider safe access to sensitive data across five dimensions: safe projects, safe people, safe settings, safe data, and safe outputs. In TREs, this is applied through governance: work is proposed and approved, researchers are accredited, environments are controlled, data is prepared, and outputs are checked.
+The [Five Safes](https://doi.org/10.13140/RG.2.1.3661.1604) framework ([Desai, Ritchie and Welpton, 2016](#references)) is an approach to consider safe access to sensitive data across five dimensions: safe projects, safe people, safe settings, safe data, and safe outputs. In Trusted Research Environments (TREs), this is applied through governance: work is proposed and approved, researchers are accredited, environments are controlled, data is prepared, and outputs are checked.
 
 A Five Safes RO-Crate records this activity so that it can be retained as provenance, exchanged between systems, and inspected later. This profile specifies how that activity is represented as an RO-Crate.
 
@@ -33,11 +33,38 @@ This profile succeeds [Five Safes RO-Crate 0.4](https://w3id.org/5s-crate/0.4).
 
 ## Design Principles
 
-The Five Safes Profile is designed with a focus on TREs. As such, it focuses on three core types of *Thing* that exist within TREs: Assets, Processes and Contexts.
+The Five Safes profile describes activity within a TRE. It is designed to:
 
-### Assets, Processes, Contexts
+- describe what happened within a TRE, *without* dictating how it must operate
+- provide a conceptually simple, concise base profile that emphasises clarity and readability
+- enable modules to build on the base profile to support additional "plug and play" functionality
+- describe TRE activity at different scales
 
-Every entity described within a Five Safes RO-Crate falls into one of three types.
+Many TREs orient their activities around "projects". However, this profile does not prescribe what a project must be, since the term has many possible meanings, such as:
+
+- A short term task, such as exploratory cohort discovery work.
+- A fixed term research grant spanning a few years.
+- An open ended workspace, capturing research that has no definite end date.
+
+Prescribing one of these as the fixed scope of a record would mean dictating how a TRE must function. Instead, the TRE or federation decides how much work one activity record covers.
+
+### The TRE Activity Record
+
+A **TRE Activity Record** ("activity record") is the account of one piece of governed work in a TRE. Its **scope**, the work it covers, might match a "project" as that TRE defines it, or it might not. An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released.
+
+An activity record is represented in data as two kinds of component: a **working record**, which holds the "live" state of the record as things change, and versioned, immutable **snapshots**, which preserve the state of the record at particular points in time. Each of these is a **representation** of the activity record, and together they form its **record sequence**. Every representation is a **Five Safes RO-Crate**; this profile describes their structure.
+
+The service or person that writes a representation is its **producer**. Anything that reads one, such as a service withiin a receiving TRE or a validator, is a **consumer**.
+
+### Observation and Scope
+
+Within its scope, an activity record holds activity that was **observed or attested**: captured by a system as it happened, such as a portal logging each query, or stated by a person or organisation, such as a manual output review.
+
+The level of detail can vary. A portal may record every query, while an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records.
+
+### The Three Things: Assets, Processes, Contexts
+
+The conceptual basis of the Five Safes RO-Crate Profile is formed of three types of entity: *Assets*, *Processes* and *Contexts*.  Every entity within a Five Safes RO-Crate falls into one of these three types, and a Five Safes RO-Crate may contain zero or more of each of these types of entity.
 
 | Type        | Description                                                                                                           |
 | ----------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -50,34 +77,10 @@ Note that this means there may be several entities corresponding to instances of
 - A protocol or plan is an *asset*, whilst an instance of applying or following it is a *process*. 
 - A source dataset is an *asset*, while a dataset derived from it is a separate *asset* with its own history.
 
-Some other examples of these entity types occurring in practice are:
+Some examples of these entity types occurring in practice are:
 
-- A request for access still exists as a *process* that occurred, even if it was declined and work did not proceed.
-- Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*.
-- Each context item is recorded once and referred to wherever needed.
-
-Notably, there is no "*Project*" entity type. This is to avoid making the core Five Safes Profile too prescriptive, since projects can have very different scopes or meanings depending on the organisation(s) involved, or even the timeframe in which work was undertaken. Instead, the root of the profile is based around an *Activity Record*.
-
-### The TRE Activity Record
-
-A **TRE Activity Record** ("activity record") is a versioned account of activity in a TRE. Each activity record covers one piece of **governed work** under the applicable TRE or federation arrangements, from a single cohort discovery query to a study lasting years. If work consists of several organisations, one activity record captures the whole piece of work.
-
-An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released. This activity record is represented as a **Five Safes RO-Crate**.
-
-### Observation and Scope
-
-An activity record focuses on activity that was observed or attested: this is work in which a system captured the event as it happened, such as a portal logging each query, or work that a person or organisation stated happened, such as a manual output review. 
-
-A portal may record every query, or an interactive workspace may capture only the governance points around a session, with the analysis between them summarised. Both are valid activity records with different scopes. 
-
-
-### Working Record and Snapshots
-
-The **working record** reflects the current activity record, and captures the understanding of the work and changes as queries run, decisions are returned, and outputs appear. A **snapshot** is a fixed copy of the working record taken at a significant moment, and once published, it is never changed. 
-
-The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Together, the working record and snapshots form a record sequence; each is a **representation** of the activity record. 
-
-This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
+- A request for access exists as a *process* that occurred, even if it was declined and work did not proceed.
+- Contexts can be the subjects of processes. For example, accrediting a researcher is a *process*, and the researcher is a *context*.
 
 ### Core and Modules
 
@@ -148,7 +151,7 @@ The following is a complete, minimal conforming working record of a feasibility 
     {
       "@id": "https://tre72.example.org/activities/A123/current",
       "@type": "Dataset",
-      "conformsTo": [{"@id": "https://w3id.org/5s-crate/1.0"}],
+      "conformsTo": [{"@id": "https://w3id.org/5s-crate/1.0-DRAFT"}],
       "identifier": {"@id": "https://tre72.example.org/activities/A123/current"},
       "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
       "name": "Feasibility enquiry A123 (TRE72)",
@@ -162,10 +165,10 @@ The following is a complete, minimal conforming working record of a feasibility 
       "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
     },
     {
-      "@id": "https://w3id.org/5s-crate/1.0",
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
       "@type": ["CreativeWork", "Profile"],
       "name": "Five Safes RO-Crate profile",
-      "version": "1.0"
+      "version": "1.0-DRAFT"
     },
     {
       "@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a",
@@ -430,7 +433,7 @@ Submitting a plan MUST be a separate `AskAction` with exactly one object (the pl
 
 Any permission or refusal in response to a submitted plan MUST be a separate `AuthorizeAction` or `RejectAction` with the same plan version as its only object, identifying the `AskAction` with `prov:wasInformedBy`. A request for revisions or clarification is another `AskAction`; it does not itself grant or refuse permission.
 
-A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking](#output-checking)).
+A request for a decision on an existing asset follows the same pattern, with the exact asset as the only `object` of both the request and the decision. Examples are a request for access to a dataset, a request to bring a software version into the TRE, and an exception request to release a refused output (see: [Output Checking and Release Decisions](#output-checking-and-release-decisions)).
 
 `CancelAction` describes future work that will no longer happen, such as withdrawing a pending request. This follows the pattern above. 
 
@@ -611,7 +614,7 @@ The subject of a decision, the request it answers, and what it used are differen
 | `prov:wasInformedBy` | An earlier process that informed the decision, including the request being answered or the decision being reversed. |
 | `prov:used` | What the decision activity actually used. |
 
-An `AuthorizeAction` or `RejectAction` answering a submitted plan or a request for a decision on one asset MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify the `AskAction` with `prov:wasInformedBy`. Any other decision identifies whatever it decided upon as its `object`. Requesting revisions or clarification does not require a permission or refusal to be recorded unless one was actually made.
+An `AuthorizeAction` or `RejectAction` answering a submitted plan or a request for a decision on one asset MUST have exactly one `object` (the same exact plan version or asset as the request) and MUST identify the `AskAction` with `prov:wasInformedBy`. An `AuthorizeAction` or `RejectAction` that does not answer a submitted plan or a request for a decision on one asset identifies what it decided upon as its `object`. Requesting revisions or clarification does not require a permission or refusal to be recorded unless one was actually made.
 
 A decision that reverses an earlier decision on the same exact `object` MUST identify that earlier decision with `prov:wasInformedBy`; the earlier decision then no longer stands.
 
@@ -657,7 +660,7 @@ The following fragment outlines an approval. The Root Data Entity lists the deci
 
 ## Context
 
-Context records who was involved, where, and under what authority.
+Context records who was involved, where, and under what authority. Each context item is recorded once and referred to wherever needed.
 
 ### People and Organisations
 
@@ -740,14 +743,16 @@ Where the kind of agreement matters, it SHOULD be given with `additionalType` re
 
 ### Credentials
 
-Training and qualifications relevant to access are `EducationalOccupationalCredential `entities referenced from the person with `hasCredential`. This identifies the exact credential awarded to that person.
+Training and qualifications relevant to access are `EducationalOccupationalCredential` entities referenced from the person with `hasCredential`. This identifies the exact credential awarded to that person.
 
 When the credential has exactly one continuous validity period with the start and endpoints known, it SHOULD carry exactly one `dct:valid` value as a closed interval in `start/end` form, with the start and endpoints as `YYYY-MM-DD` dates or both as [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) date-times with time zones, and the start not later than the end. 
 
-A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or endpoints is known. 
+A producer must not infer a missing endpoint, and `dct:valid` MUST be omitted where only a start or an endpoint is known. 
 
 !!! note
     An interval with a start and endpoint is the only form that can establish validity at a time.
+
+Where the decision that awarded a credential was observed or attested, it is an `AuthorizeAction` whose `object` is the person and whose `result` is the credential. A refusal is a `RejectAction` with the person as its `object` and no `result`. The following fragment shows an output checker, the accreditation they hold, and the decision that awarded it:
 
 ```json
 [
@@ -761,8 +766,24 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
   {
     "@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0",
     "@type": "EducationalOccupationalCredential",
-    "name": "TRE researcher accreditation",
+    "name": "TRE output checker accreditation",
     "dct:valid": "2027-01-01/2027-12-31"
+  },
+  {
+    "@id": "urn:uuid:5e2f7c1a-3b8d-4e6f-9a0b-1c2d3e4f5a6b",
+    "@type": ["AuthorizeAction", "prov:Activity"],
+    "name": "Output checker accreditation approved",
+    "agent": {"@id": "https://example.org/tre/node-a"},
+    "provider": {"@id": "https://example.org/tre/node-a"},
+    "object": {"@id": "urn:uuid:79c330fe-2e70-4b0a-917b-c5f6b9cf6521"},
+    "result": {"@id": "urn:uuid:9d721e23-78c2-4bdd-b96a-a3ef090662f0"},
+    "endTime": "2026-12-15T11:00:00Z",
+    "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
+  },
+  {
+    "@id": "https://example.org/tre/node-a",
+    "@type": "Organization",
+    "name": "TRE node A"
   }
 ]
 ```
@@ -773,6 +794,10 @@ A producer MUST NOT infer a missing endpoint, and `dct:valid` MUST be omitted wh
 ## Versioning and Snapshots
 
 An activity record exists as a working record that changes, and as snapshots that do not.
+
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither.
+
+This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
 ### Record and RO-Crate Identifiers
 
@@ -878,7 +903,7 @@ The `pav:previousVersion` requirements are outlined in [Representation State](#r
 
 ### RO-Crates and Egress
 
-An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking).
+An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking-and-release-decisions).
 
 <!-- Stub, needs more detail -->
 
@@ -905,7 +930,7 @@ A Five Safes RO-Crate MUST conform to [RO-Crate 1.3](https://www.researchobject.
 | Declaration | Entity | Value |
 |---|---|---|
 | Base RO-Crate | Metadata descriptor | `https://w3id.org/ro/crate/1.3` |
-| Five Safes RO-Crate core | Root Data Entity | `https://w3id.org/5s-crate/1.0` |
+| Five Safes RO-Crate core | Root Data Entity | `https://w3id.org/5s-crate/1.0-DRAFT` |
 | Selected Five Safes RO-Crate module | Root Data Entity | The module's exact, versioned profile IRI |
 
 The Root Data Entity MUST identify the core and every selected module directly with `conformsTo`. Each profile IRI in the Root Data Entity's `conformsTo` MUST be described by a contextual entity with the same `@id`, whose `@type` includes `Profile` and which has a `name`. A module's entity MUST identify the core with `isProfileOf`.
@@ -918,22 +943,22 @@ When a module is selected, the RO-Crate MUST satisfy every applicable `MUST` and
     "@id": "./",
     "@type": "Dataset",
     "conformsTo": [
-      {"@id": "https://w3id.org/5s-crate/1.0"},
-      {"@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery"}
+      {"@id": "https://w3id.org/5s-crate/1.0-DRAFT"},
+      {"@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/cohort-discovery"}
     ]
   },
   {
-    "@id": "https://w3id.org/5s-crate/1.0",
+    "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
     "@type": ["CreativeWork", "Profile"],
     "name": "Five Safes RO-Crate",
-    "version": "1.0"
+    "version": "1.0-DRAFT"
   },
   {
-    "@id": "https://w3id.org/5s-crate/1.0/modules/cohort-discovery",
+    "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/cohort-discovery",
     "@type": ["CreativeWork", "Profile"],
     "name": "Five Safes RO-Crate Module: Cohort Discovery",
-    "version": "1.0",
-    "isProfileOf": {"@id": "https://w3id.org/5s-crate/1.0"}
+    "version": "1.0-DRAFT",
+    "isProfileOf": {"@id": "https://w3id.org/5s-crate/1.0-DRAFT"}
   }
 ]
 ```
@@ -1292,3 +1317,4 @@ flowchart TB
 Every term and property used by this profile that is not plain schema.org, with its source vocabulary and definition.
 
 ## Appendix B. Changes From 0.4
+
