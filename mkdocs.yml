@@ -21,7 +21,15 @@ nav:
           - Trained Models: modules/trained-model-output-checking.md
 plugins:
   - search
-  - mermaid2
+  - mermaid2:
+      version: '12.2.0'
+      arguments:
+        layout: elk
+        theme: default
+        look: neo
+        flowchart:
+          wrappingWidth: 120
+          minNodeWidth: 120
 markdown_extensions:
   - admonition
   - toc:
