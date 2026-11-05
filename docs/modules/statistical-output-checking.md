@@ -259,7 +259,10 @@ The module's context IRI is `https://w3id.org/5s-crate/1.0-DRAFT/modules/statist
 
 ## Egress
 
-Everything a reader needs to understand a release decision is in entities whose required fields carry nothing taken from the data: the check, its findings, their outcomes, the kind of statistic, the requests and the decisions. Cell coordinates, per-cell flags, suppressed values, variable names and free text belong in the report file named by `result`, in a packaged configuration, or in optional `description` fields. An RO-Crate prepared for release can therefore keep the checks, findings and decisions while the report, the configuration and the descriptions are omitted or redacted.
+An [egress snapshot](../index.md#ro-crates-and-egress) may retain the checks, findings and their outcomes, the kind of statistic, requests and decisions. Report files, packaged configurations and optional descriptions are omitted or redacted, provided the retained entities and references still satisfy the core and this module. Note that cell coordinates, per-cell flags, suppressed values, variable names and free text belong in the report file named by `result`, in a packaged configuration, or in optional `description` fields. 
+
+!!! warning
+    Required metadata is not automatically suitable for release, and identifiers, classifications and recorded outcomes may also need consideration under the TRE's output checking and egress process.
 
 ## Worked Example
 

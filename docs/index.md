@@ -52,7 +52,7 @@ Prescribing one of these as the fixed scope of a record would mean dictating how
 
 A **TRE Activity Record** ("activity record") is the account of one piece of governed work in a TRE. Its **scope**, the work it covers, might match a "project" as that TRE defines it, or it might not. An activity record grows as the work progresses, and may capture queries and analyses, decisions about them, the agreements which govern them, and any outputs that are released.
 
-An activity record is represented in data as two kinds of component: a **working record**, which holds the "live" state of the record as things change, and versioned, immutable **snapshots**, which preserve the state of the record at particular points in time. Each of these is a **representation** of the activity record, and together they form its **record sequence**. Every representation is a **Five Safes RO-Crate**; this profile describes their structure.
+An activity record is represented in data as two kinds of component: a **working record**, which holds the "live" state of the record as things change, and versioned, immutable **snapshots**, which preserve the state of the record at particular points in time. Each of these is a **representation** of the activity record, and together they form its **record sequence**. The internal snapshot history is linear; separate [egress snapshots](#ro-crates-and-egress) may branch from it as leaves. Every representation is a **Five Safes RO-Crate**; this profile describes their structure.
 
 The service or person that writes a representation is its **producer**. Anything that reads one, such as a service withiin a receiving TRE or a validator, is a **consumer**.
 
@@ -209,7 +209,7 @@ The following is a complete, minimal conforming working record of a feasibility 
 }
 ```
 
-To publish a snapshot, a producer copies the working record and changes the Root Data Entity. `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed, and `datePublished` is set to when the snapshot was made available. 
+To publish an internal snapshot, a producer copies the working record and changes the Root Data Entity. `identifier` becomes the snapshot's own IRI, such as `.../activities/A123/versions/1` for the first; `version` is added with the matching integer, and `dateCreated` is set to when the snapshot was taken. Any `dateModified` is removed, and `datePublished` is set to when the snapshot was made available. A separate [egress snapshot](#ro-crates-and-egress) is prepared from a published internal snapshot.
 
 If the Root Data Entity has an absolute `@id`, it MUST be changed to an absolute IRI identifying the snapshot, and the metadata descriptor's `about` changes with it (see: [Versioning and Snapshots](#versioning-and-snapshots)).
 
@@ -228,6 +228,7 @@ Alongside the properties RO-Crate requires of any Root Data Entity, this profile
 |---|---|---|
 | `@id` | MUST | Identifies the Root Data Entity. The metadata descriptor's `about` MUST use exactly the same value. |
 | `@type` | MUST | `Dataset`, or an array containing `Dataset`. |
+| `additionalType` | MUST include the egress snapshot term on an egress snapshot | See: [RO-Crates and Egress](#ro-crates-and-egress). The term MUST NOT be present on a working record or internal snapshot. |
 | `conformsTo` | MUST | This profile's IRI and the IRI of each declared module; other application profiles MAY be present. Each profile IRI MUST also be described by a contextual entity. See: [Conformance and Modules](#conformance-and-modules). |
 | `identifier` | MUST, exactly one | The canonical RO-Crate identifier. See: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers). |
 | `dct:isVersionOf` | MUST, exactly one | The activity record identifier. See: [Record and RO-Crate Identifiers](#record-and-ro-crate-identifiers). |
@@ -239,7 +240,8 @@ Alongside the properties RO-Crate requires of any Root Data Entity, this profile
 | `license` | SHOULD, on a published RO-Crate | Describes the licence of the output data, either an open licence or restrictive, TRE-specific conditions of access. |
 | `publisher` | SHOULD | The `Organization` that published this representation. |
 | `version` | MUST, exactly one on a snapshot; <br> <br> MUST NOT, on a working record | A positive JSON integer. See: [Representation State](#representation-state). |
-| `pav:previousVersion` | MUST, exactly one on a snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the direct predecessor. |
+| `pav:previousVersion` | MUST, exactly one on an internal snapshot after the first; <br> <br> MUST NOT, otherwise | The canonical RO-Crate identifier of the preceding internal snapshot. |
+| `prov:wasDerivedFrom` | MUST, exactly one on an egress snapshot | The canonical RO-Crate identifier of its source internal snapshot. See: [RO-Crates and Egress](#ro-crates-and-egress). |
 | `hasPart` | MUST, if the RO-Crate holds or refers to data entities | Each data entity MUST be reachable from the Root Data Entity through `hasPart`, directly or through nested `Dataset` entities. |
 | `mentions` | MUST, if the RO-Crate records any processes | The processes recorded in this RO-Crate. See: [Processes](#processes). |
 
@@ -795,7 +797,7 @@ Where the decision that awarded a credential was observed or attested, it is an 
 
 An activity record exists as a working record that changes, and as snapshots that do not.
 
-The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither.
+The working record keeps one identity throughout its life, meaning "this piece of work"; each snapshot has its own identity, meaning "this piece of work, exactly as it stood at this point". A snapshot carries a version number and, after the first, a link to its predecessor; the working record carries neither. Egress snapshots link to the internal snapshot from which they were derived.
 
 This profile does not prescribe when you should take a snapshot. However, submitting, exchanging, and closing an activity record are reasonable choices.
 
@@ -849,15 +851,18 @@ The following fragment shows the working record carrying its canonical identifie
 
 ### Representation State
 
-The Root Data Entity’s `version` identifies the RO-Crate’s state. Only the following combinations conform:
+The Root Data Entity's properties distinguish the working record, internal snapshots, and egress snapshots. Only the following combinations conform; egress snapshots also carry the [egress snapshot term](#EgressSnapshot):
 
-| Representation | `version` | `pav:previousVersion` |
-|---|---|---|
-| Working record | MUST NOT be present | MUST NOT be present |
-| First snapshot | MUST be the JSON integer `1` | MUST NOT be present |
-| Later snapshot | MUST be a JSON integer greater than `1` | MUST have exactly one absolute IRI value |
+| Representation | `version` | `pav:previousVersion` | Egress source |
+|---|---|---|---|
+| Working record | MUST NOT be present | MUST NOT be present | Not applicable |
+| First internal snapshot | MUST be the JSON integer `1` | MUST NOT be present | Not applicable |
+| Later internal snapshot | MUST be a JSON integer greater than `1` | MUST identify exactly one preceding internal snapshot by its canonical IRI | Not applicable |
+| Egress snapshot | MUST be a JSON integer greater than its source's `version` | MUST NOT be present | `prov:wasDerivedFrom` MUST identify exactly one internal snapshot by its canonical IRI |
 
-Across one activity record, each snapshot MUST have a different positive integer as its `version`. Every snapshot MUST have the same `dct:isVersionOf`. A later snapshot’s `version` MUST be greater than its direct predecessor’s, but does not need to be exactly one greater. A snapshot's `pav:previousVersion` MUST NOT equal its own canonical identifier. Note that `pav:previousVersion` identifies the predecessor, rather than the version number. This specification defines one linear sequence: a snapshot MUST NOT be the direct predecessor of more than one snapshot of the same activity record, and branch or merge histories do not conform.
+Across one activity record, each snapshot, including each egress snapshot, MUST have a different positive integer as its `version`. Every snapshot MUST have the same `dct:isVersionOf`. A later internal snapshot's `version` MUST be greater than its direct predecessor's, but does not need to be exactly one greater. A snapshot's `pav:previousVersion` MUST NOT equal its own canonical identifier. Note that `pav:previousVersion` identifies the predecessor, rather than the version number.
+
+Internal snapshots form one linear history, which means that an internal snapshot MUST NOT be the direct predecessor of more than one internal snapshot of the same activity record. It MAY also be the source of one or more egress snapshots. An egress snapshot MUST NOT be the predecessor or derivation source of another snapshot in that record sequence. These egress leaves are the only permitted branches; merge histories do not conform. Version numbers distinguish representations, but a greater number alone does not establish that one snapshot succeeds another in the internal history.
 
 If an imported history cannot be represented under this specification, the producer must mint a new record identifier, and the new activity record's snapshots begin at version `1`. The imported artefacts are not changed, and the new activity record can describe or reference them as they stand. Do not use dates to infer whether an RO-Crate is a working record or a snapshot. 
 
@@ -872,7 +877,7 @@ The dates on the Root Data Entity describe the representation and not the activi
 
 | Property | Working record | Snapshot |
 |---|---|---|
-| `dateCreated` | When the working record was created. Fixed. | When the snapshot was created from the working record. Fixed. |
+| `dateCreated` | When the working record was created. Fixed. | When the internal snapshot was taken from the working record, or the egress snapshot was created from its source. Fixed. |
 | `dateModified` | The most recent actual change, if changed since creation. | MUST NOT be present. |
 | `datePublished` | When first made available as an RO-Crate. Fixed thereafter. | When the completed snapshot was first made available; it becomes immutable at this time, which may be later than `dateCreated`. |
 
@@ -884,9 +889,9 @@ An absolute `@id`, once used for one entity, MUST NOT be used for a different en
 
 ### Snapshot Requirements
 
-A snapshot is a complete RO-Crate that describes the state of the activity record, within its scope, when it was taken. A published snapshot MUST NOT be changed; if a correction is needed, it MUST be done by taking a later snapshot rather than altering an earlier one.
+A snapshot is a complete RO-Crate within its declared scope. An internal snapshot describes the state of the working record when it was taken; an egress snapshot preserves the content selected or redacted from its identified source. A published snapshot MUST NOT be changed; if a correction is needed, it MUST be done by creating a new snapshot rather than altering an earlier one. A replacement egress snapshot is derived from an internal snapshot, and never from the earlier egress snapshot.
 
-The `pav:previousVersion` requirements are outlined in [Representation State](#representation-state). The fragment below outlines the versioning properties of a later snapshot:
+The `pav:previousVersion` requirements are outlined in [Representation State](#representation-state). The fragment below outlines the versioning properties of a later internal snapshot:
 
 ```json
 {
@@ -903,13 +908,56 @@ The `pav:previousVersion` requirements are outlined in [Representation State](#r
 
 ### RO-Crates and Egress
 
-An egressed RO-Crate is a snapshot prepared for release from the TRE. It may hold outputs or references to outputs that have been approved for release together with the [checks and decisions that led to their release](#output-checking-and-release-decisions).
+An **egress snapshot** is a separate, immutable representation prepared from an internal snapshot for release from the TRE. It may hold approved outputs or references to them together with the [checks and decisions that led to their release](#output-checking-and-release-decisions). The internal history continues independently; an egress snapshot is always a leaf in the activity record's snapshot history.
 
-<!-- Stub, needs more detail -->
+<a id="EgressSnapshot"></a>
+
+The term `https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot` identifies this kind of snapshot. An egress snapshot's Root Data Entity MUST include this term in `additionalType` and written as `{"@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot"}`. A working record or internal snapshot MUST NOT carry this term.
+
+An egress snapshot has its own canonical `identifier`, `version`, `dateCreated`, and `datePublished`, whilst retaining its source's `dct:isVersionOf`. Its `prov:wasDerivedFrom` MUST identify exactly one internal snapshot of that activity record, described using [Referencing Another RO-Crate](#referencing-another-ro-crate). The source MUST have been published no later than the egress snapshot's `dateCreated`. Egress snapshots MUST NOT use `pav:previousVersion`.
+
+In the example below, the five snapshots represent the same activity record. The arrows follow the metadata links back to the predecessor, or source. Internal Snapshot 4 follows Internal Snapshot 2; Egress Snapshot 3 is distinct from that history:
+
+```mermaid
+flowchart BT
+    S1["Internal Snapshot 1"]
+    S2["Internal Snapshot 2"]
+    S4["Internal Snapshot 4"]
+    E3["Egress Snapshot 3"]
+    E5["Egress Snapshot 5"]
+
+    S2 -->|"pav:previousVersion"| S1
+    S4 -->|"pav:previousVersion"| S2
+    E3 -.->|"prov:wasDerivedFrom"| S2
+    E5 -.->|"prov:wasDerivedFrom"| S4
+
+    classDef egress fill:#c9edc4,stroke:#38753c,color:#173b1a
+    class E3,E5 egress
+```
+
+The following fragment describes the identity and source of Egress Snapshot 3; other required Root Data Entity properties and the source's description are omitted:
+
+```json
+{
+  "@id": "./",
+  "@type": "Dataset",
+  "additionalType": {"@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot"},
+  "identifier": {"@id": "https://tre72.example.org/activities/A123/versions/3"},
+  "dct:isVersionOf": {"@id": "https://tre72.example.org/activities/A123"},
+  "version": 3,
+  "prov:wasDerivedFrom": {
+    "@id": "https://tre72.example.org/activities/A123/versions/2"
+  }
+}
+```
+
+Preparing an egress snapshot may omit or redact assets and metadata without changing the source snapshot. The released RO-Crate MUST still satisfy the core and its selected modules. Note that changed outputs are new assets under [Derived Data](#derived-data).
+
+Export preparation is recorded as a `CreateAction` in the working record or a later internal snapshot, identifying the source as `object` and the egress snapshot as `result`. Actual dispatch is a separate `SendAction` whose `object` identifies the exact egress snapshot transferred, following [Transferred Snapshots](#transferred-snapshots). A correction or another release is prepared from the original or a later internal snapshot. Being a leaf does not prevent an egress snapshot from being referenced or transferred in subsequent snapshots.
 
 ### Referencing Another RO-Crate
 
-A Five Safes RO-Crate references another RO-Crate in three situations: when a [decision identifies a snapshot it used](#decision-subjects-and-provenance); when a [snapshot is exchanged](#transferred-snapshots); and when an [activity record references a federated node's RO-Crate](#node-provenance-ro-crates). The same pattern is used across all three, and the referenced RO-Crate is described as a `Dataset` entity:
+A Five Safes RO-Crate references another RO-Crate when a [decision identifies a snapshot it used](#decision-subjects-and-provenance), a [snapshot is exchanged](#transferred-snapshots), an [egress snapshot identifies its source or an export preparation identifies its result](#ro-crates-and-egress), or an [activity record references a federated node's RO-Crate](#node-provenance-ro-crates). The same pattern is used throughout, and the referenced RO-Crate is described as a `Dataset` entity:
 
 | Property | Requirement |
 |---|---|
@@ -1197,11 +1245,11 @@ The following JSON-LD fragment represents the entities and relationships shown i
 
 Federation enables research to be carried out across several nodes or organisations. For example, software execution may travel to the data, data may be pooled in one environment, or both in combination. The [federated research patterns](https://docs.federated-research.com/federated_research_patterns) outline some of these approaches to federation. 
 
-In Five Safes RO-Crate, the entire federated work has one **federated activity record**, with one record identifier and one linear sequence of snapshots. Federation changes where the detail is kept, with each node keeping the provenance a node produced in its own node provenance RO-Crate. The federated activity record references these node provenance RO-Crates rather than containing them. 
+In Five Safes RO-Crate, the entire federated work has one **federated activity record**, with one record identifier and one linear internal snapshot history, from which egress snapshots may be derived as leaves. Federation changes where the detail is kept, with each node keeping the provenance a node produced in its own node provenance RO-Crate. The federated activity record references these node provenance RO-Crates rather than containing them.
 
 ### The Federated Activity Record
 
-Every representation of the federated activity record MUST use the same record identifier with `dct:isVersionOf`, and its snapshots form a single, linear history as outlined in [Representation State](#representation-state). Parallel node activity does not create snapshot branches. Successive snapshots may carry different `publisher` values.
+Every representation of the federated activity record MUST use the same record identifier with `dct:isVersionOf`, and its snapshots follow [Representation State](#representation-state): a single internal history with optional egress leaves. Parallel node activity does not create additional snapshot branches. Successive snapshots may carry different `publisher` values.
 
 !!! tip
     For example, `Snapshot 1` of the federated activity record might be taken and published by Manchester (say, at submission), and `Snapshot 2` taken and published by Dundee after the analysis phase.
