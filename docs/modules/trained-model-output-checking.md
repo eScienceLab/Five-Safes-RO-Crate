@@ -17,7 +17,7 @@ _The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "
 
 ## Scope
  
-A model trained on data inside a TRE can reveal something about the people in that data, even though it holds no records itself. Someone with access to the model may be able to tell whether a particular person's record was used in training (membership inference), or work out a sensitive attribute of a person in the training data (attribute inference). TREs therefore check a trained model before it leaves, just as they check tables and figures.
+A model trained on data inside a TRE can reveal something about the people in that data, and may retain or memorise training records. Someone with access to the model may be able to tell whether a particular person's record was used in training (membership inference), or work out a sensitive attribute of a person in the training data (attribute inference). TREs therefore check a trained model before it leaves, just as they check tables and figures.
  
 The core profile already gives output checking its shape: a check is an `AssessAction`, a decision is an `AuthorizeAction` or `RejectAction`, a request for further action is an `AskAction`, and a review that groups them is an `Action` (see: [Output Checking and Release Decisions](../index.md#output-checking-and-release-decisions)). This module adds what is particular to models. With it, an RO-Crate answers four questions about every check of a model:
  
@@ -322,7 +322,7 @@ A pass for a retrained model only means something if two things hold: the model 
 |---|---|
 | What was the researcher asked to change? | The `description` of the request that the retraining names with `prov:wasInformedBy`. |
 | What actually changed? | The two training runs: their data (`object`), their software, and their settings versions (`instrument`). Comparing the two settings files gives the exact difference, such as `min_samples_leaf` going from 1 to 5. |
-| Were the new checks as demanding? | Pair each check of the new version with the check of the earlier version that has the same kind and the same risks. If both name the same software, settings and criteria versions as `instrument`, they were done the same way. |
+| Were the new checks as demanding? | Pair each check of the new version with the check of the earlier version that has the same kind and the same risks. Matching software, settings and criteria versions establishes only that those instruments were unchanged. Also compare the data identified by `prov:used` and any other inputs affecting attack strength; if their comparability cannot be established, the RO-Crate alone does not establish that the new check was as demanding. |
  
 Some checking tools record the settings of the model they examine, so a TRE can often fill in the training settings without asking the researcher. Changes that no tool can see, such as a different way of preparing the data, still need the researcher's own `description` of the training run.
 
