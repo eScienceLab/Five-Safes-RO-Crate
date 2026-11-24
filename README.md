@@ -13,6 +13,44 @@ This is the 1.0 Working Draft. [Five Safes RO-Crate 0.4](https://w3id.org/5s-cra
     * Execution: [Cohort Discovery](docs/modules/cohort-discovery.md), [Workflow Execution](docs/modules/workflow-execution.md)
     * Output Checking: [Statistical Outputs](docs/modules/statistical-output-checking.md), [Trained Models](docs/modules/trained-model-output-checking.md)
 
+## Building the documentation
+
+With Python 3 and pip, create a virtual environment and install the dependencies:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m mkdocs build
+```
+
+The generated site is in `site/`. For a live local preview, run
+`python -m mkdocs serve` and open <http://127.0.0.1:8000/>.
+
+Alternatively, build with Docker from the repository root:
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+  -v "$PWD:/docs" -w /docs python:3.12-slim \
+  sh -c 'python -m pip install --user -r requirements.txt && python -m mkdocs build'
+```
+
+For a live preview with Docker, run:
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+  -v "$PWD:/docs" -w /docs -p 8000:8000 python:3.12-slim \
+  sh -c 'python -m pip install --user -r requirements.txt && python -m mkdocs serve --dev-addr 0.0.0.0:8000'
+```
+
+Pushes to the `1.0` branch build and deploy the site using GitHub Actions.
+In the repository's **Settings > Pages**, set the source to **GitHub Actions**
+to enable deployment. Pull requests build the site without deploying it.
+The workflow also checks Markdown for common mistakes and retains the generated
+site as a `documentation-preview` artifact for three days. Download and extract
+the artifact from the workflow run, then serve it locally, for example with
+`python3 -m http.server 8000 --directory documentation-preview`.
+
 ## Feedback
 
 Comments and suggestions are welcome as [GitHub issues](https://github.com/eScienceLab/Five-Safes-RO-Crate/issues). See [CONTRIBUTING](CONTRIBUTING.md).

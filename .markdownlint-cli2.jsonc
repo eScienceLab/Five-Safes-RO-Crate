@@ -1,0 +1,30 @@
+{
+  "config": {
+    // Check likely markup errors without enforcing unrelated style rules.
+    "default": false,
+    // Headings need a space after the opening hashes.
+    "MD018": true,
+    // Headings should not have multiple spaces after the opening hashes.
+    "MD019": true,
+    // Closed headings need spaces inside the opening and closing hashes.
+    "MD020": true,
+    // Closed headings should not have multiple spaces inside the hashes.
+    "MD021": true,
+    // Headings must start at the beginning of a line.
+    "MD023": true,
+    // Emphasis markers must not have spaces inside them.
+    "MD037": true,
+    // Inline code markers must not have spaces inside them.
+    "MD038": true,
+    // Link text brackets must not have spaces inside them.
+    "MD039": true,
+    // Links must not have empty destinations.
+    "MD042": true,
+    // Images need alternative text.
+    "MD045": true,
+    // Links to headings must reference existing fragments.
+    "MD051": true,
+    // Reference-style links and images must have definitions.
+    "MD052": true
+  }
+}
