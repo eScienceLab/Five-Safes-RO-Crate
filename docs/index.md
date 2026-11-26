@@ -13,6 +13,7 @@ This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for r
 
 * Permalink: <https://w3id.org/5s-crate/1.0-DRAFT>
 * Version: 1.0-DRAFT
+* Previous version: <https://w3id.org/5s-crate/0.4>
 * Status: Working Draft
 * Release notes: <https://github.com/eScienceLab/Five-Safes-RO-Crate/releases>
 * Published: 2027-XX-XX
