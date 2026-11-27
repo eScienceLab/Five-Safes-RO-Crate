@@ -1,5 +1,10 @@
 {
-  "@context": "https://w3id.org/ro/crate/1.3/context",
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "sh": "http://www.w3.org/ns/shacl#"
+    }
+  ],
   "@graph": [
     {
       "@id": "ro-crate-metadata.json",
@@ -67,6 +72,9 @@
           "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
         },
         {
+          "@id": "shacl/"
+        },
+        {
           "@id": "examples/feasibility-working-record/"
         },
         {
@@ -102,6 +110,15 @@
           "@id": "#usesDPVRisk"
         },
         {
+          "@id": "#hasSpecializedSchema"
+        },
+        {
+          "@id": "#hasConformanceIndicators"
+        },
+        {
+          "@id": "#hasValidation"
+        },
+        {
           "@id": "#hasExampleWorkingRecord"
         },
         {
@@ -110,7 +127,10 @@
         {
           "@id": "#hasExampleReview42"
         }
-      ]
+      ],
+      "conformsTo": {
+        "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile"
+      }
     },
     {
       "@id": "index.html",
@@ -747,6 +767,634 @@
       ],
       "name": "Example",
       "description": "Sample instance data conforming to the profile"
+    },
+    {
+      "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate MASP Profile"
+    },
+    {
+      "@id": "#hasConformanceIndicators",
+      "@type": "ResourceDescriptor",
+      "name": "has conformance indicators",
+      "hasRole": {
+        "@id": "https://w3id.org/ro/conformance-indicators"
+      },
+      "hasArtifact": {
+        "@id": "#conformanceIndicators"
+      }
+    },
+    {
+      "@id": "#conformanceIndicators",
+      "@type": "ItemList",
+      "name": "Supported conformsTo identifiers",
+      "itemListElement": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      }
+    },
+    {
+      "@id": "#hasSpecializedSchema",
+      "@type": "ResourceDescriptor",
+      "name": "has specialized schema: MASP rules",
+      "description": "Machine-actionable rules for the core profile. Only unconditional MUST requirements are counts; SHOULD and conditional requirements are suggested properties, with the requirement stated in rdfs:comment.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/schema"
+      },
+      "hasPart": [
+        {
+          "@id": "#value_metadata_id"
+        },
+        {
+          "@id": "#value_ro_crate_1_3"
+        },
+        {
+          "@id": "#value_core_profile"
+        },
+        {
+          "@id": "#class_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_id_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_conformsTo_MetadataDescriptor"
+        },
+        {
+          "@id": "#class_RootDataEntity"
+        },
+        {
+          "@id": "#prop_about_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_additionalType_RootDataEntity"
+        },
+        {
+          "@id": "#prop_conformsTo_RootDataEntity"
+        },
+        {
+          "@id": "#prop_identifier_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dct-isVersionOf_RootDataEntity"
+        },
+        {
+          "@id": "#prop_name_RootDataEntity"
+        },
+        {
+          "@id": "#prop_description_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dateCreated_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dateModified_RootDataEntity"
+        },
+        {
+          "@id": "#prop_datePublished_RootDataEntity"
+        },
+        {
+          "@id": "#prop_license_RootDataEntity"
+        },
+        {
+          "@id": "#prop_publisher_RootDataEntity"
+        },
+        {
+          "@id": "#prop_version_RootDataEntity"
+        },
+        {
+          "@id": "#prop_pav-previousVersion_RootDataEntity"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_RootDataEntity"
+        },
+        {
+          "@id": "#class_Profile"
+        },
+        {
+          "@id": "#prop_name_Profile"
+        },
+        {
+          "@id": "#prop_version_Profile"
+        },
+        {
+          "@id": "#prop_isProfileOf_Profile"
+        },
+        {
+          "@id": "#prop_hasPart_RootDataEntity"
+        },
+        {
+          "@id": "#prop_mentions_RootDataEntity"
+        }
+      ]
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/schema",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Schema",
+      "description": "Machine-readable structural descriptions of data defined by the profile"
+    },
+    {
+      "@id": "#value_metadata_id",
+      "@type": "PropertyValue",
+      "name": "Metadata descriptor identifier",
+      "value": "ro-crate-metadata.json",
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#value_ro_crate_1_3",
+      "@type": "PropertyValue",
+      "name": "RO-Crate 1.3",
+      "value": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#value_core_profile",
+      "@type": "PropertyValue",
+      "name": "Five Safes RO-Crate core profile",
+      "value": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#class_MetadataDescriptor",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Metadata descriptor",
+      "rdfs:comment": "The ro-crate-metadata.json entity. It MUST conform to RO-Crate 1.3 and declare that version.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#metadata-file",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_id_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "The metadata descriptor is identified as ro-crate-metadata.json.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "rangeIncludes": {
+        "@id": "#value_metadata_id"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_conformsTo_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "The RO-Crate version: https://w3id.org/ro/crate/1.3. Profiles, including this one, are declared on the Root Data Entity instead.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      },
+      "rangeIncludes": {
+        "@id": "#value_ro_crate_1_3"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#class_RootDataEntity",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Root Data Entity",
+      "rdfs:comment": "Describes this RO-Crate as a single representation of the activity record: the working record, an internal snapshot or an egress snapshot. The properties below distinguish the three; see Representation State.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#root-data-entity",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#prop_about_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "The Root Data Entity. Its @id and the descriptor's about MUST use exactly the same value.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "rangeIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST include https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot on an egress snapshot, written as {\"@id\": ...}; MUST NOT include it on a working record or internal snapshot.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_conformsTo_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "MUST include this profile (https://w3id.org/5s-crate/1.0-DRAFT) and the versioned IRI of each selected module; other application profiles MAY be present. Each MUST be described by a Profile entity.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#value_core_profile"
+        },
+        {
+          "@id": "#class_Profile"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_identifier_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "MUST include exactly one canonical RO-Crate identifier: an absolute IRI in {\"@id\": ...} form that identifies this representation and is not a PropertyValue. Other identifiers the record is known by MAY be added as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_dct-isVersionOf_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:isVersionOf",
+      "name": "Is version of",
+      "rdfs:comment": "The activity record identifier: an absolute IRI, the same in every representation of the record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/isVersionOf"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the activity record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_description_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "description",
+      "name": "Description",
+      "rdfs:comment": "Describes the work the activity record covers.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/description"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_dateCreated_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dateCreated",
+      "name": "Date created",
+      "rdfs:comment": "When this representation was created: for a snapshot, when it was taken from the working record or, for an egress snapshot, created from its source. An ISO 8601 Date or DateTime with a timezone.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/dateCreated"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_dateModified_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dateModified",
+      "name": "Date modified",
+      "rdfs:comment": "MUST be present, exactly once, on a working record that has changed since creation (the most recent actual change); MUST NOT be present on a snapshot.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/dateModified"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_datePublished_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "datePublished",
+      "name": "Date published",
+      "rdfs:comment": "When this representation was first made available as an RO-Crate, including within a restricted system. A snapshot becomes immutable at this time.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/datePublished"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_license_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "license",
+      "name": "License",
+      "rdfs:comment": "SHOULD be present on a published RO-Crate: an open licence, or restrictive, TRE-specific conditions of access.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/license"
+      }
+    },
+    {
+      "@id": "#prop_publisher_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "publisher",
+      "name": "Publisher",
+      "rdfs:comment": "SHOULD identify the Organization that published this representation.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/publisher"
+      }
+    },
+    {
+      "@id": "#prop_version_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "MUST be present, exactly once, on a snapshot, as a positive JSON integer: 1 for the first internal snapshot, greater than the predecessor's for later ones, and greater than its source's for an egress snapshot. MUST NOT be present on a working record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Integer"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_pav-previousVersion_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "pav:previousVersion",
+      "name": "Previous version",
+      "rdfs:comment": "MUST identify, exactly once, the canonical identifier of the preceding internal snapshot on an internal snapshot after the first; MUST NOT be present otherwise.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/pav/previousVersion"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "MUST identify, exactly once, the canonical identifier of the source internal snapshot on an egress snapshot; not used on other representations.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Profile",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Profile",
+      "name": "Profile",
+      "rdfs:comment": "Describes a profile or module IRI listed in the Root Data Entity's conformsTo, with the same @id.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#conformance-and-modules",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/dx/prof/Profile"
+      }
+    },
+    {
+      "@id": "#prop_name_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The profile's name.",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_version_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "The profile's version label, such as 1.0-DRAFT.",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_isProfileOf_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "isProfileOf",
+      "name": "Is profile of",
+      "rdfs:comment": "On a module's Profile entity, MUST identify the Five Safes RO-Crate core (https://w3id.org/5s-crate/1.0-DRAFT).",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/dx/prof/isProfileOf"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Profile"
+      }
+    },
+    {
+      "@id": "#prop_hasPart_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasPart",
+      "name": "Has part",
+      "rdfs:comment": "MUST be present if the RO-Crate holds or refers to data entities: each MUST be reachable from the Root Data Entity through hasPart, directly or through nested Datasets. Includes referenced RO-Crates.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasPart"
+      }
+    },
+    {
+      "@id": "#prop_mentions_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "mentions",
+      "name": "Mentions",
+      "rdfs:comment": "MUST be present if the RO-Crate records any processes: every process recorded in this RO-Crate, including one that other processes already link to. The Root Data Entity is where a consumer finds all the processes.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/mentions"
+      }
+    },
+    {
+      "@id": "#hasValidation",
+      "@type": "ResourceDescriptor",
+      "name": "has validation: SHACL shapes for rocrate-validator",
+      "description": "SHACL shapes generated from the MASP rules, for checking crates with rocrate-validator. Use with rocrate-validator: rocrate-validator validate --extra-profiles-path shacl -p five-safes-1.0 <crate>.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/validation"
+      },
+      "hasArtifact": [
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl"
+        }
+      ],
+      "isBasedOn": {
+        "@id": "#hasSpecializedSchema"
+      }
+    },
+    {
+      "@id": "shacl/",
+      "@type": "Dataset",
+      "name": "rocrate-validator profiles",
+      "description": "SHACL shapes generated from the MASP rules of the core profile and its modules, as rocrate-validator profile folders. A module's profile builds on the core profile, so validating against it also checks the core rules. Use with rocrate-validator: rocrate-validator validate --extra-profiles-path shacl -p five-safes-1.0 <crate>.",
+      "hasPart": [
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl"
+        },
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "https://www.w3.org/TR/shacl/",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Shapes Constraint Language (SHACL)",
+      "url": "https://www.w3.org/TR/shacl/"
+    },
+    {
+      "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874",
+      "@type": "WebPage",
+      "name": "Turtle"
     }
   ]
 }
