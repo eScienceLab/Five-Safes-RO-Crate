@@ -33,3 +33,21 @@ done
 `53-bad-refusal-with-outcome-term.json` exits 0 with `masp-validate` 0.1.0,
 which reports a failing rule only for entities it counts or reaches through a
 range; validators that check every entity, such as wpsld, report it.
+
+## SHACL
+
+The same files can be checked with the SHACL shapes in
+[`docs/shacl/`](../../docs/shacl/), which apply the property rules to every
+entity of a class. Copy each fixture into a folder with the payload files of
+the example it varies (`feasibility-working-record` for the core fixtures,
+`statistical-review-42` for the module's) and run:
+
+```sh
+pip install roc-validator
+rocrate-validator validate -l REQUIRED --extra-profiles-path docs/shacl -p five-safes-1.0 <folder>
+rocrate-validator validate -l REQUIRED --extra-profiles-path docs/shacl -p five-safes-statistical-output-checking-1.0 <folder>
+```
+
+Every invalid file fails except `95-bad-local-person-id.json`: once parsed as
+RDF, a local `#analyst` identifier is an absolute IRI, so the shapes cannot
+tell it from an ORCID. `53-bad-refusal-with-outcome-term.json` fails here.

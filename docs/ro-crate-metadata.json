@@ -72,6 +72,9 @@
           "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
         },
         {
+          "@id": "shacl/"
+        },
+        {
           "@id": "examples/feasibility-working-record/"
         },
         {
@@ -114,6 +117,9 @@
         },
         {
           "@id": "#hasConformanceIndicators"
+        },
+        {
+          "@id": "#hasValidation"
         },
         {
           "@id": "#hasExampleWorkingRecord"
@@ -3767,6 +3773,112 @@
       "rangeIncludes": {
         "@id": "#class_Process"
       }
+    },
+    {
+      "@id": "#hasValidation",
+      "@type": "ResourceDescriptor",
+      "name": "has validation: SHACL shapes for rocrate-validator",
+      "description": "SHACL shapes generated from the MASP rules, for checking crates with rocrate-validator. Use with rocrate-validator: rocrate-validator validate --extra-profiles-path shacl -p five-safes-1.0 <crate>.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/validation"
+      },
+      "hasArtifact": [
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl"
+        }
+      ],
+      "isBasedOn": {
+        "@id": "#hasSpecializedSchema"
+      }
+    },
+    {
+      "@id": "shacl/",
+      "@type": "Dataset",
+      "name": "rocrate-validator profiles",
+      "description": "SHACL shapes generated from the MASP rules of the core profile and its modules, as rocrate-validator profile folders. A module's profile builds on the core profile, so validating against it also checks the core rules. Use with rocrate-validator: rocrate-validator validate --extra-profiles-path shacl -p five-safes-1.0 <crate>.",
+      "hasPart": [
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl"
+        },
+        {
+          "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
+        },
+        {
+          "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes-statistical-output-checking)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes-statistical-output-checking)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "https://www.w3.org/TR/shacl/",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Shapes Constraint Language (SHACL)",
+      "url": "https://www.w3.org/TR/shacl/"
+    },
+    {
+      "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874",
+      "@type": "WebPage",
+      "name": "Turtle"
     }
   ]
 }

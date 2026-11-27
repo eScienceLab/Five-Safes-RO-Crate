@@ -16,7 +16,7 @@ npm install @crate-works/ro-crate-masp-validator
 npx masp-validate crate/ro-crate-metadata.json profile/ro-crate-metadata.json
 ```
 
-The validator reports class counts only: an entity that fails its property rules is not counted, so a problem with a process usually appears as an error about the metadata descriptor, whose Root Data Entity no longer matches. Use `--json` to see the property errors. Requirements that need comparisons or conditions, such as version ordering between snapshots or `endTime` only on completed or failed processes, are not checked by these rules.
+The validator reports class counts only: an entity that fails its property rules is not counted, so a problem with a process usually appears as an error about the metadata descriptor, whose Root Data Entity no longer matches. Use `--json` to see the property errors. For stricter checks, with a message for each entity that breaks a rule, use the [SHACL shapes](../shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl) generated from these rules with [rocrate-validator](https://github.com/crs4/rocrate-validator): `rocrate-validator validate --extra-profiles-path shacl -p five-safes-1.0 crate/`. Requirements that need comparisons or conditions, such as version ordering between snapshots or `endTime` only on completed or failed processes, are not checked by these rules.
 
 ${rules.all}
 

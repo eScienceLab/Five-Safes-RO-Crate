@@ -51,6 +51,22 @@ sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href=".
   /tmp/masp/index.html > site/rules/index.html
 ```
 
+[`docs/shacl/`](docs/shacl/) holds SHACL shapes generated from the MASP rules,
+as [rocrate-validator](https://github.com/crs4/rocrate-validator) profile
+folders, so a crate can be checked with
+`rocrate-validator validate --extra-profiles-path docs/shacl -p five-safes-1.0 <crate>`
+(or `-p five-safes-statistical-output-checking-1.0`, which also checks the core
+rules). They are generated with `masp_to_shacl.py` from the `ro-crate-masp`
+skill of [ro-crate-skills](https://github.com/stain/ro-crate-skills); regenerate
+them whenever the rules change:
+
+```sh
+python3 masp_to_shacl.py docs/ro-crate-metadata.json docs/shacl \
+  --token five-safes --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+python3 masp_to_shacl.py docs/modules/statistical-output-checking/ro-crate-metadata.json docs/shacl \
+  --token five-safes-statistical-output-checking --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+```
+
 For a live local preview, run
 `python -m mkdocs serve` and open <http://127.0.0.1:8000/>.
 

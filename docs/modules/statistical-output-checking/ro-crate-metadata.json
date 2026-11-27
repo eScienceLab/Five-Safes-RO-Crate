@@ -54,6 +54,12 @@
         },
         {
           "@id": "https://w3id.org/5s-crate/1.0-DRAFT/examples/statistical-review-42/"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
         }
       ],
       "hasResource": [
@@ -80,6 +86,9 @@
         },
         {
           "@id": "#hasConformanceIndicators"
+        },
+        {
+          "@id": "#hasValidation"
         },
         {
           "@id": "#hasExampleStatisticalReview42"
@@ -1384,6 +1393,66 @@
       "prov:specializationOf": {
         "@id": "https://w3id.org/dpv/risk#hasControl"
       }
+    },
+    {
+      "@id": "#hasValidation",
+      "@type": "ResourceDescriptor",
+      "name": "has validation: SHACL shapes for rocrate-validator",
+      "description": "SHACL shapes generated from the module's MASP rules, published with the core profile's shapes in https://w3id.org/5s-crate/1.0-DRAFT/shacl/ . The module's profile builds on the core profile, so with both folders on the path rocrate-validator checks the core rules too: rocrate-validator validate --extra-profiles-path shacl -p five-safes-statistical-output-checking-1.0 <crate>.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/validation"
+      },
+      "hasArtifact": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
+        }
+      ],
+      "isBasedOn": {
+        "@id": "#hasSpecializedSchema"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes-statistical-output-checking)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes-statistical-output-checking)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "https://www.w3.org/TR/shacl/",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Shapes Constraint Language (SHACL)",
+      "url": "https://www.w3.org/TR/shacl/"
+    },
+    {
+      "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874",
+      "@type": "WebPage",
+      "name": "Turtle"
     }
   ]
 }
