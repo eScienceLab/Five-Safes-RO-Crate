@@ -144,6 +144,7 @@
         sh:path <http://schema.org/hasPart> ;
         sh:name """Root Data Entity: hasPart""" ;
         sh:description """MUST be present if the RO-Crate holds or refers to data entities: each MUST be reachable from the Root Data Entity through hasPart, directly or through nested Datasets. Includes referenced RO-Crates.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] ) ;
         sh:message """Root Data Entity: hasPart (MASP rule #prop_hasPart_RootDataEntity)""" ;
     ] ;
     sh:property [
@@ -185,4 +186,191 @@
         sh:description """On a module's Profile entity, MUST identify the Five Safes RO-Crate core (https://w3id.org/5s-crate/1.0-DRAFT).""" ;
         sh:class <http://www.w3.org/ns/dx/prof/Profile> ;
         sh:message """Profile: isProfileOf (MASP rule #prop_isProfileOf_Profile)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_File> a sh:NodeShape ;
+    sh:name """File""" ;
+    sh:targetClass <http://schema.org/MediaObject> ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """File: name""" ;
+        sh:description """The file or data SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """File: name (MASP rule #prop_name_File)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """File: version""" ;
+        sh:description """A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)""" ;
+        sh:or ( [ sh:nodeKind sh:Literal ] [ sh:or ( [ sh:datatype xsd:integer ] [ sh:datatype xsd:decimal ] [ sh:datatype xsd:double ] [ sh:datatype xsd:float ] [ sh:datatype xsd:long ] [ sh:datatype xsd:int ] ) ] ) ;
+        sh:message """File: version (MASP rule #prop_version_File)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/author> ;
+        sh:name """File: author""" ;
+        sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:message """File: author (MASP rule #prop_author_File)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/encodesCreativeWork> ;
+        sh:name """File: encodesCreativeWork""" ;
+        sh:description """On a packaged copy of an identified asset, MUST identify the exact asset version it encodes, typed CreativeWork or a subtype. A file holding several separately identified outputs lists each.""" ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:message """File: encodesCreativeWork (MASP rule #prop_encodesCreativeWork_File)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
+        sh:name """File: prov:wasDerivedFrom""" ;
+        sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:message """File: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_File)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Dataset> a sh:NodeShape ;
+    sh:name """Dataset""" ;
+    sh:targetClass <http://schema.org/Dataset> ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Dataset: name""" ;
+        sh:description """The directory or data SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Dataset: name (MASP rule #prop_name_Dataset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Dataset: version""" ;
+        sh:description """A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)""" ;
+        sh:or ( [ sh:nodeKind sh:Literal ] [ sh:or ( [ sh:datatype xsd:integer ] [ sh:datatype xsd:decimal ] [ sh:datatype xsd:double ] [ sh:datatype xsd:float ] [ sh:datatype xsd:long ] [ sh:datatype xsd:int ] ) ] ) ;
+        sh:message """Dataset: version (MASP rule #prop_version_Dataset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/author> ;
+        sh:name """Dataset: author""" ;
+        sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:message """Dataset: author (MASP rule #prop_author_Dataset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/exampleOfWork> ;
+        sh:name """Dataset: exampleOfWork""" ;
+        sh:description """On a packaged directory copy of an identified asset, MUST identify the exact asset version it holds, typed CreativeWork or a subtype.""" ;
+        sh:class <http://schema.org/CreativeWork> ;
+        sh:message """Dataset: exampleOfWork (MASP rule #prop_exampleOfWork_Dataset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/hasPart> ;
+        sh:name """Dataset: hasPart""" ;
+        sh:description """Data entities nested in this directory.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] ) ;
+        sh:message """Dataset: hasPart (MASP rule #prop_hasPart_Dataset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
+        sh:name """Dataset: prov:wasDerivedFrom""" ;
+        sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:message """Dataset: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_Dataset)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_IdentifiedAsset> a sh:NodeShape ;
+    sh:name """Identified asset""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/CreativeWork> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Identified asset: name""" ;
+        sh:description """The asset SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Identified asset: name (MASP rule #prop_name_IdentifiedAsset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Identified asset: version""" ;
+        sh:description """A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Identified asset: version (MASP rule #prop_version_IdentifiedAsset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/author> ;
+        sh:name """Identified asset: author""" ;
+        sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:message """Identified asset: author (MASP rule #prop_author_IdentifiedAsset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
+        sh:name """Identified asset: prov:wasDerivedFrom""" ;
+        sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:message """Identified asset: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_IdentifiedAsset)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Identified asset: additionalType""" ;
+        sh:description """Where the kind of agreement or policy matters, SHOULD refer to a published term, such as a Data Privacy Vocabulary agreement class.""" ;
+        sh:message """Identified asset: additionalType (MASP rule #prop_additionalType_IdentifiedAsset)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Plan> a sh:NodeShape ;
+    sh:name """Plan""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/CreativeWork> . ?this a <http://www.w3.org/ns/prov#Plan> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Plan: name""" ;
+        sh:description """The plan SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Plan: name (MASP rule #prop_name_Plan)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://purl.org/pav/previousVersion> ;
+        sh:name """Plan: pav:previousVersion""" ;
+        sh:description """A plan changed after submission links to its immediate predecessor.""" ;
+        sh:maxCount 1 ;
+        sh:class <http://schema.org/CreativeWork> ;
+        sh:message """Plan: pav:previousVersion (MASP rule #prop_pav-previousVersion_Plan)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_SoftwareApplication> a sh:NodeShape ;
+    sh:name """Software application""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/SoftwareApplication> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Software application: name""" ;
+        sh:description """The software SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Software application: name (MASP rule #prop_name_SoftwareApplication)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Software application: version""" ;
+        sh:description """A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Software application: version (MASP rule #prop_version_SoftwareApplication)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/author> ;
+        sh:name """Software application: author""" ;
+        sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:message """Software application: author (MASP rule #prop_author_SoftwareApplication)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_SoftwareSourceCode> a sh:NodeShape ;
+    sh:name """Software source code""" ;
+    sh:targetClass <http://schema.org/SoftwareSourceCode> ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Software source code: name""" ;
+        sh:description """The software SHOULD carry a name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Software source code: name (MASP rule #prop_name_SoftwareSourceCode)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Software source code: version""" ;
+        sh:description """A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Software source code: version (MASP rule #prop_version_SoftwareSourceCode)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/author> ;
+        sh:name """Software source code: author""" ;
+        sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:message """Software source code: author (MASP rule #prop_author_SoftwareSourceCode)""" ;
     ] .
