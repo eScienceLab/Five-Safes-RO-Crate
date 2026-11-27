@@ -87,6 +87,9 @@
         },
         {
           "@id": "#usesDCT"
+        },
+        {
+          "@id": "#usesDPV"
         }
       ]
     },
@@ -194,13 +197,19 @@
     },
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
       "termCode": "EgressSnapshot",
       "name": "Egress snapshot",
       "description": "A separate, immutable representation of an activity record, prepared from an internal snapshot for release from the TRE. Used as an additionalType value on the Root Data Entity of an egress snapshot, and never on a working record or internal snapshot.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
       "inDefinedTermSet": {
         "@id": "https://w3id.org/5s-crate/1.0-DRAFT#"
+      },
+      "rdfs:subClassOf": {
+        "@id": "http://schema.org/Dataset"
       }
     },
     {
@@ -272,7 +281,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Activity",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
       "termCode": "prov:Activity",
       "name": "Activity",
       "description": "Added to the @type of every process, alongside its schema.org Action type.",
@@ -283,7 +295,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Plan",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
       "termCode": "prov:Plan",
       "name": "Plan",
       "description": "Added to the @type of an asset that represents intended work, such as a submitted analysis plan.",
@@ -294,7 +309,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Association",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
       "termCode": "prov:Association",
       "name": "Association",
       "description": "Links an execution to one agent and the exact plan version it followed.",
@@ -305,7 +323,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Location",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
       "termCode": "prov:Location",
       "name": "Location",
       "description": "Added to the @type of a runtime location, such as a workspace or virtual machine.",
@@ -316,7 +337,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#qualifiedAssociation",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:qualifiedAssociation",
       "name": "qualified association",
       "description": "From an execution to the prov:Association linking it to a plan.",
@@ -327,7 +351,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#agent",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:agent",
       "name": "agent",
       "description": "The one agent of a prov:Association, which is also an agent of the execution.",
@@ -338,7 +365,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#hadPlan",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:hadPlan",
       "name": "had plan",
       "description": "The exact plan version of a prov:Association.",
@@ -349,7 +379,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#used",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:used",
       "name": "used",
       "description": "What a process, such as a decision, actually used, including a snapshot it consulted.",
@@ -360,7 +393,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#wasInformedBy",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:wasInformedBy",
       "name": "was informed by",
       "description": "An earlier process that informed this one, such as the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from.",
@@ -371,7 +407,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:wasDerivedFrom",
       "name": "was derived from",
       "description": "On a derived asset, its source where derivation was observed or attested; on an egress snapshot's Root Data Entity, its source internal snapshot.",
@@ -382,7 +421,10 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#atLocation",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "prov:atLocation",
       "name": "at location",
       "description": "The runtime location where a process ran.",
@@ -393,7 +435,10 @@
     },
     {
       "@id": "http://purl.org/pav/previousVersion",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "pav:previousVersion",
       "name": "previous version",
       "description": "On an internal snapshot after the first, the canonical identifier of the preceding internal snapshot; on a plan, its immediate predecessor.",
@@ -404,7 +449,10 @@
     },
     {
       "@id": "http://purl.org/dc/terms/isVersionOf",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "dct:isVersionOf",
       "name": "is version of",
       "description": "On the Root Data Entity, the activity record identifier, shared by every representation of the record.",
@@ -415,7 +463,10 @@
     },
     {
       "@id": "http://purl.org/dc/terms/hasPart",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "dct:hasPart",
       "name": "has part",
       "description": "From an overall process, such as an output review, to its constituent actions. Distinct from schema.org hasPart.",
@@ -426,13 +477,94 @@
     },
     {
       "@id": "http://purl.org/dc/terms/valid",
-      "@type": "DefinedTerm",
+      "@type": [
+        "DefinedTerm",
+        "rdf:Property"
+      ],
       "termCode": "dct:valid",
       "name": "valid",
       "description": "On a credential, one closed validity interval in start/end form.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#credentials",
       "inDefinedTermSet": {
         "@id": "http://purl.org/dc/terms/"
+      }
+    },
+    {
+      "@id": "#usesDPV",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: Data Privacy Vocabulary (for examples of additionalType values)",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#",
+      "@type": "DefinedTermSet",
+      "name": "Data Privacy Vocabulary (DPV)",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv",
+      "hasDefinedTerm": [
+        {
+          "@id": "https://w3id.org/dpv#DataProcessingAgreement"
+        },
+        {
+          "@id": "https://w3id.org/dpv#StatisticalConfidentialityAgreement"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#",
+      "@type": "DefinedTermSet",
+      "name": "DPV Risk extension",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv/risk",
+      "hasDefinedTerm": {
+        "@id": "https://w3id.org/dpv/risk#RiskAssessment"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#DataProcessingAgreement",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
+      "termCode": "dpv:DataProcessingAgreement",
+      "name": "Data Processing Agreement",
+      "description": "Example additionalType value for an agreement setting processing terms between organisations.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#StatisticalConfidentialityAgreement",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
+      "termCode": "dpv:StatisticalConfidentialityAgreement",
+      "name": "Statistical Confidentiality Agreement",
+      "description": "Example additionalType value for an agreement covering disclosure control.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#RiskAssessment",
+      "@type": [
+        "DefinedTerm",
+        "rdfs:Class"
+      ],
+      "termCode": "risk:RiskAssessment",
+      "name": "Risk Assessment",
+      "description": "Example additionalType value for an output check that identifies, analyses and evaluates risk.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#output-checks",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv/risk#"
       }
     },
     {
