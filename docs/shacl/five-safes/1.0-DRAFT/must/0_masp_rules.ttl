@@ -804,3 +804,51 @@
         sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """Withdrawal: object (MASP rule #prop_object_CancelAction)""" ;
     ] .
+
+<urn:masp-shacl:five-safes:class_SendAction> a sh:NodeShape ;
+    sh:name """Dispatch""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/SendAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Dispatch: object""" ;
+        sh:description """MUST identify one or more exact assets dispatched, each by an absolute IRI. Several only when transferred in the same occurrence.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Dispatch: object (MASP rule #prop_object_SendAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/recipient> ;
+        sh:name """Dispatch: recipient""" ;
+        sh:description """MUST identify exactly one receiving party; dispatches to different recipients are separate SendActions.""" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Dispatch: recipient (MASP rule #prop_recipient_SendAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_ReceiveAction> a sh:NodeShape ;
+    sh:name """Receipt""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/ReceiveAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Receipt: object""" ;
+        sh:description """MUST identify one or more exact assets received, each by an absolute IRI.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Receipt: object (MASP rule #prop_object_ReceiveAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/sender> ;
+        sh:name """Receipt: sender""" ;
+        sh:description """MUST identify exactly one sending party.""" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Receipt: sender (MASP rule #prop_sender_ReceiveAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#wasInformedBy> ;
+        sh:name """Receipt: prov:wasInformedBy""" ;
+        sh:description """Where the RO-Crate asserts that the receipt resulted from a particular dispatch, MUST identify that exact SendAction by its absolute IRI; it need not be described in this RO-Crate.""" ;
+        sh:message """Receipt: prov:wasInformedBy (MASP rule #prop_prov-wasInformedBy_ReceiveAction)""" ;
+    ] .

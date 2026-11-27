@@ -1171,6 +1171,12 @@
           "@id": "#class_UpdateAction"
         },
         {
+          "@id": "#class_SendAction"
+        },
+        {
+          "@id": "#class_ReceiveAction"
+        },
+        {
           "@id": "#prop_object_AskAction"
         },
         {
@@ -1199,6 +1205,21 @@
         },
         {
           "@id": "#prop_dct-hasPart_Action"
+        },
+        {
+          "@id": "#prop_object_SendAction"
+        },
+        {
+          "@id": "#prop_recipient_SendAction"
+        },
+        {
+          "@id": "#prop_object_ReceiveAction"
+        },
+        {
+          "@id": "#prop_sender_ReceiveAction"
+        },
+        {
+          "@id": "#prop_prov-wasInformedBy_ReceiveAction"
         },
         {
           "@id": "#prop_hasPart_RootDataEntity"
@@ -3239,6 +3260,44 @@
       }
     },
     {
+      "@id": "#class_SendAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SendAction",
+      "name": "Dispatch",
+      "rdfs:comment": "One observed or attested dispatch of one or more exact assets to exactly one recipient.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#exchange-processes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/SendAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_ReceiveAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "ReceiveAction",
+      "name": "Receipt",
+      "rdfs:comment": "One observed or attested delivery of one or more exact assets from exactly one sender.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#exchange-processes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/ReceiveAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
       "@id": "#prop_object_AskAction",
       "@type": "rdf:Property",
       "rdfs:label": "object",
@@ -3508,6 +3567,139 @@
       },
       "rangeIncludes": {
         "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#prop_object_SendAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "MUST identify one or more exact assets dispatched, each by an absolute IRI. Several only when transferred in the same occurrence.",
+      "domainIncludes": {
+        "@id": "#class_SendAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_recipient_SendAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "recipient",
+      "name": "Recipient",
+      "rdfs:comment": "MUST identify exactly one receiving party; dispatches to different recipients are separate SendActions.",
+      "domainIncludes": {
+        "@id": "#class_SendAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/recipient"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_object_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "MUST identify one or more exact assets received, each by an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_sender_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "sender",
+      "name": "Sender",
+      "rdfs:comment": "MUST identify exactly one sending party.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sender"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-wasInformedBy_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasInformedBy",
+      "name": "Was informed by",
+      "rdfs:comment": "Where the RO-Crate asserts that the receipt resulted from a particular dispatch, MUST identify that exact SendAction by its absolute IRI; it need not be described in this RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasInformedBy"
       }
     },
     {
