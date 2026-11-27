@@ -32,6 +32,7 @@ locally, run with Node.js:
 ```sh
 for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json; do
   npx --yes --package ro-crate-html@0.1.6 rochtml "$crate"
+  sed -i '1s/^/<!DOCTYPE html>\n/' "$(dirname "$crate")/ro-crate-preview.html"
 done
 ```
 
