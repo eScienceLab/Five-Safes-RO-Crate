@@ -110,18 +110,41 @@ it counts them (see [`tests/masp/`](tests/masp/)). A rule that an `@id` must be
 an absolute IRI cannot be checked, as a local `#identifier` is absolute once
 parsed as RDF.
 
-The shapes are generated with `masp_to_shacl.py` from the `ro-crate-masp` skill
-of [ro-crate-skills](https://github.com/stain/ro-crate-skills). Regenerate them
-whenever the MASP rules change, using the
-[RO-Crate 1.3 context](https://w3id.org/ro/crate/1.3/context) to map terms:
+The shapes are generated files: to change what they check, change the MASP
+rules in the Profile Crates and regenerate them (see below).
 
-```sh
-curl -sL -o ro-crate-1.3-context.jsonld https://w3id.org/ro/crate/1.3/context
-python3 masp_to_shacl.py docs/ro-crate-metadata.json docs/shacl \
-  --token five-safes --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
-python3 masp_to_shacl.py docs/modules/statistical-output-checking/ro-crate-metadata.json docs/shacl \
-  --token five-safes-statistical-output-checking --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
-```
+## Updating the Profile Crates
+
+The Profile Crates, [`docs/ro-crate-metadata.json`](docs/ro-crate-metadata.json)
+and [`docs/modules/statistical-output-checking/ro-crate-metadata.json`](docs/modules/statistical-output-checking/ro-crate-metadata.json),
+are edited directly, and their MASP rules are the source for the rules pages
+and the SHACL shapes. When the specification changes, update the rules'
+counts, ranges and descriptions to match, then:
+
+1. Regenerate the SHACL shapes in [`docs/shacl/`](docs/shacl/) with
+   `masp_to_shacl.py`, found in `skills/ro-crate-masp/scripts/` of
+   [ro-crate-skills](https://github.com/stain/ro-crate-skills) (Python 3,
+   standard library only). It maps terms with the RO-Crate 1.3 context, and
+   rewrites each profile's `profile.ttl` and `must/0_masp_rules.ttl`:
+
+   ```sh
+   curl -sL -o ro-crate-1.3-context.jsonld https://w3id.org/ro/crate/1.3/context
+   python3 masp_to_shacl.py docs/ro-crate-metadata.json docs/shacl \
+     --token five-safes --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+   python3 masp_to_shacl.py docs/modules/statistical-output-checking/ro-crate-metadata.json docs/shacl \
+     --token five-safes-statistical-output-checking --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+   ```
+
+   Run the commands from the repository root, so the generated files name the
+   Profile Crates by relative paths. Check what the script prints as not
+   converted. A new module gets its own `--token`, and its Profile Crate a
+   `#hasValidation` resource like the existing module's.
+2. Check the examples and the fixtures in [`tests/masp/`](tests/masp/) with
+   `masp-validate` and with rocrate-validator, as described there: valid crates
+   must pass and each invalid fixture must fail. Add a fixture for each new
+   requirement.
+3. Build the site and look at the generated rules pages (see
+   [Building the documentation](#building-the-documentation)).
 
 ## Feedback
 
