@@ -1050,7 +1050,10 @@ A check performed by software is attributed as in [Who Performed a Process](#who
 | `instrument` | SHOULD identify the tool or policy version that helped perform the check, where one did, as specified in [Process Shape](#process-shape). |
 | `result` | MAY identify a report the check produced. |
 
-The `additionalType` value describes the kind of check. For example, a check that identifies, analyses and evaluates risk [can use DPV's `RiskAssessment`](https://w3id.org/dpv/risk#RiskAssessment) (as in the disclosure risk assessment below). Note that this is an example classification and the base profile does not require this term for output checks.
+The `additionalType` value describes the kind of check. For example, a check that identifies, analyses and evaluates risk can use [`https://w3id.org/dpv/risk#RiskAssessment`](https://w3id.org/dpv/risk#RiskAssessment) from the DPV Risk extension (as in the disclosure risk assessment below). Note that this is an example classification and the base profile does not require this term for output checks.
+
+!!! note "Which `RiskAssessment`?"
+    DPV has two terms named `RiskAssessment`. The Risk extension's `https://w3id.org/dpv/risk#RiskAssessment` is an activity of risk management (following ISO 31073), which is what an `AssessAction` records: one occasion of assessing risk. DPV core's `https://w3id.org/dpv#RiskAssessment` is an organisational measure, such as an organisation's practice of assessing risks, and is not used to type a check.
 
 A single file may contain several separately identified outputs. For example, a spreadsheet containing several tables. Each table is a separate output, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
 

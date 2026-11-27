@@ -122,7 +122,7 @@ A working record or snapshot that declares this module MUST record at least one 
 
 | Property | Requirement | Description |
 |---|---|---|
-| `additionalType` | MUST include the module term <br><br> SHOULD include `https://w3id.org/dpv/risk#RiskAssessment` where the check identified, analysed or evaluated disclosure risk | The module term marks the check and is how it is selected. Further published terms MAY be added. |
+| `additionalType` | MUST include the module term <br><br> SHOULD include `https://w3id.org/dpv/risk#RiskAssessment` where the check identified, analysed or evaluated disclosure risk | The module term marks the check and is how it is selected. `https://w3id.org/dpv/risk#RiskAssessment` is the DPV Risk extension's term for an activity of assessing risk, not DPV core's `https://w3id.org/dpv#RiskAssessment`, which is an organisational measure (see: [Output Checks](../index.md#output-checks)). Further published terms MAY be added. |
 | `@type` | MUST include `AssessAction` | [Process Shape](../index.md#process-shape) and [Output Checks](../index.md#output-checks) in the Five Safes RO-Crate core then apply. |
 | `result` | SHOULD identify at least one finding for each `object`, where `actionStatus` is `CompletedActionStatus`; <br><br> MAY identify a report; <br><br> MUST NOT identify an `AuthorizeAction` or `RejectAction` | An active or failed check is not expected to have findings. A check with no `actionStatus` fails the Process Shape requirements. |
 | `instrument` | SHOULD identify the exact version of the policy or configuration that set the check's criteria, and any software, where either helped perform the check | A copy of a configuration file is packaged as described in [Packaging Outputs](#packaging-outputs). |
@@ -242,7 +242,7 @@ Terms from two published vocabularies are used as values, written as full IRIs i
 | Vocabulary | Namespace | Used for |
 |---|---|---|
 | [StatbarnSDC](https://w3id.org/statbarnsdc) 1.0 | `https://w3id.org/statbarnsdc#` | The kind of statistic (its statbarn and analysis classes), and the risk, evaluation and control classes under the optional properties. |
-| [Data Privacy Vocabulary](https://w3id.org/dpv) 2.3 and its [Risk extension](https://w3id.org/dpv/risk) | `https://w3id.org/dpv#`, `https://w3id.org/dpv/risk#` | `RiskAssessment` as a kind of check, and the three optional properties. |
+| [Data Privacy Vocabulary](https://w3id.org/dpv) 2.3 and its [Risk extension](https://w3id.org/dpv/risk) | `https://w3id.org/dpv#`, `https://w3id.org/dpv/risk#` | `https://w3id.org/dpv/risk#RiskAssessment` as a kind of check, and the three optional properties. |
 
 As every module, outcome and StatbarnSDC term is a value, no context is needed beyond RO-Crate 1.3. The RO-Crate context does not bind `dpv` or `risk`, so an RO-Crate that writes a DPV property with either prefix includes the module context, as required under [Optional Published Terms](#optional-published-terms). The context binds those two prefixes:
 
