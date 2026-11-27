@@ -913,6 +913,15 @@
           "@id": "#class_SoftwareSourceCode"
         },
         {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_id_ReferencedCrate"
+        },
+        {
+          "@id": "#class_NodeProvenanceCrate"
+        },
+        {
           "@id": "#prop_name_File"
         },
         {
@@ -983,6 +992,24 @@
         },
         {
           "@id": "#prop_additionalType_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_version_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_dct-isVersionOf_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_datePublished_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_conformsTo_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_about_NodeProvenanceCrate"
+        },
+        {
+          "@id": "#prop_publisher_NodeProvenanceCrate"
         },
         {
           "@id": "#prop_hasPart_RootDataEntity"
@@ -1329,6 +1356,9 @@
       "prov:specializationOf": {
         "@id": "http://purl.org/pav/previousVersion"
       },
+      "rangeIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
       "sh:maxCount": 1
     },
     {
@@ -1342,6 +1372,9 @@
       },
       "prov:specializationOf": {
         "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": {
+        "@id": "#class_ReferencedCrate"
       },
       "sh:maxCount": 1
     },
@@ -1520,6 +1553,46 @@
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
       "prov:specializationOf": {
         "@id": "http://schema.org/SoftwareSourceCode"
+      }
+    },
+    {
+      "@id": "#class_ReferencedCrate",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Referenced RO-Crate",
+      "rdfs:comment": "Another RO-Crate referenced from this one: a snapshot a decision used, a transferred snapshot, an egress snapshot's source, or a node provenance RO-Crate. Its @id is the referenced RO-Crate's canonical identifier, and it MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#referencing-another-ro-crate",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#prop_id_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A referenced RO-Crate MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_NodeProvenanceCrate",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Node provenance RO-Crate",
+      "rdfs:comment": "A fixed, published RO-Crate holding the provenance of one node in a federation, referenced from the federated activity record.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#node-provenance-ro-crates",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      },
+      "rdfs:subClassOf": {
+        "@id": "#class_ReferencedCrate"
       }
     },
     {
@@ -1934,6 +2007,99 @@
       }
     },
     {
+      "@id": "#prop_version_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "MUST copy the integer version present on the referenced RO-Crate's Root Data Entity.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Integer"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_dct-isVersionOf_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:isVersionOf",
+      "name": "Is version of",
+      "rdfs:comment": "MUST copy the activity record identifier present on the referenced RO-Crate's Root Data Entity.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/isVersionOf"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_datePublished_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "datePublished",
+      "name": "Date published",
+      "rdfs:comment": "MUST copy the datePublished present on the referenced RO-Crate's Root Data Entity. For a snapshot a decision used or an exchange transferred, it MUST NOT be later than that process's endTime.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/datePublished"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_conformsTo_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "SHOULD include the versionless https://w3id.org/ro/crate; MUST NOT include a version-specific RO-Crate IRI. Application-profile IRIs MAY be present as hints.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      }
+    },
+    {
+      "@id": "#prop_about_NodeProvenanceCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "MUST identify the activity record, an exact process or an exact asset that is the subject matter of the node provenance RO-Crate, as absolute IRIs.",
+      "domainIncludes": {
+        "@id": "#class_NodeProvenanceCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_publisher_NodeProvenanceCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "publisher",
+      "name": "Publisher",
+      "rdfs:comment": "SHOULD identify the Organization that published the node provenance RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_NodeProvenanceCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/publisher"
+      }
+    },
+    {
       "@id": "#prop_hasPart_RootDataEntity",
       "@type": "rdf:Property",
       "rdfs:label": "hasPart",
@@ -1951,6 +2117,12 @@
         },
         {
           "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_NodeProvenanceCrate"
         }
       ]
     },

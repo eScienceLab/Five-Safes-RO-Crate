@@ -131,6 +131,7 @@
         sh:name """Root Data Entity: pav:previousVersion""" ;
         sh:description """MUST identify, exactly once, the canonical identifier of the preceding internal snapshot on an internal snapshot after the first; MUST NOT be present otherwise.""" ;
         sh:maxCount 1 ;
+        sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ;
         sh:message """Root Data Entity: pav:previousVersion (MASP rule #prop_pav-previousVersion_RootDataEntity)""" ;
     ] ;
     sh:property [
@@ -138,13 +139,14 @@
         sh:name """Root Data Entity: prov:wasDerivedFrom""" ;
         sh:description """MUST identify, exactly once, the canonical identifier of the source internal snapshot on an egress snapshot; not used on other representations.""" ;
         sh:maxCount 1 ;
+        sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ;
         sh:message """Root Data Entity: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_RootDataEntity)""" ;
     ] ;
     sh:property [
         sh:path <http://schema.org/hasPart> ;
         sh:name """Root Data Entity: hasPart""" ;
         sh:description """MUST be present if the RO-Crate holds or refers to data entities: each MUST be reachable from the Root Data Entity through hasPart, directly or through nested Datasets. Includes referenced RO-Crates.""" ;
-        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] ) ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:node <urn:masp-shacl:five-safes:class_NodeProvenanceCrate> ] ) ;
         sh:message """Root Data Entity: hasPart (MASP rule #prop_hasPart_RootDataEntity)""" ;
     ] ;
     sh:property [
@@ -222,13 +224,13 @@
         sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
         sh:name """File: prov:wasDerivedFrom""" ;
         sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
-        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
         sh:message """File: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_File)""" ;
     ] .
 
 <urn:masp-shacl:five-safes:class_Dataset> a sh:NodeShape ;
     sh:name """Dataset""" ;
-    sh:targetClass <http://schema.org/Dataset> ;
+    sh:class <http://schema.org/Dataset> ;
     sh:property [
         sh:path <http://schema.org/name> ;
         sh:name """Dataset: name""" ;
@@ -260,14 +262,14 @@
         sh:path <http://schema.org/hasPart> ;
         sh:name """Dataset: hasPart""" ;
         sh:description """Data entities nested in this directory.""" ;
-        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] ) ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] ) ;
         sh:message """Dataset: hasPart (MASP rule #prop_hasPart_Dataset)""" ;
     ] ;
     sh:property [
         sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
         sh:name """Dataset: prov:wasDerivedFrom""" ;
         sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
-        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
         sh:message """Dataset: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_Dataset)""" ;
     ] .
 
@@ -298,7 +300,7 @@
         sh:path <http://www.w3.org/ns/prov#wasDerivedFrom> ;
         sh:name """Identified asset: prov:wasDerivedFrom""" ;
         sh:description """On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.""" ;
-        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
         sh:message """Identified asset: prov:wasDerivedFrom (MASP rule #prop_prov-wasDerivedFrom_IdentifiedAsset)""" ;
     ] ;
     sh:property [
@@ -373,4 +375,55 @@
         sh:name """Software source code: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
         sh:message """Software source code: author (MASP rule #prop_author_SoftwareSourceCode)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_ReferencedCrate> a sh:NodeShape ;
+    sh:name """Referenced RO-Crate""" ;
+    sh:class <http://schema.org/Dataset> ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Referenced RO-Crate: version""" ;
+        sh:description """MUST copy the integer version present on the referenced RO-Crate's Root Data Entity.""" ;
+        sh:maxCount 1 ;
+        sh:or ( [ sh:datatype xsd:integer ] [ sh:datatype xsd:decimal ] [ sh:datatype xsd:double ] [ sh:datatype xsd:float ] [ sh:datatype xsd:long ] [ sh:datatype xsd:int ] ) ;
+        sh:message """Referenced RO-Crate: version (MASP rule #prop_version_ReferencedCrate)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://purl.org/dc/terms/isVersionOf> ;
+        sh:name """Referenced RO-Crate: dct:isVersionOf""" ;
+        sh:description """MUST copy the activity record identifier present on the referenced RO-Crate's Root Data Entity.""" ;
+        sh:maxCount 1 ;
+        sh:message """Referenced RO-Crate: dct:isVersionOf (MASP rule #prop_dct-isVersionOf_ReferencedCrate)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/datePublished> ;
+        sh:name """Referenced RO-Crate: datePublished""" ;
+        sh:description """MUST copy the datePublished present on the referenced RO-Crate's Root Data Entity. For a snapshot a decision used or an exchange transferred, it MUST NOT be later than that process's endTime.""" ;
+        sh:maxCount 1 ;
+        sh:or ( [ sh:nodeKind sh:Literal ] [ sh:nodeKind sh:Literal ] ) ;
+        sh:message """Referenced RO-Crate: datePublished (MASP rule #prop_datePublished_ReferencedCrate)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://purl.org/dc/terms/conformsTo> ;
+        sh:name """Referenced RO-Crate: conformsTo""" ;
+        sh:description """SHOULD include the versionless https://w3id.org/ro/crate; MUST NOT include a version-specific RO-Crate IRI. Application-profile IRIs MAY be present as hints.""" ;
+        sh:message """Referenced RO-Crate: conformsTo (MASP rule #prop_conformsTo_ReferencedCrate)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_NodeProvenanceCrate> a sh:NodeShape ;
+    sh:name """Node provenance RO-Crate""" ;
+    sh:class <http://schema.org/Dataset> ;
+    sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ;
+    sh:property [
+        sh:path <http://schema.org/about> ;
+        sh:name """Node provenance RO-Crate: about""" ;
+        sh:description """MUST identify the activity record, an exact process or an exact asset that is the subject matter of the node provenance RO-Crate, as absolute IRIs.""" ;
+        sh:minCount 1 ;
+        sh:message """Node provenance RO-Crate: about (MASP rule #prop_about_NodeProvenanceCrate)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/publisher> ;
+        sh:name """Node provenance RO-Crate: publisher""" ;
+        sh:description """SHOULD identify the Organization that published the node provenance RO-Crate.""" ;
+        sh:message """Node provenance RO-Crate: publisher (MASP rule #prop_publisher_NodeProvenanceCrate)""" ;
     ] .
