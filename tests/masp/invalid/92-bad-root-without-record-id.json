@@ -33,7 +33,7 @@
         "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
       },
       "publisher": {
-        "@id": "https://ror.org/027m9bs27"
+        "@id": "https://tre72.example.org/"
       },
       "hasPart": [
         {
@@ -69,7 +69,7 @@
         "@id": "https://orcid.org/0000-0002-1825-0097"
       },
       "provider": {
-        "@id": "https://ror.org/027m9bs27"
+        "@id": "https://tre72.example.org/"
       },
       "object": {
         "@id": "query.sql"
@@ -100,11 +100,11 @@
       "@type": "Person",
       "name": "Example analyst",
       "affiliation": {
-        "@id": "https://ror.org/027m9bs27"
+        "@id": "https://tre72.example.org/"
       }
     },
     {
-      "@id": "https://ror.org/027m9bs27",
+      "@id": "https://tre72.example.org/",
       "@type": "Organization",
       "name": "TRE72"
     }

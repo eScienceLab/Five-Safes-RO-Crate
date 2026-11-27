@@ -161,7 +161,7 @@ The following is a complete, minimal conforming working record of a feasibility 
       "dateModified": "2027-03-14T09:20:31Z",
       "datePublished": "2027-03-13T09:01:00Z",
       "license": {"@id": "https://creativecommons.org/publicdomain/zero/1.0/"},
-      "publisher": {"@id": "https://ror.org/027m9bs27"},
+      "publisher": {"@id": "https://tre72.example.org/"},
       "hasPart": [{"@id": "query.sql"}, {"@id": "outputs/counts.csv"}],
       "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
     },
@@ -176,7 +176,7 @@ The following is a complete, minimal conforming working record of a feasibility 
       "@type": ["CreateAction", "prov:Activity"],
       "name": "Execute feasibility query",
       "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "object": {"@id": "query.sql"},
       "result": {"@id": "outputs/counts.csv"},
       "startTime": "2027-03-14T09:20:30Z",
@@ -199,10 +199,10 @@ The following is a complete, minimal conforming working record of a feasibility 
       "@id": "https://orcid.org/0000-0002-1825-0097",
       "@type": "Person",
       "name": "Example analyst",
-      "affiliation": {"@id": "https://ror.org/027m9bs27"}
+      "affiliation": {"@id": "https://tre72.example.org/"}
     },
     {
-      "@id": "https://ror.org/027m9bs27",
+      "@id": "https://tre72.example.org/",
       "@type": "Organization",
       "name": "TRE72"
     }
@@ -475,11 +475,11 @@ The following fragment describes a submitted plan, its request, and one executio
     "@type": ["AskAction", "prov:Activity"],
     "name": "Submit analysis plan",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "provider": {"@id": "https://tre72.example.org/"},
     "object": {
       "@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b"
     },
-    "recipient": {"@id": "https://ror.org/027m9bs27"},
+    "recipient": {"@id": "https://tre72.example.org/"},
     "endTime": "2027-03-13T15:00:00Z",
     "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
   },
@@ -488,7 +488,7 @@ The following fragment describes a submitted plan, its request, and one executio
     "@type": ["CreateAction", "prov:Activity"],
     "name": "Execute approved analysis",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "provider": {"@id": "https://tre72.example.org/"},
     "prov:qualifiedAssociation": {
       "@id": "urn:uuid:d0f1c2b3-4a5e-4f60-9b7c-8d9e0f1a2b3c"
     },
@@ -640,7 +640,7 @@ The following fragment outlines an approval. The Root Data Entity lists the deci
     "@type": ["AuthorizeAction", "prov:Activity"],
     "name": "Enquiry approved for the two participating sites",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://ror.org/027m9bs27"},
+    "provider": {"@id": "https://tre72.example.org/"},
     "object": {"@id": "https://tre72.example.org/activities/A123/plans/enquiry-3f2b"},
     "prov:wasInformedBy": {
       "@id": "https://tre72.example.org/activities/A123/requests/enquiry-3f2b"
@@ -1118,7 +1118,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "@type": ["Action", "prov:Activity"],
       "name": "Review 42",
       "agent": {"@id": "https://tre72.example.org/staff/0417"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "object": [
         {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
         {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
@@ -1141,7 +1141,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "@type": ["AuthorizeAction", "prov:Activity"],
       "name": "Cohort count result approved for release",
       "agent": {"@id": "https://tre72.example.org/staff/0417"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "object": {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
       "prov:wasInformedBy": {
         "@id": "https://tre72.example.org/activities/A123/checks/check-1"
@@ -1155,7 +1155,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "name": "Cohort count by site refused",
       "description": "Release of site-level counts was refused under the TRE's release policy.",
       "agent": {"@id": "https://tre72.example.org/staff/0417"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
       "prov:wasInformedBy": {
         "@id": "https://tre72.example.org/activities/A123/checks/check-1"
@@ -1169,7 +1169,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "name": "Request revisions to cohort counts by age",
       "description": "Combine the small age categories and submit a revised table for review.",
       "agent": {"@id": "https://tre72.example.org/staff/0417"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"},
       "recipient": {"@id": "https://orcid.org/0000-0002-1825-0097"},
       "prov:wasInformedBy": {
@@ -1183,8 +1183,8 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "@type": ["AssessAction", "prov:Activity"],
       "additionalType": {"@id": "https://w3id.org/dpv/risk#RiskAssessment"},
       "name": "Output check 1: automated disclosure risk assessment",
-      "agent": {"@id": "https://ror.org/027m9bs27"},
-      "provider": {"@id": "https://ror.org/027m9bs27"},
+      "agent": {"@id": "https://tre72.example.org/"},
+      "provider": {"@id": "https://tre72.example.org/"},
       "instrument": {"@id": "https://doi.org/10.5281/zenodo.18456450"},
       "object": [
         {"@id": "https://tre72.example.org/activities/A123/assets/count/v1"},
@@ -1231,7 +1231,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "@id": "https://tre72.example.org/staff/0417",
       "@type": "Person",
       "name": "Example output checker",
-      "affiliation": {"@id": "https://ror.org/027m9bs27"}
+      "affiliation": {"@id": "https://tre72.example.org/"}
     },
     {
       "@id": "https://orcid.org/0000-0002-1825-0097",
@@ -1239,7 +1239,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
       "name": "Example researcher"
     },
     {
-      "@id": "https://ror.org/027m9bs27",
+      "@id": "https://tre72.example.org/",
       "@type": "Organization",
       "name": "TRE72"
     }
