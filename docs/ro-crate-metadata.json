@@ -1075,6 +1075,84 @@
           "@id": "#prop_hasCredential_Person"
         },
         {
+          "@id": "#class_Location"
+        },
+        {
+          "@id": "#prop_id_Location"
+        },
+        {
+          "@id": "#prop_name_Location"
+        },
+        {
+          "@id": "#class_Process"
+        },
+        {
+          "@id": "#prop_id_Process"
+        },
+        {
+          "@id": "#value_action_status"
+        },
+        {
+          "@id": "#prop_agent_Process"
+        },
+        {
+          "@id": "#prop_actionStatus_Process"
+        },
+        {
+          "@id": "#prop_name_Process"
+        },
+        {
+          "@id": "#prop_description_Process"
+        },
+        {
+          "@id": "#prop_object_Process"
+        },
+        {
+          "@id": "#prop_result_Process"
+        },
+        {
+          "@id": "#prop_instrument_Process"
+        },
+        {
+          "@id": "#prop_provider_Process"
+        },
+        {
+          "@id": "#prop_prov-atLocation_Process"
+        },
+        {
+          "@id": "#prop_startTime_Process"
+        },
+        {
+          "@id": "#prop_endTime_Process"
+        },
+        {
+          "@id": "#prop_additionalType_Process"
+        },
+        {
+          "@id": "#prop_prov-wasInformedBy_Process"
+        },
+        {
+          "@id": "#prop_prov-used_Process"
+        },
+        {
+          "@id": "#class_Association"
+        },
+        {
+          "@id": "#prop_prov-agent_Association"
+        },
+        {
+          "@id": "#prop_prov-hadPlan_Association"
+        },
+        {
+          "@id": "#prop_prov-qualifiedAssociation_Process"
+        },
+        {
+          "@id": "#class_CreateAction"
+        },
+        {
+          "@id": "#class_UpdateAction"
+        },
+        {
           "@id": "#prop_hasPart_RootDataEntity"
         },
         {
@@ -2516,6 +2594,489 @@
       }
     },
     {
+      "@id": "#class_Location",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Thing",
+      "name": "Location",
+      "rdfs:comment": "A runtime location where a process ran, such as a workspace or virtual machine.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#the-tre-and-its-nodes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/Thing"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Location"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_id_Location",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A location MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Location"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Location",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the location.",
+      "domainIncludes": {
+        "@id": "#class_Location"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#class_Process",
+      "@type": "rdfs:Class",
+      "rdfs:label": "prov:Activity",
+      "name": "Process",
+      "rdfs:comment": "Something that happened: an Action whose @type includes one of the kinds of process and prov:Activity, referenced from the Root Data Entity's mentions. The kinds below inherit these rules.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#process-shape",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#Activity"
+      }
+    },
+    {
+      "@id": "#prop_id_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A process MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#value_action_status",
+      "@type": "PropertyValue",
+      "name": "Process status",
+      "value": "/^http:\\/\\/schema\\.org\\/(Active|Completed|Failed)ActionStatus$/",
+      "sh:minCount": 1,
+      "description": "One of ActiveActionStatus, CompletedActionStatus or FailedActionStatus. PotentialActionStatus MUST NOT be used."
+    },
+    {
+      "@id": "#prop_agent_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "agent",
+      "name": "Agent",
+      "rdfs:comment": "The people or organisations that directly performed or operated the process. A role, account or pool of people MUST NOT be used; an automated step is attributed to the operating organisation, with the software as instrument.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/agent"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_actionStatus_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "actionStatus",
+      "name": "Action status",
+      "rdfs:comment": "Exactly one of http://schema.org/ActiveActionStatus, CompletedActionStatus or FailedActionStatus, written as {\"@id\": ...}; PotentialActionStatus MUST NOT be used. A process keeps its @id as it moves from active to completed or failed.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "rangeIncludes": {
+        "@id": "#value_action_status"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/actionStatus"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "SHOULD say what happened, in words.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_description_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "description",
+      "name": "Description",
+      "rdfs:comment": "MAY give further detail, such as the command run.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/description"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_object_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "SHOULD identify what the process acted on. An asset that needs an identity beyond this RO-Crate is referenced through an entity with an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_result_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "A CreateAction with CompletedActionStatus that produced an asset MUST identify it. An anticipated, suppressed or withheld output MUST NOT appear as result.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Credential"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_instrument_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "instrument",
+      "name": "Instrument",
+      "rdfs:comment": "SHOULD identify the exact protocol, software or other asset that actually helped perform the process; applicability alone does not make an asset an instrument.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/instrument"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_File"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_provider_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "provider",
+      "name": "Provider",
+      "rdfs:comment": "MUST identify the Organization that provided or operated the environment or service, where the process was carried out within a TRE or one of its nodes.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/provider"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#prop_prov-atLocation_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:atLocation",
+      "name": "At location",
+      "rdfs:comment": "MAY identify the runtime location where the process ran.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#atLocation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Location"
+      }
+    },
+    {
+      "@id": "#prop_startTime_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "startTime",
+      "name": "Start time",
+      "rdfs:comment": "SHOULD give when the process actually began; never an anticipated time.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/startTime"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/DateTime"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_endTime_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "endTime",
+      "name": "End time",
+      "rdfs:comment": "MUST be present where actionStatus is CompletedActionStatus or FailedActionStatus; MUST NOT be present where ActiveActionStatus.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/endTime"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/DateTime"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MAY refer to the exact IRI of a published term for a more specific kind of process, without changing its published meaning.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_prov-wasInformedBy_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasInformedBy",
+      "name": "Was informed by",
+      "rdfs:comment": "An earlier process that informed this one: the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from. Asserted only where observed or attested.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasInformedBy"
+      }
+    },
+    {
+      "@id": "#prop_prov-used_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:used",
+      "name": "Used",
+      "rdfs:comment": "What the process actually used, such as an agreement it drew on. A snapshot is identified only if it existed and was actually used.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#used"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        }
+      ]
+    },
+    {
+      "@id": "#class_Association",
+      "@type": "rdfs:Class",
+      "rdfs:label": "prov:Association",
+      "name": "Association",
+      "rdfs:comment": "Links an execution of planned work to one agent and the exact plan version it followed. There should be one association per agent-and-plan pair.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#Association"
+      }
+    },
+    {
+      "@id": "#prop_prov-agent_Association",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:agent",
+      "name": "Agent",
+      "rdfs:comment": "Exactly one agent, which is also an agent of the execution.",
+      "domainIncludes": {
+        "@id": "#class_Association"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#agent"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-hadPlan_Association",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:hadPlan",
+      "name": "Had plan",
+      "rdfs:comment": "Exactly one plan, identifying the exact plan version.",
+      "domainIncludes": {
+        "@id": "#class_Association"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#hadPlan"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Plan"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-qualifiedAssociation_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:qualifiedAssociation",
+      "name": "Qualified association",
+      "rdfs:comment": "When planned work is executed, the execution MUST link to the plan through at least one association.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#qualifiedAssociation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Association"
+      }
+    },
+    {
+      "@id": "#class_CreateAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreateAction",
+      "name": "Creation",
+      "rdfs:comment": "Work intended to create an asset, such as a query execution or workflow run. Work that completed without returning an artefact keeps this type and CompletedActionStatus, has no result, and SHOULD explain the outcome in description.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CreateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_UpdateAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "UpdateAction",
+      "name": "Record update",
+      "rdfs:comment": "A change to the activity record or the RO-Crate as a whole.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/UpdateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
       "@id": "#prop_hasPart_RootDataEntity",
       "@type": "rdf:Property",
       "rdfs:label": "hasPart",
@@ -2553,6 +3114,9 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/mentions"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Process"
       }
     },
     {
