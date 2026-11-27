@@ -36,6 +36,18 @@ for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json; 
 done
 ```
 
+The core Profile Crate also holds [MASP](https://github.com/Language-Research-Technology/ro-crate-masp)
+rules, from which the build generates `rules/index.html` using the template
+[`masp/profile-text.md`](masp/profile-text.md). To generate it locally:
+
+```sh
+mkdir -p /tmp/masp site/rules && cp site/ro-crate-metadata.json /tmp/masp/
+npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs \
+  /tmp/masp/ro-crate-metadata.json masp/profile-text.md /tmp/masp/profile-documentation.md
+sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href="../ro-crate-metadata.json"|' \
+  /tmp/masp/index.html > site/rules/index.html
+```
+
 For a live local preview, run
 `python -m mkdocs serve` and open <http://127.0.0.1:8000/>.
 

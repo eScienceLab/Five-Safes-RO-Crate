@@ -23,13 +23,23 @@ jobs:
         with:
           node-version: '22'
       - name: Check Markdown
-        run: npx --yes markdownlint-cli2@0.24.2 'docs/**/*.md' '*.md'
+        run: npx --yes markdownlint-cli2@0.24.2 'docs/**/*.md' 'masp/*.md' '*.md'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
       - run: python -m pip install -r requirements.txt
       - run: python -m mkdocs build
+      - name: Generate documentation of the core profile's MASP rules
+        run: |
+          mkdir -p "$RUNNER_TEMP/masp"
+          cp site/ro-crate-metadata.json "$RUNNER_TEMP/masp/"
+          npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs \
+            "$RUNNER_TEMP/masp/ro-crate-metadata.json" masp/profile-text.md "$RUNNER_TEMP/masp/profile-documentation.md"
+          mkdir -p site/rules
+          # the page sits one level below the Profile Crate it documents
+          sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href="../ro-crate-metadata.json"|' \
+            "$RUNNER_TEMP/masp/index.html" > site/rules/index.html
       - name: Generate RO-Crate previews of the Profile Crates
         run: |
           for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json; do
