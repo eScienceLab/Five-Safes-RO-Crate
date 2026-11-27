@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{#- FAIR Signposting (https://signposting.org/FAIR/) for the pages listed under
+    extra.signposting in mkdocs.yml; GitHub Pages cannot send Link headers. #}
+{%- block site_meta %}
+  {{- super() }}
+  {%- set signposting = config.extra.signposting.get(page.file.src_uri) if page and page.file else none %}
+  {%- for link in signposting or [] %}
+    <link rel="{{ link.rel }}" href="{{ link.href }}"
+      {%- if link.type %} type="{{ link.type }}"{% endif %}
+      {%- if link.profile %} profile="{{ link.profile }}"{% endif %} />
+  {%- endfor %}
+{%- endblock %}

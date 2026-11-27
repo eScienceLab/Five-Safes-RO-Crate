@@ -3,6 +3,7 @@ site_description: An RO-Crate profile for recording and exchanging Trusted Resea
 repo_url: https://github.com/eScienceLab/Five-Safes-RO-Crate
 theme:
   name: readthedocs
+  custom_dir: overrides
 extra_css:
   - stylesheets/extra.css
 nav:
@@ -19,6 +20,28 @@ nav:
       - Output Checking:
           - Statistical Outputs: modules/statistical-output-checking.md
           - Trained Models: modules/trained-model-output-checking.md
+# FAIR Signposting links in the pages' <head> (overrides/main.html): the Profile Crate
+# (describedby), the permalink (cite-as), the licence of the page and the authors
+extra:
+  signposting:
+    index.md:
+      - {rel: describedby, href: ro-crate-metadata.json, type: application/ld+json, profile: 'https://w3id.org/ro/crate'}
+      - {rel: cite-as, href: 'https://w3id.org/5s-crate/1.0-DRAFT'}
+      - {rel: license, href: 'http://spdx.org/licenses/MIT'}
+      - {rel: type, href: 'https://schema.org/CreativeWork'}
+      - {rel: type, href: 'https://schema.org/AboutPage'}
+      - {rel: author, href: 'https://orcid.org/0000-0003-1193-6632'}
+      - {rel: author, href: 'https://orcid.org/0000-0003-3307-9432'}
+      - {rel: author, href: 'https://orcid.org/0000-0002-1248-3594'}
+      - {rel: author, href: 'https://orcid.org/0000-0002-9308-9889'}
+      - {rel: author, href: 'https://orcid.org/0000-0002-0035-6475'}
+      - {rel: author, href: 'https://orcid.org/0000-0001-9842-9718'}
+    modules/statistical-output-checking.md:
+      - {rel: describedby, href: ro-crate-metadata.json, type: application/ld+json, profile: 'https://w3id.org/ro/crate'}
+      - {rel: cite-as, href: 'https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking'}
+      - {rel: license, href: 'http://spdx.org/licenses/MIT'}
+      - {rel: type, href: 'https://schema.org/CreativeWork'}
+      - {rel: type, href: 'https://schema.org/AboutPage'}
 plugins:
   - search
   - mermaid2:
