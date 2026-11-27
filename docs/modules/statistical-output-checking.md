@@ -298,10 +298,14 @@ flowchart TD
 
 <br>
 
-Output check 1 and its findings are shown under [Entities](#entities). The following fragment describes the remainder of the unhappy path for output B and the revision of output C. Review 42, its approval of A and its request to revise C are unchanged from the [Five Safes RO-Crate core's worked example](../index.md#worked-example-one-review-of-three-outputs); the refusal gains the exception request under `prov:wasInformedBy` and a `description` stating that the request was considered. The fragment uses the module context because the revision and the revised asset carry DPV properties:
+Output check 1 and its findings are shown under [Entities](#entities). The following fragment describes the remainder of the unhappy path for output B and the revision of output C. Review 42, its approval of A and its request to revise C are unchanged from the [Five Safes RO-Crate core's worked example](../index.md#worked-example-one-review-of-three-outputs); the refusal gains the exception request under `prov:wasInformedBy` and a `description` stating that the request was considered. Because the revision and the revised asset carry DPV properties written with the `dpv:` and `risk:` prefixes, the fragment includes the module context:
 
 ```json
-[
+{ "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {"dpv": "https://w3id.org/dpv#", "risk": "https://w3id.org/dpv/risk#"}
+  ],
+  "@graph": [
   {
     "@id": "https://tre72.example.org/activities/A123/requests/exception-count-by-site",
     "@type": ["AskAction", "prov:Activity"],
@@ -411,7 +415,8 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "endTime": "2027-03-17T09:28:00Z",
     "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
   }
-]
+  ]
+}
 ```
 
 Note that output check 2, Review 43 and the approval of the revised output follow the same patterns and are omitted here for brevity. The complete RO-Crate for this example, including the Root Data Entity, the packaged copies and every process, is published alongside this module.
