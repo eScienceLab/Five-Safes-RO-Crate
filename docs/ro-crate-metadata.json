@@ -1012,6 +1012,69 @@
           "@id": "#prop_publisher_NodeProvenanceCrate"
         },
         {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#prop_id_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        },
+        {
+          "@id": "#prop_id_Organization"
+        },
+        {
+          "@id": "#prop_name_Person"
+        },
+        {
+          "@id": "#prop_name_Organization"
+        },
+        {
+          "@id": "#prop_affiliation_Person"
+        },
+        {
+          "@id": "#prop_sameAs_Person"
+        },
+        {
+          "@id": "#prop_identifier_Person"
+        },
+        {
+          "@id": "#prop_sameAs_Organization"
+        },
+        {
+          "@id": "#prop_identifier_Organization"
+        },
+        {
+          "@id": "#class_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_value_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_propertyID_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_url_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_name_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#class_Credential"
+        },
+        {
+          "@id": "#prop_name_Credential"
+        },
+        {
+          "@id": "#value_closed_interval"
+        },
+        {
+          "@id": "#prop_dct-valid_Credential"
+        },
+        {
+          "@id": "#prop_hasCredential_Person"
+        },
+        {
           "@id": "#prop_hasPart_RootDataEntity"
         },
         {
@@ -1325,6 +1388,9 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/publisher"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
       }
     },
     {
@@ -1792,7 +1858,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/author"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
     },
     {
       "@id": "#prop_author_SoftwareSourceCode",
@@ -1805,7 +1879,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/author"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
     },
     {
       "@id": "#prop_author_IdentifiedAsset",
@@ -1818,7 +1900,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/author"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
     },
     {
       "@id": "#prop_author_File",
@@ -1831,7 +1921,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/author"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
     },
     {
       "@id": "#prop_author_Dataset",
@@ -1844,7 +1942,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/author"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
     },
     {
       "@id": "#prop_encodesCreativeWork_File",
@@ -2097,6 +2203,316 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/publisher"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#class_Person",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Person",
+      "name": "Person",
+      "rdfs:comment": "One specific person. The @id MUST NOT denote a role, account, pool of people or unidentified performer; an ORCID iD where appropriate, or a stable opaque IRI.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#people-and-organisations",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Person"
+      }
+    },
+    {
+      "@id": "#prop_id_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A person MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Organization",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Organization",
+      "name": "Organization",
+      "rdfs:comment": "An organisation, including a TRE or one of its nodes. A parent organisation's ROR MUST NOT be used for a distinct TRE, node or department.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#people-and-organisations",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Organization"
+      }
+    },
+    {
+      "@id": "#prop_id_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An organisation MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The person's name, or a pseudonym such as \"Checker 17\".",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The organisation's name.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_affiliation_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "affiliation",
+      "name": "Affiliation",
+      "rdfs:comment": "MAY reference the exact Organization described in the RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/affiliation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#prop_sameAs_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "sameAs",
+      "name": "Same as",
+      "rdfs:comment": "MAY record an external Web URL whose page unambiguously indicates the entity's identity.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sameAs"
+      }
+    },
+    {
+      "@id": "#prop_identifier_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "Other external identifiers MAY be given as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      }
+    },
+    {
+      "@id": "#prop_sameAs_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "sameAs",
+      "name": "Same as",
+      "rdfs:comment": "MAY record an external Web URL whose page unambiguously indicates the entity's identity.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sameAs"
+      }
+    },
+    {
+      "@id": "#prop_identifier_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "Other external identifiers MAY be given as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      }
+    },
+    {
+      "@id": "#class_IdentifierPropertyValue",
+      "@type": "rdfs:Class",
+      "rdfs:label": "PropertyValue",
+      "name": "Identifier (PropertyValue)",
+      "rdfs:comment": "Another identifier something is known by, such as a project reference or an archive's identifier for a deposited snapshot.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#record-and-ro-crate-identifiers",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/PropertyValue"
+      }
+    },
+    {
+      "@id": "#prop_value_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "value",
+      "name": "Value",
+      "rdfs:comment": "MUST carry the identifier.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/value"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_propertyID_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "propertyID",
+      "name": "Property ID",
+      "rdfs:comment": "SHOULD identify the identifier's scheme.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/propertyID"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/URL"
+        },
+        {
+          "@id": "http://schema.org/Text"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_url_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "url",
+      "name": "URL",
+      "rdfs:comment": "SHOULD give the identifier's resolvable form where one exists.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/url"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/URL"
+      }
+    },
+    {
+      "@id": "#prop_name_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the kind of identifier.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#class_Credential",
+      "@type": "rdfs:Class",
+      "rdfs:label": "EducationalOccupationalCredential",
+      "name": "Credential",
+      "rdfs:comment": "Training or a qualification relevant to access, awarded to one person and referenced from that person with hasCredential.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#credentials",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/EducationalOccupationalCredential"
+      }
+    },
+    {
+      "@id": "#prop_name_Credential",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the credential.",
+      "domainIncludes": {
+        "@id": "#class_Credential"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#value_closed_interval",
+      "@type": "PropertyValue",
+      "name": "Closed validity interval",
+      "value": "/^(\\d{4}-\\d{2}-\\d{2}\\/\\d{4}-\\d{2}-\\d{2}|\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2})\\/\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2}))$/",
+      "sh:minCount": 1,
+      "description": "start/end, both YYYY-MM-DD dates or both RFC 3339 date-times with time zones."
+    },
+    {
+      "@id": "#prop_dct-valid_Credential",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:valid",
+      "name": "Valid",
+      "rdfs:comment": "SHOULD be one closed interval in start/end form when the credential has exactly one continuous validity period with both endpoints known, the start not later than the end. MUST be omitted where only one endpoint is known; a missing endpoint must not be inferred.",
+      "domainIncludes": {
+        "@id": "#class_Credential"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/valid"
+      },
+      "rangeIncludes": {
+        "@id": "#value_closed_interval"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_hasCredential_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasCredential",
+      "name": "Has credential",
+      "rdfs:comment": "The exact credentials awarded to this person that are relevant to access.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasCredential"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Credential"
       }
     },
     {

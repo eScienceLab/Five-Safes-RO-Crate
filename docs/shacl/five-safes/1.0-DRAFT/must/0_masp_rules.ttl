@@ -116,6 +116,7 @@
         sh:path <http://schema.org/publisher> ;
         sh:name """Root Data Entity: publisher""" ;
         sh:description """SHOULD identify the Organization that published this representation.""" ;
+        sh:class <http://schema.org/Organization> ;
         sh:message """Root Data Entity: publisher (MASP rule #prop_publisher_RootDataEntity)""" ;
     ] ;
     sh:property [
@@ -211,6 +212,7 @@
         sh:path <http://schema.org/author> ;
         sh:name """File: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """File: author (MASP rule #prop_author_File)""" ;
     ] ;
     sh:property [
@@ -249,6 +251,7 @@
         sh:path <http://schema.org/author> ;
         sh:name """Dataset: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """Dataset: author (MASP rule #prop_author_Dataset)""" ;
     ] ;
     sh:property [
@@ -294,6 +297,7 @@
         sh:path <http://schema.org/author> ;
         sh:name """Identified asset: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """Identified asset: author (MASP rule #prop_author_IdentifiedAsset)""" ;
     ] ;
     sh:property [
@@ -350,6 +354,7 @@
         sh:path <http://schema.org/author> ;
         sh:name """Software application: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """Software application: author (MASP rule #prop_author_SoftwareApplication)""" ;
     ] .
 
@@ -374,6 +379,7 @@
         sh:path <http://schema.org/author> ;
         sh:name """Software source code: author""" ;
         sh:description """A held or produced software or trained-model asset SHOULD carry author where known.""" ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
         sh:message """Software source code: author (MASP rule #prop_author_SoftwareSourceCode)""" ;
     ] .
 
@@ -425,5 +431,126 @@
         sh:path <http://schema.org/publisher> ;
         sh:name """Node provenance RO-Crate: publisher""" ;
         sh:description """SHOULD identify the Organization that published the node provenance RO-Crate.""" ;
+        sh:class <http://schema.org/Organization> ;
         sh:message """Node provenance RO-Crate: publisher (MASP rule #prop_publisher_NodeProvenanceCrate)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Person> a sh:NodeShape ;
+    sh:name """Person""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/Person> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Person: name""" ;
+        sh:description """The person's name, or a pseudonym such as \"Checker 17\".""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Person: name (MASP rule #prop_name_Person)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/affiliation> ;
+        sh:name """Person: affiliation""" ;
+        sh:description """MAY reference the exact Organization described in the RO-Crate.""" ;
+        sh:class <http://schema.org/Organization> ;
+        sh:message """Person: affiliation (MASP rule #prop_affiliation_Person)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/sameAs> ;
+        sh:name """Person: sameAs""" ;
+        sh:description """MAY record an external Web URL whose page unambiguously indicates the entity's identity.""" ;
+        sh:message """Person: sameAs (MASP rule #prop_sameAs_Person)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/identifier> ;
+        sh:name """Person: identifier""" ;
+        sh:description """Other external identifiers MAY be given as PropertyValue entities.""" ;
+        sh:class <http://schema.org/PropertyValue> ;
+        sh:message """Person: identifier (MASP rule #prop_identifier_Person)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/hasCredential> ;
+        sh:name """Person: hasCredential""" ;
+        sh:description """The exact credentials awarded to this person that are relevant to access.""" ;
+        sh:class <http://schema.org/EducationalOccupationalCredential> ;
+        sh:message """Person: hasCredential (MASP rule #prop_hasCredential_Person)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Organization> a sh:NodeShape ;
+    sh:name """Organization""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/Organization> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Organization: name""" ;
+        sh:description """The organisation's name.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Organization: name (MASP rule #prop_name_Organization)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/sameAs> ;
+        sh:name """Organization: sameAs""" ;
+        sh:description """MAY record an external Web URL whose page unambiguously indicates the entity's identity.""" ;
+        sh:message """Organization: sameAs (MASP rule #prop_sameAs_Organization)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/identifier> ;
+        sh:name """Organization: identifier""" ;
+        sh:description """Other external identifiers MAY be given as PropertyValue entities.""" ;
+        sh:class <http://schema.org/PropertyValue> ;
+        sh:message """Organization: identifier (MASP rule #prop_identifier_Organization)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_IdentifierPropertyValue> a sh:NodeShape ;
+    sh:name """Identifier (PropertyValue)""" ;
+    sh:targetClass <http://schema.org/PropertyValue> ;
+    sh:property [
+        sh:path <http://schema.org/value> ;
+        sh:name """Identifier (PropertyValue): value""" ;
+        sh:description """MUST carry the identifier.""" ;
+        sh:minCount 1 ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Identifier (PropertyValue): value (MASP rule #prop_value_IdentifierPropertyValue)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/propertyID> ;
+        sh:name """Identifier (PropertyValue): propertyID""" ;
+        sh:description """SHOULD identify the identifier's scheme.""" ;
+        sh:or ( [ sh:nodeKind sh:IRIOrLiteral ] [ sh:nodeKind sh:Literal ] ) ;
+        sh:message """Identifier (PropertyValue): propertyID (MASP rule #prop_propertyID_IdentifierPropertyValue)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/url> ;
+        sh:name """Identifier (PropertyValue): url""" ;
+        sh:description """SHOULD give the identifier's resolvable form where one exists.""" ;
+        sh:nodeKind sh:IRIOrLiteral ;
+        sh:message """Identifier (PropertyValue): url (MASP rule #prop_url_IdentifierPropertyValue)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Identifier (PropertyValue): name""" ;
+        sh:description """Names the kind of identifier.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Identifier (PropertyValue): name (MASP rule #prop_name_IdentifierPropertyValue)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Credential> a sh:NodeShape ;
+    sh:name """Credential""" ;
+    sh:targetClass <http://schema.org/EducationalOccupationalCredential> ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Credential: name""" ;
+        sh:description """Names the credential.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Credential: name (MASP rule #prop_name_Credential)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://purl.org/dc/terms/valid> ;
+        sh:name """Credential: dct:valid""" ;
+        sh:description """SHOULD be one closed interval in start/end form when the credential has exactly one continuous validity period with both endpoints known, the start not later than the end. MUST be omitted where only one endpoint is known; a missing endpoint must not be inferred.""" ;
+        sh:maxCount 1 ;
+        sh:message """Credential: dct:valid (MASP rule #prop_dct-valid_Credential)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://purl.org/dc/terms/valid> ;
+        sh:name """Credential: dct:valid (Closed validity interval)""" ;
+        sh:qualifiedValueShape [ sh:pattern """^(\\d{4}-\\d{2}-\\d{2}\\/\\d{4}-\\d{2}-\\d{2}|\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2})\\/\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2}))$""" ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message """Credential: dct:valid must have 1 to any values matching #value_closed_interval (MASP rule #prop_dct-valid_Credential)""" ;
     ] .
