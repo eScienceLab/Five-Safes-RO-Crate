@@ -161,13 +161,25 @@ npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs -x
 cp /tmp/xlsx/ro-crate-metadata.xlsx docs/
 ```
 
-The rules can also be edited in the spreadsheet and synced back to the JSON by
-running the same command with the edited spreadsheet newer than the JSON, but
-`generate-masp-docs` 0.1.0 then rewrites the whole JSON: it declares RO-Crate
-1.2 and adds `@vocab` to the context, writes counts as strings, adds `isPartOf`
-to every rule and an `identifier` to the metadata descriptor, and replaces
-prefixes in the context, such as the module's `dpv` and `risk`, with their
-names. Copy across only the rules that changed, and check the result as above.
+The rules can also be edited in the spreadsheet. `generate-masp-docs` 0.1.0
+then rewrites the whole JSON when it syncs the edits back: it declares
+RO-Crate 1.2 and adds `@vocab` to the context, writes counts as strings,
+adds `isPartOf` and an `identifier` that the Profile Crate does not have, adds
+the vocabularies to the rules, reorders lists, and replaces prefixes in the
+context, such as the module's `dpv` and `risk`, with their names. So sync in
+the scratch folder and merge the result with
+[`masp/fix_xlsx_sync.py`](masp/fix_xlsx_sync.py), which keeps only the edits:
+
+```sh
+mkdir -p /tmp/xlsx && cp docs/ro-crate-metadata.json docs/ro-crate-metadata.xlsx /tmp/xlsx/
+touch /tmp/xlsx/ro-crate-metadata.xlsx  # the newer file wins
+npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs -x \
+  /tmp/xlsx/ro-crate-metadata.json masp/profile-text.md /tmp/xlsx/profile-documentation.md
+python3 masp/fix_xlsx_sync.py /tmp/xlsx/ro-crate-metadata.json docs/ro-crate-metadata.json
+git diff docs/ro-crate-metadata.json
+```
+
+Then check the result and regenerate the SHACL shapes as above.
 
 ## Feedback
 
