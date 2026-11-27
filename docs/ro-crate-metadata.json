@@ -1,6 +1,9 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.3/context"
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "sh": "http://www.w3.org/ns/shacl#"
+    }
   ],
   "@graph": [
     {
@@ -90,8 +93,17 @@
         },
         {
           "@id": "#usesDPV"
+        },
+        {
+          "@id": "#hasSpecializedSchema"
+        },
+        {
+          "@id": "#hasConformanceIndicators"
         }
-      ]
+      ],
+      "conformsTo": {
+        "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile"
+      }
     },
     {
       "@id": "index.html",
@@ -197,18 +209,12 @@
     },
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "name": "Egress snapshot",
       "description": "A separate, immutable representation of an activity record, prepared from an internal snapshot for release from the TRE. Used as an additionalType value on the Root Data Entity of an egress snapshot, and never on a working record or internal snapshot.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
       "inDefinedTermSet": {
         "@id": "https://w3id.org/5s-crate/1.0-DRAFT#"
-      },
-      "rdfs:subClassOf": {
-        "@id": "http://schema.org/Dataset"
       }
     },
     {
@@ -280,10 +286,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Activity",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:Activity",
       "name": "Activity",
       "description": "Added to the @type of every process, alongside its schema.org Action type.",
@@ -294,10 +297,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Plan",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:Plan",
       "name": "Plan",
       "description": "Added to the @type of an asset that represents intended work, such as a submitted analysis plan.",
@@ -308,10 +308,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Association",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:Association",
       "name": "Association",
       "description": "Links an execution to one agent and the exact plan version it followed.",
@@ -322,10 +319,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#Location",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:Location",
       "name": "Location",
       "description": "Added to the @type of a runtime location, such as a workspace or virtual machine.",
@@ -336,10 +330,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#qualifiedAssociation",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:qualifiedAssociation",
       "name": "qualified association",
       "description": "From an execution to the prov:Association linking it to a plan.",
@@ -350,10 +341,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#agent",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:agent",
       "name": "agent",
       "description": "The one agent of a prov:Association, which is also an agent of the execution.",
@@ -364,10 +352,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#hadPlan",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:hadPlan",
       "name": "had plan",
       "description": "The exact plan version of a prov:Association.",
@@ -378,10 +363,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#used",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:used",
       "name": "used",
       "description": "What a process, such as a decision, actually used, including a snapshot it consulted.",
@@ -392,10 +374,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#wasInformedBy",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:wasInformedBy",
       "name": "was informed by",
       "description": "An earlier process that informed this one, such as the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from.",
@@ -406,10 +385,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:wasDerivedFrom",
       "name": "was derived from",
       "description": "On a derived asset, its source where derivation was observed or attested; on an egress snapshot's Root Data Entity, its source internal snapshot.",
@@ -420,10 +396,7 @@
     },
     {
       "@id": "http://www.w3.org/ns/prov#atLocation",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "prov:atLocation",
       "name": "at location",
       "description": "The runtime location where a process ran.",
@@ -434,10 +407,7 @@
     },
     {
       "@id": "http://purl.org/pav/previousVersion",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "pav:previousVersion",
       "name": "previous version",
       "description": "On an internal snapshot after the first, the canonical identifier of the preceding internal snapshot; on a plan, its immediate predecessor.",
@@ -448,10 +418,7 @@
     },
     {
       "@id": "http://purl.org/dc/terms/isVersionOf",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "dct:isVersionOf",
       "name": "is version of",
       "description": "On the Root Data Entity, the activity record identifier, shared by every representation of the record.",
@@ -462,10 +429,7 @@
     },
     {
       "@id": "http://purl.org/dc/terms/hasPart",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "dct:hasPart",
       "name": "has part",
       "description": "From an overall process, such as an output review, to its constituent actions. Distinct from schema.org hasPart.",
@@ -476,10 +440,7 @@
     },
     {
       "@id": "http://purl.org/dc/terms/valid",
-      "@type": [
-        "DefinedTerm",
-        "rdf:Property"
-      ],
+      "@type": "DefinedTerm",
       "termCode": "dct:valid",
       "name": "valid",
       "description": "On a credential, one closed validity interval in start/end form.",
@@ -526,10 +487,7 @@
     },
     {
       "@id": "https://w3id.org/dpv#DataProcessingAgreement",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "name": "Data Processing Agreement",
       "description": "Example additionalType value for an agreement setting processing terms between organisations.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
@@ -539,10 +497,7 @@
     },
     {
       "@id": "https://w3id.org/dpv#StatisticalConfidentialityAgreement",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "name": "Statistical Confidentiality Agreement",
       "description": "Example additionalType value for an agreement covering disclosure control.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
@@ -552,10 +507,7 @@
     },
     {
       "@id": "https://w3id.org/dpv/risk#RiskAssessment",
-      "@type": [
-        "DefinedTerm",
-        "rdfs:Class"
-      ],
+      "@type": "DefinedTerm",
       "name": "Risk Assessment",
       "description": "Example additionalType value for an output check that identifies, analyses and evaluates risk. The DPV Risk extension's term for an activity of assessing risk (ISO 31073), not DPV core's dpv:RiskAssessment, which is an organisational measure.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT#output-checks",
@@ -698,6 +650,2972 @@
       ],
       "name": "Vocabulary",
       "description": "Defines terms used in the profile specification"
+    },
+    {
+      "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate MASP Profile"
+    },
+    {
+      "@id": "#hasConformanceIndicators",
+      "@type": "ResourceDescriptor",
+      "name": "has conformance indicators",
+      "hasRole": {
+        "@id": "https://w3id.org/ro/conformance-indicators"
+      },
+      "hasArtifact": {
+        "@id": "#conformanceIndicators"
+      }
+    },
+    {
+      "@id": "#conformanceIndicators",
+      "@type": "ItemList",
+      "name": "Supported conformsTo identifiers",
+      "itemListElement": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      }
+    },
+    {
+      "@id": "#hasSpecializedSchema",
+      "@type": "ResourceDescriptor",
+      "name": "has specialized schema: MASP rules",
+      "description": "Machine-actionable rules for the core profile. Only unconditional MUST requirements are counts; SHOULD and conditional requirements are suggested properties, with the requirement stated in rdfs:comment.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/schema"
+      },
+      "hasPart": [
+        {
+          "@id": "#value_absolute_iri"
+        },
+        {
+          "@id": "#value_metadata_id"
+        },
+        {
+          "@id": "#value_ro_crate_1_3"
+        },
+        {
+          "@id": "#class_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_id_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_conformsTo_MetadataDescriptor"
+        },
+        {
+          "@id": "#class_RootDataEntity"
+        },
+        {
+          "@id": "#prop_about_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_additionalType_RootDataEntity"
+        },
+        {
+          "@id": "#prop_conformsTo_RootDataEntity"
+        },
+        {
+          "@id": "#prop_identifier_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dct-isVersionOf_RootDataEntity"
+        },
+        {
+          "@id": "#prop_name_RootDataEntity"
+        },
+        {
+          "@id": "#prop_description_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dateCreated_RootDataEntity"
+        },
+        {
+          "@id": "#prop_dateModified_RootDataEntity"
+        },
+        {
+          "@id": "#prop_datePublished_RootDataEntity"
+        },
+        {
+          "@id": "#prop_license_RootDataEntity"
+        },
+        {
+          "@id": "#prop_publisher_RootDataEntity"
+        },
+        {
+          "@id": "#prop_version_RootDataEntity"
+        },
+        {
+          "@id": "#prop_pav-previousVersion_RootDataEntity"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_RootDataEntity"
+        },
+        {
+          "@id": "#class_Profile"
+        },
+        {
+          "@id": "#prop_name_Profile"
+        },
+        {
+          "@id": "#prop_version_Profile"
+        },
+        {
+          "@id": "#prop_isProfileOf_Profile"
+        },
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_id_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#prop_id_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_id_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_id_ReferencedCrate"
+        },
+        {
+          "@id": "#class_NodeProvenanceCrate"
+        },
+        {
+          "@id": "#prop_name_File"
+        },
+        {
+          "@id": "#prop_name_Dataset"
+        },
+        {
+          "@id": "#prop_name_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_name_Plan"
+        },
+        {
+          "@id": "#prop_name_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_name_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_version_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_version_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_version_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_version_File"
+        },
+        {
+          "@id": "#prop_version_Dataset"
+        },
+        {
+          "@id": "#prop_author_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_author_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_author_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_author_File"
+        },
+        {
+          "@id": "#prop_author_Dataset"
+        },
+        {
+          "@id": "#prop_encodesCreativeWork_File"
+        },
+        {
+          "@id": "#prop_exampleOfWork_Dataset"
+        },
+        {
+          "@id": "#prop_hasPart_Dataset"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_File"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_Dataset"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_pav-previousVersion_Plan"
+        },
+        {
+          "@id": "#prop_additionalType_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_version_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_dct-isVersionOf_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_datePublished_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_conformsTo_ReferencedCrate"
+        },
+        {
+          "@id": "#prop_about_NodeProvenanceCrate"
+        },
+        {
+          "@id": "#prop_publisher_NodeProvenanceCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#prop_id_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        },
+        {
+          "@id": "#prop_id_Organization"
+        },
+        {
+          "@id": "#prop_name_Person"
+        },
+        {
+          "@id": "#prop_name_Organization"
+        },
+        {
+          "@id": "#prop_affiliation_Person"
+        },
+        {
+          "@id": "#prop_sameAs_Person"
+        },
+        {
+          "@id": "#prop_identifier_Person"
+        },
+        {
+          "@id": "#prop_sameAs_Organization"
+        },
+        {
+          "@id": "#prop_identifier_Organization"
+        },
+        {
+          "@id": "#class_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_value_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_propertyID_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_url_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#prop_name_IdentifierPropertyValue"
+        },
+        {
+          "@id": "#class_Credential"
+        },
+        {
+          "@id": "#prop_name_Credential"
+        },
+        {
+          "@id": "#value_closed_interval"
+        },
+        {
+          "@id": "#prop_dct-valid_Credential"
+        },
+        {
+          "@id": "#prop_hasCredential_Person"
+        },
+        {
+          "@id": "#class_Location"
+        },
+        {
+          "@id": "#prop_id_Location"
+        },
+        {
+          "@id": "#prop_name_Location"
+        },
+        {
+          "@id": "#class_Process"
+        },
+        {
+          "@id": "#prop_id_Process"
+        },
+        {
+          "@id": "#actionStatus_values"
+        },
+        {
+          "@id": "#prop_agent_Process"
+        },
+        {
+          "@id": "#prop_actionStatus_Process"
+        },
+        {
+          "@id": "#prop_name_Process"
+        },
+        {
+          "@id": "#prop_description_Process"
+        },
+        {
+          "@id": "#prop_object_Process"
+        },
+        {
+          "@id": "#prop_result_Process"
+        },
+        {
+          "@id": "#prop_instrument_Process"
+        },
+        {
+          "@id": "#prop_provider_Process"
+        },
+        {
+          "@id": "#prop_prov-atLocation_Process"
+        },
+        {
+          "@id": "#prop_startTime_Process"
+        },
+        {
+          "@id": "#prop_endTime_Process"
+        },
+        {
+          "@id": "#prop_additionalType_Process"
+        },
+        {
+          "@id": "#prop_prov-wasInformedBy_Process"
+        },
+        {
+          "@id": "#prop_prov-used_Process"
+        },
+        {
+          "@id": "#class_Association"
+        },
+        {
+          "@id": "#prop_prov-agent_Association"
+        },
+        {
+          "@id": "#prop_prov-hadPlan_Association"
+        },
+        {
+          "@id": "#prop_prov-qualifiedAssociation_Process"
+        },
+        {
+          "@id": "#class_AskAction"
+        },
+        {
+          "@id": "#class_CreateAction"
+        },
+        {
+          "@id": "#class_Action"
+        },
+        {
+          "@id": "#class_AssessAction"
+        },
+        {
+          "@id": "#class_AuthorizeAction"
+        },
+        {
+          "@id": "#class_RejectAction"
+        },
+        {
+          "@id": "#class_CancelAction"
+        },
+        {
+          "@id": "#class_UpdateAction"
+        },
+        {
+          "@id": "#class_SendAction"
+        },
+        {
+          "@id": "#class_ReceiveAction"
+        },
+        {
+          "@id": "#prop_object_AskAction"
+        },
+        {
+          "@id": "#prop_recipient_AskAction"
+        },
+        {
+          "@id": "#prop_object_AuthorizeAction"
+        },
+        {
+          "@id": "#prop_object_RejectAction"
+        },
+        {
+          "@id": "#prop_object_CancelAction"
+        },
+        {
+          "@id": "#prop_result_AuthorizeAction"
+        },
+        {
+          "@id": "#prop_object_AssessAction"
+        },
+        {
+          "@id": "#prop_result_AssessAction"
+        },
+        {
+          "@id": "#prop_additionalType_AssessAction"
+        },
+        {
+          "@id": "#prop_dct-hasPart_Action"
+        },
+        {
+          "@id": "#prop_object_SendAction"
+        },
+        {
+          "@id": "#prop_recipient_SendAction"
+        },
+        {
+          "@id": "#prop_object_ReceiveAction"
+        },
+        {
+          "@id": "#prop_sender_ReceiveAction"
+        },
+        {
+          "@id": "#prop_prov-wasInformedBy_ReceiveAction"
+        },
+        {
+          "@id": "#prop_hasPart_RootDataEntity"
+        },
+        {
+          "@id": "#prop_mentions_RootDataEntity"
+        }
+      ]
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/schema",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Schema",
+      "description": "Machine-readable structural descriptions of data defined by the profile"
+    },
+    {
+      "@id": "#value_absolute_iri",
+      "@type": "PropertyValue",
+      "name": "Absolute IRI",
+      "value": "/^[A-Za-z][A-Za-z0-9+.-]*:/",
+      "sh:minCount": 1,
+      "description": "An absolute IRI, such as an https URL or a UUID URN; a relative path or local #fragment does not match."
+    },
+    {
+      "@id": "#value_metadata_id",
+      "@type": "PropertyValue",
+      "name": "Metadata descriptor identifier",
+      "value": "ro-crate-metadata.json",
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#value_ro_crate_1_3",
+      "@type": "PropertyValue",
+      "name": "RO-Crate 1.3",
+      "value": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#class_MetadataDescriptor",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Metadata descriptor",
+      "rdfs:comment": "The ro-crate-metadata.json entity. It MUST conform to RO-Crate 1.3 and declare that version.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#metadata-file",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_id_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "The metadata descriptor is identified as ro-crate-metadata.json.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "rangeIncludes": {
+        "@id": "#value_metadata_id"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_conformsTo_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "The RO-Crate version: https://w3id.org/ro/crate/1.3. Profiles, including this one, are declared on the Root Data Entity instead.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      },
+      "rangeIncludes": {
+        "@id": "#value_ro_crate_1_3"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#class_RootDataEntity",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Root Data Entity",
+      "rdfs:comment": "Describes this RO-Crate as a single representation of the activity record: the working record, an internal snapshot or an egress snapshot. The properties below distinguish the three; see Representation State.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#root-data-entity",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#prop_about_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "The Root Data Entity. Its @id and the descriptor's about MUST use exactly the same value.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "rangeIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST include https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot on an egress snapshot, written as {\"@id\": ...}; MUST NOT include it on a working record or internal snapshot.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_conformsTo_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "MUST include this profile (https://w3id.org/5s-crate/1.0-DRAFT) and the versioned IRI of each selected module; other application profiles MAY be present. Each MUST be described by a Profile entity.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Profile"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_identifier_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "MUST include exactly one canonical RO-Crate identifier: an absolute IRI in {\"@id\": ...} form that identifies this representation and is not a PropertyValue. Other identifiers the record is known by MAY be added as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_dct-isVersionOf_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:isVersionOf",
+      "name": "Is version of",
+      "rdfs:comment": "The activity record identifier: an absolute IRI, the same in every representation of the record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/isVersionOf"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the activity record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_description_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "description",
+      "name": "Description",
+      "rdfs:comment": "Describes the work the activity record covers.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/description"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_dateCreated_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dateCreated",
+      "name": "Date created",
+      "rdfs:comment": "When this representation was created: for a snapshot, when it was taken from the working record or, for an egress snapshot, created from its source. An ISO 8601 Date or DateTime with a timezone.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/dateCreated"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_dateModified_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "dateModified",
+      "name": "Date modified",
+      "rdfs:comment": "MUST be present, exactly once, on a working record that has changed since creation (the most recent actual change); MUST NOT be present on a snapshot.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/dateModified"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_datePublished_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "datePublished",
+      "name": "Date published",
+      "rdfs:comment": "When this representation was first made available as an RO-Crate, including within a restricted system. A snapshot becomes immutable at this time.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/datePublished"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_license_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "license",
+      "name": "License",
+      "rdfs:comment": "SHOULD be present on a published RO-Crate: an open licence, or restrictive, TRE-specific conditions of access.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/license"
+      }
+    },
+    {
+      "@id": "#prop_publisher_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "publisher",
+      "name": "Publisher",
+      "rdfs:comment": "SHOULD identify the Organization that published this representation.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/publisher"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#prop_version_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "MUST be present, exactly once, on a snapshot, as a positive JSON integer: 1 for the first internal snapshot, greater than the predecessor's for later ones, and greater than its source's for an egress snapshot. MUST NOT be present on a working record.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Integer"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_pav-previousVersion_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "pav:previousVersion",
+      "name": "Previous version",
+      "rdfs:comment": "MUST identify, exactly once, the canonical identifier of the preceding internal snapshot on an internal snapshot after the first; MUST NOT be present otherwise.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/pav/previousVersion"
+      },
+      "rangeIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "MUST identify, exactly once, the canonical identifier of the source internal snapshot on an egress snapshot; not used on other representations.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Profile",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Profile",
+      "name": "Profile",
+      "rdfs:comment": "Describes a profile or module IRI listed in the Root Data Entity's conformsTo, with the same @id.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#conformance-and-modules",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/dx/prof/Profile"
+      }
+    },
+    {
+      "@id": "#prop_name_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The profile's name.",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_version_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "The profile's version label, such as 1.0-DRAFT.",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_isProfileOf_Profile",
+      "@type": "rdf:Property",
+      "rdfs:label": "isProfileOf",
+      "name": "Is profile of",
+      "rdfs:comment": "On a module's Profile entity, MUST identify the Five Safes RO-Crate core (https://w3id.org/5s-crate/1.0-DRAFT).",
+      "domainIncludes": {
+        "@id": "#class_Profile"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/dx/prof/isProfileOf"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Profile"
+      }
+    },
+    {
+      "@id": "#class_File",
+      "@type": "rdfs:Class",
+      "rdfs:label": "File",
+      "name": "File",
+      "rdfs:comment": "A file held in the RO-Crate, by its relative payload path, or data represented by reference with an absolute IRI. It MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/MediaObject"
+      }
+    },
+    {
+      "@id": "#class_Dataset",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Dataset",
+      "rdfs:comment": "A directory held in the RO-Crate, by its relative payload path, or data represented by reference with an absolute IRI. It MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#class_IdentifiedAsset",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Identified asset",
+      "rdfs:comment": "An asset with an absolute IRI identifying one exact asset version independently of this RO-Crate, such as an output named by a decision, an agreement, a policy or a protocol. Packaged copies link to it.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#packaged-copies-of-identified-assets",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      }
+    },
+    {
+      "@id": "#prop_id_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An identified asset MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Plan",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Plan",
+      "rdfs:comment": "Intended work represented before it begins, such as a submitted analysis plan. A change after submission creates a new plan with a new @id.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CreativeWork"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Plan"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_id_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A plan MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_SoftwareApplication",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SoftwareApplication",
+      "name": "Software application",
+      "rdfs:comment": "An exact software version referred to by a process, typically as its instrument.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/SoftwareApplication"
+      }
+    },
+    {
+      "@id": "#prop_id_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "Software referred to by a process MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_SoftwareSourceCode",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SoftwareSourceCode",
+      "name": "Software source code",
+      "rdfs:comment": "Software source code: a packaged source file (also typed File) or an exact version referred to by a process.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/SoftwareSourceCode"
+      }
+    },
+    {
+      "@id": "#class_ReferencedCrate",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Referenced RO-Crate",
+      "rdfs:comment": "Another RO-Crate referenced from this one: a snapshot a decision used, a transferred snapshot, an egress snapshot's source, or a node provenance RO-Crate. Its @id is the referenced RO-Crate's canonical identifier, and it MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#referencing-another-ro-crate",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#prop_id_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A referenced RO-Crate MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_NodeProvenanceCrate",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Node provenance RO-Crate",
+      "rdfs:comment": "A fixed, published RO-Crate holding the provenance of one node in a federation, referenced from the federated activity record.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#node-provenance-ro-crates",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      },
+      "rdfs:subClassOf": {
+        "@id": "#class_ReferencedCrate"
+      }
+    },
+    {
+      "@id": "#prop_name_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The file or data SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The directory or data SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The asset SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The plan SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The software SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The software SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Text"
+        },
+        {
+          "@id": "http://schema.org/Integer"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_version_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Text"
+        },
+        {
+          "@id": "http://schema.org/Integer"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_encodesCreativeWork_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "encodesCreativeWork",
+      "name": "Encodes creative work",
+      "rdfs:comment": "On a packaged copy of an identified asset, MUST identify the exact asset version it encodes, typed CreativeWork or a subtype. A file holding several separately identified outputs lists each.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/encodesCreativeWork"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_exampleOfWork_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "exampleOfWork",
+      "name": "Example of work",
+      "rdfs:comment": "On a packaged directory copy of an identified asset, MUST identify the exact asset version it holds, typed CreativeWork or a subtype.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/exampleOfWork"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      }
+    },
+    {
+      "@id": "#prop_hasPart_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasPart",
+      "name": "Has part",
+      "rdfs:comment": "Data entities nested in this directory.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasPart"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_pav-previousVersion_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "pav:previousVersion",
+      "name": "Previous version",
+      "rdfs:comment": "A plan changed after submission links to its immediate predecessor.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/pav/previousVersion"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Plan"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "Where the kind of agreement or policy matters, SHOULD refer to a published term, such as a Data Privacy Vocabulary agreement class.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_version_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "MUST copy the integer version present on the referenced RO-Crate's Root Data Entity.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Integer"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_dct-isVersionOf_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:isVersionOf",
+      "name": "Is version of",
+      "rdfs:comment": "MUST copy the activity record identifier present on the referenced RO-Crate's Root Data Entity.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/isVersionOf"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_datePublished_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "datePublished",
+      "name": "Date published",
+      "rdfs:comment": "MUST copy the datePublished present on the referenced RO-Crate's Root Data Entity. For a snapshot a decision used or an exchange transferred, it MUST NOT be later than that process's endTime.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/datePublished"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Date"
+        },
+        {
+          "@id": "http://schema.org/DateTime"
+        }
+      ],
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_conformsTo_ReferencedCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "SHOULD include the versionless https://w3id.org/ro/crate; MUST NOT include a version-specific RO-Crate IRI. Application-profile IRIs MAY be present as hints.",
+      "domainIncludes": {
+        "@id": "#class_ReferencedCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      }
+    },
+    {
+      "@id": "#prop_about_NodeProvenanceCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "MUST identify the activity record, an exact process or an exact asset that is the subject matter of the node provenance RO-Crate, as absolute IRIs.",
+      "domainIncludes": {
+        "@id": "#class_NodeProvenanceCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_publisher_NodeProvenanceCrate",
+      "@type": "rdf:Property",
+      "rdfs:label": "publisher",
+      "name": "Publisher",
+      "rdfs:comment": "SHOULD identify the Organization that published the node provenance RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_NodeProvenanceCrate"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/publisher"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#class_Person",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Person",
+      "name": "Person",
+      "rdfs:comment": "One specific person. The @id MUST NOT denote a role, account, pool of people or unidentified performer; an ORCID iD where appropriate, or a stable opaque IRI.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#people-and-organisations",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Person"
+      }
+    },
+    {
+      "@id": "#prop_id_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A person MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Organization",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Organization",
+      "name": "Organization",
+      "rdfs:comment": "An organisation, including a TRE or one of its nodes. A parent organisation's ROR MUST NOT be used for a distinct TRE, node or department.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#people-and-organisations",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Organization"
+      }
+    },
+    {
+      "@id": "#prop_id_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An organisation MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The person's name, or a pseudonym such as \"Checker 17\".",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The organisation's name.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_affiliation_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "affiliation",
+      "name": "Affiliation",
+      "rdfs:comment": "MAY reference the exact Organization described in the RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/affiliation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#prop_sameAs_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "sameAs",
+      "name": "Same as",
+      "rdfs:comment": "MAY record an external Web URL whose page unambiguously indicates the entity's identity.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sameAs"
+      }
+    },
+    {
+      "@id": "#prop_identifier_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "Other external identifiers MAY be given as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      }
+    },
+    {
+      "@id": "#prop_sameAs_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "sameAs",
+      "name": "Same as",
+      "rdfs:comment": "MAY record an external Web URL whose page unambiguously indicates the entity's identity.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sameAs"
+      }
+    },
+    {
+      "@id": "#prop_identifier_Organization",
+      "@type": "rdf:Property",
+      "rdfs:label": "identifier",
+      "name": "Identifier",
+      "rdfs:comment": "Other external identifiers MAY be given as PropertyValue entities.",
+      "domainIncludes": {
+        "@id": "#class_Organization"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/identifier"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      }
+    },
+    {
+      "@id": "#class_IdentifierPropertyValue",
+      "@type": "rdfs:Class",
+      "rdfs:label": "PropertyValue",
+      "name": "Identifier (PropertyValue)",
+      "rdfs:comment": "Another identifier something is known by, such as a project reference or an archive's identifier for a deposited snapshot.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#record-and-ro-crate-identifiers",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/PropertyValue"
+      }
+    },
+    {
+      "@id": "#prop_value_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "value",
+      "name": "Value",
+      "rdfs:comment": "MUST carry the identifier.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/value"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_propertyID_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "propertyID",
+      "name": "Property ID",
+      "rdfs:comment": "SHOULD identify the identifier's scheme.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/propertyID"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/URL"
+        },
+        {
+          "@id": "http://schema.org/Text"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_url_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "url",
+      "name": "URL",
+      "rdfs:comment": "SHOULD give the identifier's resolvable form where one exists.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/url"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/URL"
+      }
+    },
+    {
+      "@id": "#prop_name_IdentifierPropertyValue",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the kind of identifier.",
+      "domainIncludes": {
+        "@id": "#class_IdentifierPropertyValue"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#class_Credential",
+      "@type": "rdfs:Class",
+      "rdfs:label": "EducationalOccupationalCredential",
+      "name": "Credential",
+      "rdfs:comment": "Training or a qualification relevant to access, awarded to one person and referenced from that person with hasCredential.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#credentials",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/EducationalOccupationalCredential"
+      }
+    },
+    {
+      "@id": "#prop_name_Credential",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the credential.",
+      "domainIncludes": {
+        "@id": "#class_Credential"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#value_closed_interval",
+      "@type": "PropertyValue",
+      "name": "Closed validity interval",
+      "value": "/^(\\d{4}-\\d{2}-\\d{2}\\/\\d{4}-\\d{2}-\\d{2}|\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2})\\/\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2}))$/",
+      "sh:minCount": 1,
+      "description": "start/end, both YYYY-MM-DD dates or both RFC 3339 date-times with time zones."
+    },
+    {
+      "@id": "#prop_dct-valid_Credential",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:valid",
+      "name": "Valid",
+      "rdfs:comment": "SHOULD be one closed interval in start/end form when the credential has exactly one continuous validity period with both endpoints known, the start not later than the end. MUST be omitted where only one endpoint is known; a missing endpoint must not be inferred.",
+      "domainIncludes": {
+        "@id": "#class_Credential"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/valid"
+      },
+      "rangeIncludes": {
+        "@id": "#value_closed_interval"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_hasCredential_Person",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasCredential",
+      "name": "Has credential",
+      "rdfs:comment": "The exact credentials awarded to this person that are relevant to access.",
+      "domainIncludes": {
+        "@id": "#class_Person"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasCredential"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Credential"
+      }
+    },
+    {
+      "@id": "#class_Location",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Thing",
+      "name": "Location",
+      "rdfs:comment": "A runtime location where a process ran, such as a workspace or virtual machine.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#the-tre-and-its-nodes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/Thing"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Location"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_id_Location",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A location MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Location"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Location",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "Names the location.",
+      "domainIncludes": {
+        "@id": "#class_Location"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#class_Process",
+      "@type": "rdfs:Class",
+      "rdfs:label": "prov:Activity",
+      "name": "Process",
+      "rdfs:comment": "Something that happened: an Action whose @type includes one of the kinds of process and prov:Activity, referenced from the Root Data Entity's mentions. The kinds below inherit these rules.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#process-shape",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#Activity"
+      }
+    },
+    {
+      "@id": "#prop_id_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A process MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#actionStatus_values",
+      "@type": "ItemList",
+      "name": "Process status",
+      "itemListElement": [
+        {
+          "@id": "http://schema.org/ActiveActionStatus"
+        },
+        {
+          "@id": "http://schema.org/CompletedActionStatus"
+        },
+        {
+          "@id": "http://schema.org/FailedActionStatus"
+        }
+      ],
+      "description": "PotentialActionStatus MUST NOT be used."
+    },
+    {
+      "@id": "#prop_agent_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "agent",
+      "name": "Agent",
+      "rdfs:comment": "The people or organisations that directly performed or operated the process. A role, account or pool of people MUST NOT be used; an automated step is attributed to the operating organisation, with the software as instrument.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/agent"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_actionStatus_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "actionStatus",
+      "name": "Action status",
+      "rdfs:comment": "Exactly one of http://schema.org/ActiveActionStatus, CompletedActionStatus or FailedActionStatus (the list #actionStatus_values), written as {\"@id\": ...}; PotentialActionStatus MUST NOT be used. A process keeps its @id as it moves from active to completed or failed.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/actionStatus"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_name_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "SHOULD say what happened, in words.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_description_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "description",
+      "name": "Description",
+      "rdfs:comment": "MAY give further detail, such as the command run.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/description"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_object_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "SHOULD identify what the process acted on. An asset that needs an identity beyond this RO-Crate is referenced through an entity with an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_result_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "A CreateAction with CompletedActionStatus that produced an asset MUST identify it. An anticipated, suppressed or withheld output MUST NOT appear as result.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Credential"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_instrument_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "instrument",
+      "name": "Instrument",
+      "rdfs:comment": "SHOULD identify the exact protocol, software or other asset that actually helped perform the process; applicability alone does not make an asset an instrument.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/instrument"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_File"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_provider_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "provider",
+      "name": "Provider",
+      "rdfs:comment": "MUST identify the Organization that provided or operated the environment or service, where the process was carried out within a TRE or one of its nodes.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/provider"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Organization"
+      }
+    },
+    {
+      "@id": "#prop_prov-atLocation_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:atLocation",
+      "name": "At location",
+      "rdfs:comment": "MAY identify the runtime location where the process ran.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#atLocation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Location"
+      }
+    },
+    {
+      "@id": "#prop_startTime_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "startTime",
+      "name": "Start time",
+      "rdfs:comment": "SHOULD give when the process actually began; never an anticipated time.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/startTime"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/DateTime"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_endTime_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "endTime",
+      "name": "End time",
+      "rdfs:comment": "MUST be present where actionStatus is CompletedActionStatus or FailedActionStatus; MUST NOT be present where ActiveActionStatus.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/endTime"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/DateTime"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MAY refer to the exact IRI of a published term for a more specific kind of process, without changing its published meaning.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_prov-wasInformedBy_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasInformedBy",
+      "name": "Was informed by",
+      "rdfs:comment": "An earlier process that informed this one: the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from. Asserted only where observed or attested.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasInformedBy"
+      }
+    },
+    {
+      "@id": "#prop_prov-used_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:used",
+      "name": "Used",
+      "rdfs:comment": "What the process actually used, such as an agreement it drew on. A snapshot is identified only if it existed and was actually used.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#used"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        }
+      ]
+    },
+    {
+      "@id": "#class_Association",
+      "@type": "rdfs:Class",
+      "rdfs:label": "prov:Association",
+      "name": "Association",
+      "rdfs:comment": "Links an execution of planned work to one agent and the exact plan version it followed. There should be one association per agent-and-plan pair.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#Association"
+      }
+    },
+    {
+      "@id": "#prop_prov-agent_Association",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:agent",
+      "name": "Agent",
+      "rdfs:comment": "Exactly one agent, which is also an agent of the execution.",
+      "domainIncludes": {
+        "@id": "#class_Association"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#agent"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-hadPlan_Association",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:hadPlan",
+      "name": "Had plan",
+      "rdfs:comment": "Exactly one plan, identifying the exact plan version.",
+      "domainIncludes": {
+        "@id": "#class_Association"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#hadPlan"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Plan"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-qualifiedAssociation_Process",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:qualifiedAssociation",
+      "name": "Qualified association",
+      "rdfs:comment": "When planned work is executed, the execution MUST link to the plan through at least one association.",
+      "domainIncludes": {
+        "@id": "#class_Process"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#qualifiedAssociation"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Association"
+      }
+    },
+    {
+      "@id": "#class_AskAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AskAction",
+      "name": "Request",
+      "rdfs:comment": "Submitting a plan, asking for a decision, or requesting further action on an asset. CompletedActionStatus means the request was made, not that the work was completed.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AskAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_CreateAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreateAction",
+      "name": "Creation",
+      "rdfs:comment": "Work intended to create an asset, such as a query execution or workflow run. Work that completed without returning an artefact keeps this type and CompletedActionStatus, has no result, and SHOULD explain the outcome in description.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CreateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_Action",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Action",
+      "name": "Overall process",
+      "rdfs:comment": "An overall process with constituent actions, such as an output review, or other work with no more specific type.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/Action"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_AssessAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AssessAction",
+      "name": "Check",
+      "rdfs:comment": "A check or assessment of an asset. It does not itself assert permission or refusal.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#output-checks",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AssessAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_AuthorizeAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AuthorizeAction",
+      "name": "Permission",
+      "rdfs:comment": "A decision that permits something, such as release of an output, a submitted plan, or a credential.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AuthorizeAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_RejectAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "RejectAction",
+      "name": "Refusal",
+      "rdfs:comment": "A decision that refuses something.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/RejectAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_CancelAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CancelAction",
+      "name": "Withdrawal",
+      "rdfs:comment": "Withdrawing a request before the work begins.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CancelAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_UpdateAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "UpdateAction",
+      "name": "Record update",
+      "rdfs:comment": "A change to the activity record or the RO-Crate as a whole.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/UpdateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_SendAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SendAction",
+      "name": "Dispatch",
+      "rdfs:comment": "One observed or attested dispatch of one or more exact assets to exactly one recipient.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#exchange-processes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/SendAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_ReceiveAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "ReceiveAction",
+      "name": "Receipt",
+      "rdfs:comment": "One observed or attested delivery of one or more exact assets from exactly one sender.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#exchange-processes",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/ReceiveAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#prop_object_AskAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "Submitting a plan or asking for a decision on an asset: exactly one object, the exact plan version or asset. A request for further action identifies each output concerned by an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_AskAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_recipient_AskAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "recipient",
+      "name": "Recipient",
+      "rdfs:comment": "The person or organisation asked to act: exactly one when submitting a plan, at least one for a request for further action.",
+      "domainIncludes": {
+        "@id": "#class_AskAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/recipient"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_AuthorizeAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.",
+      "domainIncludes": {
+        "@id": "#class_AuthorizeAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_RejectAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.",
+      "domainIncludes": {
+        "@id": "#class_RejectAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_CancelAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "The exact request subject withdrawn, following the pattern for decisions.",
+      "domainIncludes": {
+        "@id": "#class_CancelAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_result_AuthorizeAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "For an accreditation decision, the credential awarded to the person who is the object.",
+      "domainIncludes": {
+        "@id": "#class_AuthorizeAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Credential"
+      }
+    },
+    {
+      "@id": "#prop_object_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "For an output check, MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_result_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "MAY identify a report the check produced.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_additionalType_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "For an output check, SHOULD refer to a published term for the kind of check, such as https://w3id.org/dpv/risk#RiskAssessment.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_dct-hasPart_Action",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:hasPart",
+      "name": "Has part",
+      "rdfs:comment": "For an overall review, the recorded constituent actions: checks, decisions and requests made within it.",
+      "domainIncludes": {
+        "@id": "#class_Action"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/hasPart"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#prop_object_SendAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "MUST identify one or more exact assets dispatched, each by an absolute IRI. Several only when transferred in the same occurrence.",
+      "domainIncludes": {
+        "@id": "#class_SendAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_recipient_SendAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "recipient",
+      "name": "Recipient",
+      "rdfs:comment": "MUST identify exactly one receiving party; dispatches to different recipients are separate SendActions.",
+      "domainIncludes": {
+        "@id": "#class_SendAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/recipient"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_object_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "MUST identify one or more exact assets received, each by an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_sender_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "sender",
+      "name": "Sender",
+      "rdfs:comment": "MUST identify exactly one sending party.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/sender"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_prov-wasInformedBy_ReceiveAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasInformedBy",
+      "name": "Was informed by",
+      "rdfs:comment": "Where the RO-Crate asserts that the receipt resulted from a particular dispatch, MUST identify that exact SendAction by its absolute IRI; it need not be described in this RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_ReceiveAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasInformedBy"
+      }
+    },
+    {
+      "@id": "#prop_hasPart_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasPart",
+      "name": "Has part",
+      "rdfs:comment": "MUST be present if the RO-Crate holds or refers to data entities: each MUST be reachable from the Root Data Entity through hasPart, directly or through nested Datasets. Includes referenced RO-Crates.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasPart"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_NodeProvenanceCrate"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_mentions_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "mentions",
+      "name": "Mentions",
+      "rdfs:comment": "MUST be present if the RO-Crate records any processes: the processes recorded in this RO-Crate.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/mentions"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Process"
+      }
     }
   ]
 }
