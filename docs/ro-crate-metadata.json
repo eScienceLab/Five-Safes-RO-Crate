@@ -95,6 +95,9 @@
           "@id": "#usesDPV"
         },
         {
+          "@id": "#usesDPVRisk"
+        },
+        {
           "@id": "#hasSpecializedSchema"
         },
         {
@@ -458,6 +461,17 @@
       },
       "hasArtifact": {
         "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "#usesDPVRisk",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: DPV Risk extension (for examples of additionalType values)",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv/risk#"
       }
     },
     {
