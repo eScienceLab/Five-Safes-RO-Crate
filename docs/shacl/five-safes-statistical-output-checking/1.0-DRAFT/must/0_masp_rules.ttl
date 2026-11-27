@@ -71,6 +71,7 @@
         sh:path <http://schema.org/instrument> ;
         sh:name """Statistical output check: instrument""" ;
         sh:description """SHOULD identify the exact version of the policy or configuration that set the check's criteria, and any software, where either helped perform the check.""" ;
+        sh:or ( [ sh:node <urn:masp-shacl:five-safes-statistical-output-checking:class_Policy> ] [ sh:class <http://schema.org/SoftwareApplication> ] ) ;
         sh:message """Statistical output check: instrument (MASP rule #prop_instrument_StatisticalOutputCheck)""" ;
     ] ;
     sh:property [
@@ -193,6 +194,28 @@
         sh:message """Output (CreativeWork): dpv:isMitigatedByMeasure (MASP rule #prop_dpv-isMitigatedByMeasure_OutputWork)""" ;
     ] .
 
+<urn:masp-shacl:five-safes-statistical-output-checking:class_Policy> a sh:NodeShape ;
+    sh:name """Policy or configuration""" ;
+    sh:class <http://schema.org/CreativeWork> ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Policy or configuration: version""" ;
+        sh:description """The version label of the policy or configuration.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Policy or configuration: version (MASP rule #prop_version_Policy)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes-statistical-output-checking:class_Software> a sh:NodeShape ;
+    sh:name """Checking software""" ;
+    sh:targetClass <http://schema.org/SoftwareApplication> ;
+    sh:property [
+        sh:path <http://schema.org/version> ;
+        sh:name """Checking software: version""" ;
+        sh:description """The tool's version.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Checking software: version (MASP rule #prop_version_Software)""" ;
+    ] .
+
 <urn:masp-shacl:five-safes-statistical-output-checking:class_Report> a sh:NodeShape ;
     sh:name """Report""" ;
     sh:targetClass <http://schema.org/MediaObject> ;
@@ -202,6 +225,67 @@
         sh:description """MAY identify the outputs the report covers.""" ;
         sh:or ( [ sh:class <http://schema.org/Dataset> ] [ sh:node <urn:masp-shacl:five-safes-statistical-output-checking:class_OutputWork> ] ) ;
         sh:message """Report: about (MASP rule #prop_about_Report)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes-statistical-output-checking:class_AuthorizeAction> a sh:NodeShape ;
+    sh:name """Permission""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AuthorizeAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Permission: additionalType""" ;
+        sh:description """MUST NOT include a term from the outcome set.""" ;
+        sh:message """Permission: additionalType (MASP rule #prop_additionalType_AuthorizeAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Permission: additionalType (No outcome term)""" ;
+        sh:qualifiedValueShape [ sh:pattern """^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$""" ] ;
+        sh:qualifiedMaxCount 0 ;
+        sh:message """Permission: additionalType must have 0 to 0 values matching #value_no_outcome (MASP rule #prop_additionalType_AuthorizeAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes-statistical-output-checking:class_RejectAction> a sh:NodeShape ;
+    sh:name """Refusal""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/RejectAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Refusal: additionalType""" ;
+        sh:description """MUST NOT include a term from the outcome set.""" ;
+        sh:message """Refusal: additionalType (MASP rule #prop_additionalType_RejectAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Refusal: additionalType (No outcome term)""" ;
+        sh:qualifiedValueShape [ sh:pattern """^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$""" ] ;
+        sh:qualifiedMaxCount 0 ;
+        sh:message """Refusal: additionalType must have 0 to 0 values matching #value_no_outcome (MASP rule #prop_additionalType_RejectAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes-statistical-output-checking:class_AskAction> a sh:NodeShape ;
+    sh:name """Request""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AskAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Request: additionalType""" ;
+        sh:description """MUST NOT include a term from the outcome set.""" ;
+        sh:message """Request: additionalType (MASP rule #prop_additionalType_AskAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Request: additionalType (No outcome term)""" ;
+        sh:qualifiedValueShape [ sh:pattern """^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$""" ] ;
+        sh:qualifiedMaxCount 0 ;
+        sh:message """Request: additionalType must have 0 to 0 values matching #value_no_outcome (MASP rule #prop_additionalType_AskAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes-statistical-output-checking:class_CreateAction> a sh:NodeShape ;
+    sh:name """Creation""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/CreateAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <https://w3id.org/dpv/risk#hasControl> ;
+        sh:name """Creation: risk:hasControl""" ;
+        sh:description """MAY identify a published control class, such as https://w3id.org/statbarnsdc#Rounding, that this process actually applied.""" ;
+        sh:message """Creation: risk:hasControl (MASP rule #prop_risk-hasControl_CreateAction)""" ;
     ] .
 
 <urn:masp-shacl:five-safes-statistical-output-checking:class-counts> a sh:NodeShape ;

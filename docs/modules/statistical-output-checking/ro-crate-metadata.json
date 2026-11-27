@@ -497,6 +497,9 @@
           "@id": "#value_one_outcome"
         },
         {
+          "@id": "#value_no_outcome"
+        },
+        {
           "@id": "#value_absolute_iri"
         },
         {
@@ -593,10 +596,49 @@
           "@id": "#prop_dpv-isMitigatedByMeasure_OutputWork"
         },
         {
+          "@id": "#class_Policy"
+        },
+        {
+          "@id": "#prop_id_Policy"
+        },
+        {
+          "@id": "#prop_version_Policy"
+        },
+        {
+          "@id": "#class_Software"
+        },
+        {
+          "@id": "#prop_version_Software"
+        },
+        {
           "@id": "#class_Report"
         },
         {
           "@id": "#prop_about_Report"
+        },
+        {
+          "@id": "#class_AuthorizeAction"
+        },
+        {
+          "@id": "#prop_additionalType_AuthorizeAction"
+        },
+        {
+          "@id": "#class_RejectAction"
+        },
+        {
+          "@id": "#prop_additionalType_RejectAction"
+        },
+        {
+          "@id": "#class_AskAction"
+        },
+        {
+          "@id": "#prop_additionalType_AskAction"
+        },
+        {
+          "@id": "#class_CreateAction"
+        },
+        {
+          "@id": "#prop_risk-hasControl_CreateAction"
         }
       ]
     },
@@ -643,6 +685,15 @@
       "sh:minCount": 1,
       "sh:maxCount": 1,
       "description": "Exactly one of the module's outcome terms #Pass, #Fail and #NeedsReview; other additionalType values are not restricted."
+    },
+    {
+      "@id": "#value_no_outcome",
+      "@type": "PropertyValue",
+      "name": "No outcome term",
+      "value": "/^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$/",
+      "sh:minCount": 0,
+      "sh:maxCount": 0,
+      "description": "None of the module's outcome terms; other additionalType values are not restricted."
     },
     {
       "@id": "#value_absolute_iri",
@@ -827,7 +878,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/instrument"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Policy"
+        },
+        {
+          "@id": "#class_Software"
+        }
+      ]
     },
     {
       "@id": "#prop_risk-hasRiskEvaluation_StatisticalOutputCheck",
@@ -1110,6 +1169,75 @@
       "sh:maxCount": 0
     },
     {
+      "@id": "#class_Policy",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Policy or configuration",
+      "rdfs:comment": "The disclosure control rules and thresholds a check applied: a CreativeWork with an absolute IRI and version, named as the check's instrument, with any packaged copy linked by encodesCreativeWork.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#entities",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      }
+    },
+    {
+      "@id": "#prop_id_Policy",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An absolute IRI identifying the exact policy or configuration version.",
+      "domainIncludes": {
+        "@id": "#class_Policy"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_version_Policy",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "The version label of the policy or configuration.",
+      "domainIncludes": {
+        "@id": "#class_Policy"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#class_Software",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SoftwareApplication",
+      "name": "Checking software",
+      "rdfs:comment": "A checking tool, with a version-specific IRI, named as the check's instrument.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#recording-results-from-a-checking-tool",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/SoftwareApplication"
+      }
+    },
+    {
+      "@id": "#prop_version_Software",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "The tool's version.",
+      "domainIncludes": {
+        "@id": "#class_Software"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
       "@id": "#class_Report",
       "@type": "rdfs:Class",
       "rdfs:label": "File",
@@ -1140,6 +1268,131 @@
           "@id": "#class_OutputWork"
         }
       ]
+    },
+    {
+      "@id": "#class_AuthorizeAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AuthorizeAction",
+      "name": "Permission",
+      "rdfs:comment": "A decision or request is recorded by its type alone; an outcome term on one would let a reader mistake what a check found for what the TRE decided or a researcher asked.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcome-terms-on-decisions-and-requests",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AuthorizeAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_additionalType_AuthorizeAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST NOT include a term from the outcome set.",
+      "domainIncludes": {
+        "@id": "#class_AuthorizeAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      },
+      "rangeIncludes": {
+        "@id": "#value_no_outcome"
+      }
+    },
+    {
+      "@id": "#class_RejectAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "RejectAction",
+      "name": "Refusal",
+      "rdfs:comment": "A decision or request is recorded by its type alone; an outcome term on one would let a reader mistake what a check found for what the TRE decided or a researcher asked.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcome-terms-on-decisions-and-requests",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/RejectAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_additionalType_RejectAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST NOT include a term from the outcome set.",
+      "domainIncludes": {
+        "@id": "#class_RejectAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      },
+      "rangeIncludes": {
+        "@id": "#value_no_outcome"
+      }
+    },
+    {
+      "@id": "#class_AskAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AskAction",
+      "name": "Request",
+      "rdfs:comment": "A decision or request is recorded by its type alone; an outcome term on one would let a reader mistake what a check found for what the TRE decided or a researcher asked.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcome-terms-on-decisions-and-requests",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AskAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_additionalType_AskAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST NOT include a term from the outcome set.",
+      "domainIncludes": {
+        "@id": "#class_AskAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      },
+      "rangeIncludes": {
+        "@id": "#value_no_outcome"
+      }
+    },
+    {
+      "@id": "#class_CreateAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreateAction",
+      "name": "Creation",
+      "rdfs:comment": "A process that produced an output, such as recomputing a table with combined categories.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#optional-published-terms",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CreateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_risk-hasControl_CreateAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "risk:hasControl",
+      "name": "Has control",
+      "rdfs:comment": "MAY identify a published control class, such as https://w3id.org/statbarnsdc#Rounding, that this process actually applied.",
+      "domainIncludes": {
+        "@id": "#class_CreateAction"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv/risk#hasControl"
+      }
     },
     {
       "@id": "#hasValidation",
