@@ -3805,6 +3805,12 @@
         },
         {
           "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
+        },
+        {
+          "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
         }
       ]
     },
@@ -3823,6 +3829,32 @@
       "@id": "shacl/five-safes/1.0-DRAFT/must/0_masp_rules.ttl",
       "@type": "File",
       "name": "SHACL shapes (five-safes)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes-statistical-output-checking)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes-statistical-output-checking)",
       "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
       "encodingFormat": [
         "text/turtle",

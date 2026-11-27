@@ -3,7 +3,8 @@
     "https://w3id.org/ro/crate/1.3/context",
     {
       "dpv": "https://w3id.org/dpv#",
-      "risk": "https://w3id.org/dpv/risk#"
+      "risk": "https://w3id.org/dpv/risk#",
+      "sh": "http://www.w3.org/ns/shacl#"
     }
   ],
   "@graph": [
@@ -53,6 +54,12 @@
         },
         {
           "@id": "https://w3id.org/5s-crate/1.0-DRAFT/examples/statistical-review-42/"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
         }
       ],
       "hasResource": [
@@ -75,9 +82,21 @@
           "@id": "#usesDPVRisk"
         },
         {
+          "@id": "#hasSpecializedSchema"
+        },
+        {
+          "@id": "#hasConformanceIndicators"
+        },
+        {
+          "@id": "#hasValidation"
+        },
+        {
           "@id": "#hasExampleStatisticalReview42"
         }
-      ]
+      ],
+      "conformsTo": {
+        "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile"
+      }
     },
     {
       "@id": "index.html",
@@ -428,6 +447,759 @@
       ],
       "name": "Example",
       "description": "Sample instance data conforming to the profile"
+    },
+    {
+      "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate MASP Profile"
+    },
+    {
+      "@id": "#hasConformanceIndicators",
+      "@type": "ResourceDescriptor",
+      "name": "has conformance indicators",
+      "hasRole": {
+        "@id": "https://w3id.org/ro/conformance-indicators"
+      },
+      "hasArtifact": {
+        "@id": "#conformanceIndicators"
+      }
+    },
+    {
+      "@id": "#conformanceIndicators",
+      "@type": "ItemList",
+      "name": "Supported conformsTo identifiers",
+      "itemListElement": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+      }
+    },
+    {
+      "@id": "#hasSpecializedSchema",
+      "@type": "ResourceDescriptor",
+      "name": "has specialized schema: MASP rules",
+      "description": "Machine-actionable rules for what this module adds to the Five Safes RO-Crate core; a crate declaring the module is also checked against the core rules. Only unconditional MUST requirements are counts; SHOULD and conditional requirements are suggested properties, with the requirement stated in rdfs:comment.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/schema"
+      },
+      "hasPart": [
+        {
+          "@id": "#value_metadata_id"
+        },
+        {
+          "@id": "#value_module_profile"
+        },
+        {
+          "@id": "#value_check_term"
+        },
+        {
+          "@id": "#value_one_outcome"
+        },
+        {
+          "@id": "#value_absolute_iri"
+        },
+        {
+          "@id": "#class_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_id_MetadataDescriptor"
+        },
+        {
+          "@id": "#class_RootDataEntity"
+        },
+        {
+          "@id": "#prop_about_MetadataDescriptor"
+        },
+        {
+          "@id": "#prop_conformsTo_RootDataEntity"
+        },
+        {
+          "@id": "#prop_mentions_RootDataEntity"
+        },
+        {
+          "@id": "#class_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#prop_additionalType_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#prop_object_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#prop_result_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#prop_instrument_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#prop_risk-hasRiskEvaluation_StatisticalOutputCheck"
+        },
+        {
+          "@id": "#class_Finding"
+        },
+        {
+          "@id": "#prop_id_Finding"
+        },
+        {
+          "@id": "#prop_additionalType_Finding"
+        },
+        {
+          "@id": "#prop_about_Finding"
+        },
+        {
+          "@id": "#prop_description_Finding"
+        },
+        {
+          "@id": "#prop_risk-hasRiskEvaluation_Finding"
+        },
+        {
+          "@id": "#prop_dpv-isMitigatedByMeasure_Finding"
+        },
+        {
+          "@id": "#class_OutputDataset"
+        },
+        {
+          "@id": "#class_OutputWork"
+        },
+        {
+          "@id": "#prop_id_OutputDataset"
+        },
+        {
+          "@id": "#prop_additionalType_OutputDataset"
+        },
+        {
+          "@id": "#prop_dpv-hasRisk_OutputDataset"
+        },
+        {
+          "@id": "#prop_risk-hasControl_OutputDataset"
+        },
+        {
+          "@id": "#prop_dpv-isMitigatedByMeasure_OutputDataset"
+        },
+        {
+          "@id": "#prop_id_OutputWork"
+        },
+        {
+          "@id": "#prop_additionalType_OutputWork"
+        },
+        {
+          "@id": "#prop_dpv-hasRisk_OutputWork"
+        },
+        {
+          "@id": "#prop_risk-hasControl_OutputWork"
+        },
+        {
+          "@id": "#prop_dpv-isMitigatedByMeasure_OutputWork"
+        },
+        {
+          "@id": "#class_Report"
+        },
+        {
+          "@id": "#prop_about_Report"
+        }
+      ]
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/schema",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Schema",
+      "description": "Machine-readable structural descriptions of data defined by the profile"
+    },
+    {
+      "@id": "#value_metadata_id",
+      "@type": "PropertyValue",
+      "name": "Metadata descriptor identifier",
+      "value": "ro-crate-metadata.json",
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#value_module_profile",
+      "@type": "PropertyValue",
+      "name": "Statistical Output Checking module",
+      "value": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#value_check_term",
+      "@type": "PropertyValue",
+      "name": "Statistical output check term",
+      "value": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck"
+      },
+      "sh:minCount": 1,
+      "description": "The module term that marks an AssessAction as a statistical output check."
+    },
+    {
+      "@id": "#value_one_outcome",
+      "@type": "PropertyValue",
+      "name": "Exactly one outcome term",
+      "value": "/^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$/",
+      "sh:minCount": 1,
+      "sh:maxCount": 1,
+      "description": "Exactly one of the module's outcome terms #Pass, #Fail and #NeedsReview; other additionalType values are not restricted."
+    },
+    {
+      "@id": "#value_absolute_iri",
+      "@type": "PropertyValue",
+      "name": "Absolute IRI",
+      "value": "/^[A-Za-z][A-Za-z0-9+.-]*:/",
+      "sh:minCount": 1,
+      "description": "An absolute IRI, such as an https URL or a UUID URN."
+    },
+    {
+      "@id": "#class_MetadataDescriptor",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Metadata descriptor",
+      "rdfs:comment": "The ro-crate-metadata.json entity of a crate declaring this module.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#requirements",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_id_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "ro-crate-metadata.json",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "rangeIncludes": {
+        "@id": "#value_metadata_id"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_RootDataEntity",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Root Data Entity",
+      "rdfs:comment": "The Root Data Entity of a working record or snapshot that declares this module. The Five Safes RO-Crate core rules apply as well.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#requirements",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#prop_about_MetadataDescriptor",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "The Root Data Entity.",
+      "domainIncludes": {
+        "@id": "#class_MetadataDescriptor"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "rangeIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_conformsTo_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "conformsTo",
+      "name": "Conforms to",
+      "rdfs:comment": "MUST include the module's IRI (https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking) alongside the core profile's, each described by a Profile entity.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/conformsTo"
+      },
+      "rangeIncludes": {
+        "@id": "#value_module_profile"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_mentions_RootDataEntity",
+      "@type": "rdf:Property",
+      "rdfs:label": "mentions",
+      "name": "Mentions",
+      "rdfs:comment": "A working record or snapshot that declares this module MUST record at least one statistical output check under mentions.",
+      "domainIncludes": {
+        "@id": "#class_RootDataEntity"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/mentions"
+      }
+    },
+    {
+      "@id": "#class_StatisticalOutputCheck",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AssessAction",
+      "name": "Statistical output check",
+      "rdfs:comment": "One occasion of checking statistical outputs, such as a session of a checking tool or one person's examination of a batch of outputs: an AssessAction whose additionalType includes the module term. At least one MUST be recorded. Other AssessActions are ordinary Five Safes RO-Crate checks; validators that check every AssessAction against this rule, rather than only counting those that pass, will also report those.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-check",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AssessAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_StatisticalOutputCheck",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST include the module term https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck, which is how the module selects the checks it applies to. SHOULD also include https://w3id.org/dpv/risk#RiskAssessment where the check identified, analysed or evaluated disclosure risk; further published terms MAY be added.",
+      "domainIncludes": {
+        "@id": "#class_StatisticalOutputCheck"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      },
+      "rangeIncludes": {
+        "@id": "#value_check_term"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_StatisticalOutputCheck",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "Each output checked, through an entity with an absolute IRI identifying the asset and version examined.",
+      "domainIncludes": {
+        "@id": "#class_StatisticalOutputCheck"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_OutputDataset"
+        },
+        {
+          "@id": "#class_OutputWork"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_result_StatisticalOutputCheck",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "Where actionStatus is CompletedActionStatus, SHOULD identify at least one finding for each object; MAY identify a report; MUST NOT identify an AuthorizeAction or RejectAction.",
+      "domainIncludes": {
+        "@id": "#class_StatisticalOutputCheck"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Finding"
+        },
+        {
+          "@id": "#class_Report"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_instrument_StatisticalOutputCheck",
+      "@type": "rdf:Property",
+      "rdfs:label": "instrument",
+      "name": "Instrument",
+      "rdfs:comment": "SHOULD identify the exact version of the policy or configuration that set the check's criteria, and any software, where either helped perform the check.",
+      "domainIncludes": {
+        "@id": "#class_StatisticalOutputCheck"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/instrument"
+      }
+    },
+    {
+      "@id": "#prop_risk-hasRiskEvaluation_StatisticalOutputCheck",
+      "@type": "rdf:Property",
+      "rdfs:label": "risk:hasRiskEvaluation",
+      "name": "Has risk evaluation",
+      "rdfs:comment": "MAY identify a published kind of evaluation the check applied to its outputs, such as https://w3id.org/statbarnsdc#MinimumThresholdCheck.",
+      "domainIncludes": {
+        "@id": "#class_StatisticalOutputCheck"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv/risk#hasRiskEvaluation"
+      }
+    },
+    {
+      "@id": "#class_Finding",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Finding",
+      "rdfs:comment": "What one check found about one output, listed under the check's result. A finding MUST be listed under result by exactly one check, and its about MUST be an object of that check.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-finding",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      }
+    },
+    {
+      "@id": "#prop_id_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A finding is a contextual entity with an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "MUST include exactly one term from the outcome set: #Pass, #Fail or #NeedsReview.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      },
+      "rangeIncludes": {
+        "@id": "#value_one_outcome"
+      },
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_about_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "Exactly one output: the output the finding concerns, which MUST be an object of the check that lists the finding.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_OutputDataset"
+        },
+        {
+          "@id": "#class_OutputWork"
+        }
+      ],
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_description_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "description",
+      "name": "Description",
+      "rdfs:comment": "SHOULD say what was found, in words. Cell coordinates, cell values and variable names belong in the report, not in metadata.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/description"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_risk-hasRiskEvaluation_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "risk:hasRiskEvaluation",
+      "name": "Has risk evaluation",
+      "rdfs:comment": "MAY identify the published kind of evaluation this finding reports on, when one finding is recorded per evaluation.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv/risk#hasRiskEvaluation"
+      }
+    },
+    {
+      "@id": "#prop_dpv-isMitigatedByMeasure_Finding",
+      "@type": "rdf:Property",
+      "rdfs:label": "dpv:isMitigatedByMeasure",
+      "name": "Is mitigated by measure",
+      "rdfs:comment": "MUST NOT be used on a finding: measures that could be applied are not recorded.",
+      "domainIncludes": {
+        "@id": "#class_Finding"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv#isMitigatedByMeasure"
+      },
+      "sh:maxCount": 0
+    },
+    {
+      "@id": "#class_OutputDataset",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Output (Dataset)",
+      "rdfs:comment": "The output a check examined, as in the Five Safes RO-Crate core: an asset with an absolute IRI, with any packaged copies.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-output",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#class_OutputWork",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Output (CreativeWork)",
+      "rdfs:comment": "The output a check examined, as in the Five Safes RO-Crate core: an asset with an absolute IRI, with any packaged copies. A figure is a CreativeWork; an ImageObject is a subtype.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-output",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      }
+    },
+    {
+      "@id": "#prop_id_OutputDataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An output has an absolute IRI, so that later checks, decisions and other RO-Crates name the same exact output.",
+      "domainIncludes": {
+        "@id": "#class_OutputDataset"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_OutputDataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "SHOULD identify the most specific StatbarnSDC class that describes the statistic, such as https://w3id.org/statbarnsdc#Crosstabs, where the output is a statistic of a kind that vocabulary covers.",
+      "domainIncludes": {
+        "@id": "#class_OutputDataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_dpv-hasRisk_OutputDataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "dpv:hasRisk",
+      "name": "Has risk",
+      "rdfs:comment": "MAY identify a published risk class, such as https://w3id.org/statbarnsdc#LowCount, that applies to this output.",
+      "domainIncludes": {
+        "@id": "#class_OutputDataset"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv#hasRisk"
+      }
+    },
+    {
+      "@id": "#prop_risk-hasControl_OutputDataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "risk:hasControl",
+      "name": "Has control",
+      "rdfs:comment": "MAY identify a published control class, such as https://w3id.org/statbarnsdc#Suppression, actually applied in producing this output, only where the RO-Crate records no CreateAction that applied it.",
+      "domainIncludes": {
+        "@id": "#class_OutputDataset"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv/risk#hasControl"
+      }
+    },
+    {
+      "@id": "#prop_dpv-isMitigatedByMeasure_OutputDataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "dpv:isMitigatedByMeasure",
+      "name": "Is mitigated by measure",
+      "rdfs:comment": "MUST NOT be used on an output: measures that could be applied, but were not, are not recorded.",
+      "domainIncludes": {
+        "@id": "#class_OutputDataset"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv#isMitigatedByMeasure"
+      },
+      "sh:maxCount": 0
+    },
+    {
+      "@id": "#prop_id_OutputWork",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An output has an absolute IRI, so that later checks, decisions and other RO-Crates name the same exact output.",
+      "domainIncludes": {
+        "@id": "#class_OutputWork"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_OutputWork",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "SHOULD identify the most specific StatbarnSDC class that describes the statistic, such as https://w3id.org/statbarnsdc#Crosstabs, where the output is a statistic of a kind that vocabulary covers.",
+      "domainIncludes": {
+        "@id": "#class_OutputWork"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_dpv-hasRisk_OutputWork",
+      "@type": "rdf:Property",
+      "rdfs:label": "dpv:hasRisk",
+      "name": "Has risk",
+      "rdfs:comment": "MAY identify a published risk class, such as https://w3id.org/statbarnsdc#LowCount, that applies to this output.",
+      "domainIncludes": {
+        "@id": "#class_OutputWork"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv#hasRisk"
+      }
+    },
+    {
+      "@id": "#prop_risk-hasControl_OutputWork",
+      "@type": "rdf:Property",
+      "rdfs:label": "risk:hasControl",
+      "name": "Has control",
+      "rdfs:comment": "MAY identify a published control class, such as https://w3id.org/statbarnsdc#Suppression, actually applied in producing this output, only where the RO-Crate records no CreateAction that applied it.",
+      "domainIncludes": {
+        "@id": "#class_OutputWork"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv/risk#hasControl"
+      }
+    },
+    {
+      "@id": "#prop_dpv-isMitigatedByMeasure_OutputWork",
+      "@type": "rdf:Property",
+      "rdfs:label": "dpv:isMitigatedByMeasure",
+      "name": "Is mitigated by measure",
+      "rdfs:comment": "MUST NOT be used on an output: measures that could be applied, but were not, are not recorded.",
+      "domainIncludes": {
+        "@id": "#class_OutputWork"
+      },
+      "prov:specializationOf": {
+        "@id": "https://w3id.org/dpv#isMitigatedByMeasure"
+      },
+      "sh:maxCount": 0
+    },
+    {
+      "@id": "#class_Report",
+      "@type": "rdfs:Class",
+      "rdfs:label": "File",
+      "name": "Report",
+      "rdfs:comment": "A tool's report, listed directly under the check's result as a File by relative path. A report is not an output.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#packaging-outputs",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/MediaObject"
+      }
+    },
+    {
+      "@id": "#prop_about_Report",
+      "@type": "rdf:Property",
+      "rdfs:label": "about",
+      "name": "About",
+      "rdfs:comment": "MAY identify the outputs the report covers.",
+      "domainIncludes": {
+        "@id": "#class_Report"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/about"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_OutputDataset"
+        },
+        {
+          "@id": "#class_OutputWork"
+        }
+      ]
+    },
+    {
+      "@id": "#hasValidation",
+      "@type": "ResourceDescriptor",
+      "name": "has validation: SHACL shapes for rocrate-validator",
+      "description": "SHACL shapes generated from the module's MASP rules, published with the core profile's shapes in https://w3id.org/5s-crate/1.0-DRAFT/shacl/ . The module's profile builds on the core profile, so with both folders on the path rocrate-validator checks the core rules too: rocrate-validator validate --extra-profiles-path shacl -p five-safes-statistical-output-checking-1.0 <crate>.",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/validation"
+      },
+      "hasArtifact": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl"
+        }
+      ],
+      "isBasedOn": {
+        "@id": "#hasSpecializedSchema"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/profile.ttl",
+      "@type": "File",
+      "name": "rocrate-validator profile declaration (five-safes-statistical-output-checking)",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/shacl/five-safes-statistical-output-checking/1.0-DRAFT/must/0_masp_rules.ttl",
+      "@type": "File",
+      "name": "SHACL shapes (five-safes-statistical-output-checking)",
+      "description": "Generated from the MASP rules; every rule is checked at the REQUIRED level.",
+      "encodingFormat": [
+        "text/turtle",
+        {
+          "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874"
+        }
+      ],
+      "conformsTo": {
+        "@id": "https://www.w3.org/TR/shacl/"
+      }
+    },
+    {
+      "@id": "https://www.w3.org/TR/shacl/",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Shapes Constraint Language (SHACL)",
+      "url": "https://www.w3.org/TR/shacl/"
+    },
+    {
+      "@id": "https://www.nationalarchives.gov.uk/PRONOM/fmt/874",
+      "@type": "WebPage",
+      "name": "Turtle"
     }
   ]
 }
