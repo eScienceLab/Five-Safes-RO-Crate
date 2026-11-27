@@ -382,10 +382,12 @@ Processes are the things that happen. For example, a researcher executing an SQL
 
 Every process MUST be an [Action](http://schema.org/Action) whose `@type` includes one of the types in [Kinds of Process](#kinds-of-process) and also `prov:Activity`.
 
+`prov:Activity` marks an entity as a process, whatever its kind, so that consumers and validators can recognise every process by one type. It is also the type PROV-O expects for the processes that `prov:wasInformedBy`, `prov:used` and `prov:qualifiedAssociation` relate. The profile does not otherwise describe processes with PROV-O: who performed a process, when, and what it acted on and produced are recorded with the schema.org `Action` properties below. An action taken from an RO-Crate that does not follow this profile, such as a plain `CreateAction` from a Process Run Crate, is a process of this profile only once `prov:Activity` is added to its `@type`.
+
 | Property | Requirement | Description |
 |---|---|---|
 | `@id` | MUST | An absolute IRI identifying this process occurrence. |
-| `@type` | MUST | See [Kinds of Process](#kinds-of-process). |
+| `@type` | MUST | One of the types in [Kinds of Process](#kinds-of-process), and `prov:Activity`. |
 | `agent` | MUST | The people or organisations that directly performed or operated the process, each described in the RO-Crate as a `Person` or `Organization`. |
 | `actionStatus` | MUST, exactly one | See [Status](#status); written as `{"@id": ...}`. |
 | `name` | SHOULD | What happened, in words. |
@@ -415,7 +417,7 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 | Moving something between parties | `SendAction`, `ReceiveAction` |
 
 
-The `@type` array MAY include further, more specific types alongside a listed type.
+The `@type` array MUST also include `prov:Activity` (see: [Process Shape](#process-shape)), and MAY include further, more specific types alongside a listed type.
 
 An `AssessAction` records a check or assessment but does not itself assert permission or refusal. Any such decision MUST be recorded as an `AuthorizeAction` or `RejectAction`; the outcome is distinguished by that type. The check and decision may be constituent actions of the same overall process.
 
