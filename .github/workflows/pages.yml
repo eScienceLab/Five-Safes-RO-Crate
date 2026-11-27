@@ -40,6 +40,12 @@ jobs:
           # the page sits one level below the Profile Crate it documents
           sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href="../ro-crate-metadata.json"|' \
             "$RUNNER_TEMP/masp/index.html" > site/rules/index.html
+          mkdir -p "$RUNNER_TEMP/masp-soc" site/modules/statistical-output-checking/rules
+          cp site/modules/statistical-output-checking/ro-crate-metadata.json "$RUNNER_TEMP/masp-soc/"
+          npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs \
+            "$RUNNER_TEMP/masp-soc/ro-crate-metadata.json" masp/statistical-output-checking-text.md "$RUNNER_TEMP/masp-soc/profile-documentation.md"
+          sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href="../ro-crate-metadata.json"|' \
+            "$RUNNER_TEMP/masp-soc/index.html" > site/modules/statistical-output-checking/rules/index.html
       - name: Generate RO-Crate previews of the Profile Crates
         run: |
           for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json site/examples/*/ro-crate-metadata.json; do

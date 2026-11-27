@@ -1,0 +1,9 @@
+@prefix prof: <http://www.w3.org/ns/dx/prof/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking> a prof:Profile ;
+    rdfs:label """Five Safes RO-Crate Module: Statistical Output Checking""" ;
+    rdfs:comment """A module of the Five Safes RO-Crate profile for recording checks of statistical outputs, such as tables, figures and summary statistics, before release from a TRE: a term marking the check, a finding per output with one of three outcomes, the kind of statistic, and optional published terms for risks, evaluations and controls.""" ;
+    prof:isProfileOf <https://w3id.org/ro/crate/1.3> , <https://w3id.org/5s-crate/1.0-DRAFT> ;
+    prof:isTransitiveProfileOf <https://w3id.org/ro/crate/1.3> , <https://w3id.org/ro/crate/1.2> , <https://w3id.org/5s-crate/1.0-DRAFT> ;
+    prof:hasToken """five-safes-statistical-output-checking""" .
