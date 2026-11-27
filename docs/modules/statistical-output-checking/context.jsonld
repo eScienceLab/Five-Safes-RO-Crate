@@ -1,0 +1,6 @@
+{
+  "@context": {
+    "dpv": "https://w3id.org/dpv#",
+    "risk": "https://w3id.org/dpv/risk#"
+  }
+}

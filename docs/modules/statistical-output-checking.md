@@ -4,6 +4,9 @@ A module of the [Five Safes RO-Crate profile](../index.md). It is declared along
 
 * Permalink: <https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking>
 * Profile of: <https://w3id.org/5s-crate/1.0-DRAFT>, identified with `isProfileOf` on the module's Profile entity
+* Profile Crate: [ro-crate-metadata.json](statistical-output-checking/ro-crate-metadata.json) (<a href="ro-crate-preview.html">preview</a>)
+* JSON-LD context: [context.jsonld](statistical-output-checking/context.jsonld)
+* Example RO-Crate: [Statistical Review 42](../examples/statistical-review-42/ro-crate-metadata.json) (<a href="../../examples/statistical-review-42/ro-crate-preview.html">preview</a>)
 * Version: 1.0-DRAFT
 * Status: Working Draft
 * Published: 2027-XX-XX
