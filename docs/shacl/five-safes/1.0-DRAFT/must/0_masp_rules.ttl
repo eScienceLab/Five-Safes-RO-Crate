@@ -154,6 +154,7 @@
         sh:path <http://schema.org/mentions> ;
         sh:name """Root Data Entity: mentions""" ;
         sh:description """MUST be present if the RO-Crate records any processes: every process recorded in this RO-Crate, including one that other processes already link to. The Root Data Entity is where a consumer finds all the processes.""" ;
+        sh:class <http://www.w3.org/ns/prov#Activity> ;
         sh:message """Root Data Entity: mentions (MASP rule #prop_mentions_RootDataEntity)""" ;
     ] ;
     sh:property [
@@ -553,4 +554,155 @@
         sh:qualifiedValueShape [ sh:pattern """^(\\d{4}-\\d{2}-\\d{2}\\/\\d{4}-\\d{2}-\\d{2}|\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2})\\/\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(Z|[+-]\\d{2}:\\d{2}))$""" ] ;
         sh:qualifiedMinCount 1 ;
         sh:message """Credential: dct:valid must have 1 to any values matching #value_closed_interval (MASP rule #prop_dct-valid_Credential)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Location> a sh:NodeShape ;
+    sh:name """Location""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/Thing> . ?this a <http://www.w3.org/ns/prov#Location> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Location: name""" ;
+        sh:description """Names the location.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Location: name (MASP rule #prop_name_Location)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Process> a sh:NodeShape ;
+    sh:name """Process""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://www.w3.org/ns/prov#Activity> . FILTER((REGEX(STR(?this), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\") || REGEX(REPLACE(STR(?this), \"^.*/([^/]+)/?$\", \"$1\"), \"^[A-Za-z][A-Za-z0-9+.-]*:\", \"\"))) }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/agent> ;
+        sh:name """Process: agent""" ;
+        sh:description """The people or organisations that directly performed or operated the process. A role, account or pool of people MUST NOT be used; an automated step is attributed to the operating organisation, with the software as instrument.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Process: agent (MASP rule #prop_agent_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/actionStatus> ;
+        sh:name """Process: actionStatus""" ;
+        sh:description """Exactly one of http://schema.org/ActiveActionStatus, CompletedActionStatus or FailedActionStatus, written as {\"@id\": ...}; PotentialActionStatus MUST NOT be used. A process keeps its @id as it moves from active to completed or failed.""" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message """Process: actionStatus (MASP rule #prop_actionStatus_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/name> ;
+        sh:name """Process: name""" ;
+        sh:description """SHOULD say what happened, in words.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Process: name (MASP rule #prop_name_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/description> ;
+        sh:name """Process: description""" ;
+        sh:description """MAY give further detail, such as the command run.""" ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Process: description (MASP rule #prop_description_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Process: object""" ;
+        sh:description """SHOULD identify what the process acted on. An asset that needs an identity beyond this RO-Crate is referenced through an entity with an absolute IRI.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Process: object (MASP rule #prop_object_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/result> ;
+        sh:name """Process: result""" ;
+        sh:description """A CreateAction with CompletedActionStatus that produced an asset MUST identify it. An anticipated, suppressed or withheld output MUST NOT appear as result.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/EducationalOccupationalCredential> ] ) ;
+        sh:message """Process: result (MASP rule #prop_result_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/instrument> ;
+        sh:name """Process: instrument""" ;
+        sh:description """SHOULD identify the exact protocol, software or other asset that actually helped perform the process; applicability alone does not make an asset an instrument.""" ;
+        sh:or ( [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/MediaObject> ] ) ;
+        sh:message """Process: instrument (MASP rule #prop_instrument_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/provider> ;
+        sh:name """Process: provider""" ;
+        sh:description """MUST identify the Organization that provided or operated the environment or service, where the process was carried out within a TRE or one of its nodes.""" ;
+        sh:class <http://schema.org/Organization> ;
+        sh:message """Process: provider (MASP rule #prop_provider_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#atLocation> ;
+        sh:name """Process: prov:atLocation""" ;
+        sh:description """MAY identify the runtime location where the process ran.""" ;
+        sh:class <http://schema.org/Thing> ;
+        sh:message """Process: prov:atLocation (MASP rule #prop_prov-atLocation_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/startTime> ;
+        sh:name """Process: startTime""" ;
+        sh:description """SHOULD give when the process actually began; never an anticipated time.""" ;
+        sh:maxCount 1 ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Process: startTime (MASP rule #prop_startTime_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/endTime> ;
+        sh:name """Process: endTime""" ;
+        sh:description """MUST be present where actionStatus is CompletedActionStatus or FailedActionStatus; MUST NOT be present where ActiveActionStatus.""" ;
+        sh:maxCount 1 ;
+        sh:nodeKind sh:Literal ;
+        sh:message """Process: endTime (MASP rule #prop_endTime_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Process: additionalType""" ;
+        sh:description """MAY refer to the exact IRI of a published term for a more specific kind of process, without changing its published meaning.""" ;
+        sh:message """Process: additionalType (MASP rule #prop_additionalType_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#wasInformedBy> ;
+        sh:name """Process: prov:wasInformedBy""" ;
+        sh:description """An earlier process that informed this one: the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from. Asserted only where observed or attested.""" ;
+        sh:message """Process: prov:wasInformedBy (MASP rule #prop_prov-wasInformedBy_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#used> ;
+        sh:name """Process: prov:used""" ;
+        sh:description """What the process actually used, such as an agreement it drew on. A snapshot is identified only if it existed and was actually used.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:node <urn:masp-shacl:five-safes:class_Dataset> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] ) ;
+        sh:message """Process: prov:used (MASP rule #prop_prov-used_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#qualifiedAssociation> ;
+        sh:name """Process: prov:qualifiedAssociation""" ;
+        sh:description """When planned work is executed, the execution MUST link to the plan through at least one association.""" ;
+        sh:class <http://www.w3.org/ns/prov#Association> ;
+        sh:message """Process: prov:qualifiedAssociation (MASP rule #prop_prov-qualifiedAssociation_Process)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/actionStatus> ;
+        sh:name """Process: actionStatus (Process status)""" ;
+        sh:qualifiedValueShape [ sh:pattern """^http:\\/\\/schema\\.org\\/(Active|Completed|Failed)ActionStatus$""" ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message """Process: actionStatus must have 1 to any values matching #value_action_status (MASP rule #prop_actionStatus_Process)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_Association> a sh:NodeShape ;
+    sh:name """Association""" ;
+    sh:targetClass <http://www.w3.org/ns/prov#Association> ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#agent> ;
+        sh:name """Association: prov:agent""" ;
+        sh:description """Exactly one agent, which is also an agent of the execution.""" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Association: prov:agent (MASP rule #prop_prov-agent_Association)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://www.w3.org/ns/prov#hadPlan> ;
+        sh:name """Association: prov:hadPlan""" ;
+        sh:description """Exactly one plan, identifying the exact plan version.""" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class <http://schema.org/CreativeWork> ;
+        sh:message """Association: prov:hadPlan (MASP rule #prop_prov-hadPlan_Association)""" ;
     ] .

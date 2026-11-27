@@ -28,4 +28,6 @@ pip install roc-validator
 rocrate-validator validate -l REQUIRED --extra-profiles-path docs/shacl -p five-safes-1.0 <folder>
 ```
 
-Every invalid file fails.
+Every invalid file fails except `95-bad-local-person-id.json`: once parsed as
+RDF, a local `#analyst` identifier is an absolute IRI, so the shapes cannot
+tell it from an ORCID.
