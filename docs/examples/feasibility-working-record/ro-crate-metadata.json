@@ -36,7 +36,7 @@
         "@id": "http://spdx.org/licenses/CC0-1.0"
       },
       "publisher": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "hasPart": [
         {
@@ -72,7 +72,7 @@
         "@id": "https://orcid.org/0000-0002-1825-0097"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "object": {
         "@id": "query.sql"
@@ -103,13 +103,13 @@
       "@type": "Person",
       "name": "Example analyst",
       "affiliation": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       }
     },
     {
-      "@id": "https://tre72.example.org/",
+      "@id": "https://ror.org/027m9bs27",
       "@type": "Organization",
-      "name": "TRE72"
+      "name": "The University of Manchester"
     },
     {
       "@id": "http://spdx.org/licenses/CC0-1.0",

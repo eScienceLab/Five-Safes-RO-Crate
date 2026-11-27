@@ -65,7 +65,7 @@
         "@id": "http://spdx.org/licenses/CC0-1.0"
       },
       "publisher": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       }
     },
     {
@@ -88,7 +88,7 @@
         "@id": "https://tre72.example.org/staff/0417"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "object": [
         {
@@ -132,7 +132,7 @@
         "@id": "https://tre72.example.org/staff/0417"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "object": {
         "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
@@ -158,7 +158,7 @@
         "@id": "https://tre72.example.org/staff/0417"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "object": {
         "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
@@ -184,7 +184,7 @@
         "@id": "https://tre72.example.org/staff/0417"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "object": {
         "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
@@ -212,10 +212,10 @@
       },
       "name": "Output check 1: automated disclosure risk assessment",
       "agent": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "provider": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       },
       "instrument": {
         "@id": "https://doi.org/10.5281/zenodo.18456450"
@@ -288,7 +288,7 @@
       "@type": "Person",
       "name": "Example output checker",
       "affiliation": {
-        "@id": "https://tre72.example.org/"
+        "@id": "https://ror.org/027m9bs27"
       }
     },
     {
@@ -297,10 +297,10 @@
       "name": "Example researcher"
     },
     {
-      "@id": "https://tre72.example.org/",
+      "@id": "https://ror.org/027m9bs27",
       "@type": "Organization",
-      "name": "TRE72",
-      "url": "https://tre72.example.org/"
+      "name": "The University of Manchester",
+      "url": "https://www.manchester.ac.uk/"
     },
     {
       "@id": "http://spdx.org/licenses/CC0-1.0",

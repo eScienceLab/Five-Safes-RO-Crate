@@ -50,8 +50,8 @@ The following fragment records one check of three outputs by a tool, attributed 
       {"@id": "https://w3id.org/dpv/risk#RiskAssessment"}
     ],
     "name": "Output check 1: automated disclosure risk assessment",
-    "agent": {"@id": "https://tre72.example.org/"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "agent": {"@id": "https://ror.org/027m9bs27"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "instrument": [
       {"@id": "https://doi.org/10.5281/zenodo.18456450"},
       {"@id": "https://tre72.example.org/policies/sdc/v4"}
@@ -268,7 +268,7 @@ An [egress snapshot](../index.md#ro-crates-and-egress) may retain the checks, fi
 
 The example continues from the Five Safes RO-Crate core's [Review 42](../index.md#worked-example-one-review-of-three-outputs):
 
-- Output check 1, run by a tool and attributed to TRE72, found that output A passed, output B failed and output C needed review. The researcher asked for an exception for B before any decision was made. 
+- Output check 1, run by a tool and attributed to The University of Manchester, which operates TRE72, found that output A passed, output B failed and output C needed review. The researcher asked for an exception for B before any decision was made. 
 - In Review 42 a checker approved A, refused B after considering the exception, and asked for C to be revised. 
 - The researcher asked again about B with new information from the data provider, then recomputed C with combined age bands as a new asset; a tool check and the checker's own check both passed the revised output. 
 - In Review 43 the checker approved the revised C and approved B on exception, reversing the refusal.
@@ -312,9 +312,9 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "name": "Exception requested for cohort count by site",
     "description": "Site-level counts are required for the funder's report; the two small sites are named in the published protocol.",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
-    "recipient": {"@id": "https://tre72.example.org/"},
+    "recipient": {"@id": "https://ror.org/027m9bs27"},
     "prov:wasInformedBy": {"@id": "https://tre72.example.org/activities/A123/checks/check-1"},
     "endTime": "2027-03-14T15:30:00Z",
     "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
@@ -325,7 +325,7 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "name": "Cohort count by site refused",
     "description": "Release of site-level counts was refused under the TRE's release policy. The exception request was considered: the protocol names the sites but not their size.",
     "agent": {"@id": "https://tre72.example.org/staff/0417"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
     "prov:wasInformedBy": [
       {"@id": "https://tre72.example.org/activities/A123/checks/check-1"},
@@ -339,7 +339,7 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "@type": ["CreateAction", "prov:Activity"],
     "name": "Recompute cohort count by age with combined age bands",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"},
     "result": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v2"},
     "risk:hasControl": {"@id": "https://w3id.org/statbarnsdc#CategoricalAggregation"},
@@ -367,7 +367,7 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "additionalType": {"@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck"},
     "name": "Output check 3: manual check of the revised table against the earlier release",
     "agent": {"@id": "https://tre72.example.org/staff/0417"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "instrument": {"@id": "https://tre72.example.org/policies/sdc/v4"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v2"},
     "prov:wasInformedBy": {"@id": "https://tre72.example.org/activities/A123/checks/check-2"},
@@ -389,9 +389,9 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "name": "Second exception request for cohort count by site",
     "description": "The data provider has confirmed in writing that site totals are already public at trust level.",
     "agent": {"@id": "https://orcid.org/0000-0002-1825-0097"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
-    "recipient": {"@id": "https://tre72.example.org/"},
+    "recipient": {"@id": "https://ror.org/027m9bs27"},
     "prov:wasInformedBy": [
       {"@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f"},
       {"@id": "https://tre72.example.org/activities/A123/checks/check-1"}
@@ -405,7 +405,7 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "name": "Cohort count by site approved on exception",
     "description": "Approved on the data provider's written confirmation. Release is limited to the funder's report and not for open publication.",
     "agent": {"@id": "https://tre72.example.org/staff/0417"},
-    "provider": {"@id": "https://tre72.example.org/"},
+    "provider": {"@id": "https://ror.org/027m9bs27"},
     "object": {"@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"},
     "prov:wasInformedBy": [
       {"@id": "https://tre72.example.org/activities/A123/requests/exception-count-by-site-2"},
