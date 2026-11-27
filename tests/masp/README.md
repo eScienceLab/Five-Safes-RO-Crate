@@ -1,0 +1,20 @@
+# MASP rule fixtures
+
+RO-Crate metadata files for checking the MASP rules in the core
+[Profile Crate](../../docs/ro-crate-metadata.json). The crates in
+[`docs/examples/`](../../docs/examples/) are the main valid cases; `valid/` adds
+variants of them, and each file in `invalid/` breaks one requirement of the
+specification.
+
+```sh
+npm install @crate-works/ro-crate-masp-validator
+for f in docs/examples/*/ro-crate-metadata.json tests/masp/valid/*.json tests/masp/invalid/*.json; do
+  npx masp-validate "$f" docs/ro-crate-metadata.json > /dev/null 2>&1
+  echo "$? $f"
+done
+```
+
+Valid files exit 0, invalid files exit 2, except
+`91-bad-potential-status.json`: `masp-validate` 0.1.0 requires every
+`{"@id": ...}` value to be described in the crate, so `actionStatus` has no
+range in the rules and `PotentialActionStatus` is not detected.
