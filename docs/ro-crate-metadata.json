@@ -2762,17 +2762,7 @@
       "@id": "#value_action_status",
       "@type": "PropertyValue",
       "name": "Process status",
-      "value": [
-        {
-          "@id": "http://schema.org/ActiveActionStatus"
-        },
-        {
-          "@id": "http://schema.org/CompletedActionStatus"
-        },
-        {
-          "@id": "http://schema.org/FailedActionStatus"
-        }
-      ],
+      "value": "/^http:\\/\\/schema\\.org\\/(Active|Completed|Failed)ActionStatus$/",
       "sh:minCount": 1,
       "description": "One of ActiveActionStatus, CompletedActionStatus or FailedActionStatus. PotentialActionStatus MUST NOT be used."
     },

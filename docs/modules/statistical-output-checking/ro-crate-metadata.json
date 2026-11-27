@@ -672,17 +672,7 @@
       "@id": "#value_one_outcome",
       "@type": "PropertyValue",
       "name": "Exactly one outcome term",
-      "value": [
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass"
-        },
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail"
-        },
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview"
-        }
-      ],
+      "value": "/^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$/",
       "sh:minCount": 1,
       "sh:maxCount": 1,
       "description": "Exactly one of the module's outcome terms #Pass, #Fail and #NeedsReview; other additionalType values are not restricted."
@@ -691,17 +681,7 @@
       "@id": "#value_no_outcome",
       "@type": "PropertyValue",
       "name": "No outcome term",
-      "value": [
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass"
-        },
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail"
-        },
-        {
-          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview"
-        }
-      ],
+      "value": "/^https:\\/\\/w3id\\.org\\/5s-crate\\/1\\.0-DRAFT\\/modules\\/statistical-output-checking#(Pass|Fail|NeedsReview)$/",
       "sh:minCount": 0,
       "sh:maxCount": 0,
       "description": "None of the module's outcome terms; other additionalType values are not restricted."
