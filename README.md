@@ -143,8 +143,31 @@ counts, ranges and descriptions to match, then:
    `masp-validate` and with rocrate-validator, as described there: valid crates
    must pass and each invalid fixture must fail. Add a fixture for each new
    requirement.
-3. Build the site and look at the generated rules pages (see
+3. Regenerate the spreadsheet next to each Profile Crate (see below).
+4. Build the site and look at the generated rules pages (see
    [Building the documentation](#building-the-documentation)).
+
+Each Profile Crate has a spreadsheet copy, `ro-crate-metadata.xlsx`, with a
+sheet per type: the class rules are on `@type=rdfs_Class` and the property
+rules on `@type=rdf_Property`, which can be easier to review than the JSON.
+The JSON stays the source. Regenerate a spreadsheet from it in a scratch
+folder, where the newer of the two files wins, and copy only the spreadsheet
+back:
+
+```sh
+mkdir -p /tmp/xlsx && cp docs/ro-crate-metadata.json /tmp/xlsx/
+npx --yes --package @crate-works/ro-crate-masp-tools@0.1.0 generate-masp-docs -x \
+  /tmp/xlsx/ro-crate-metadata.json masp/profile-text.md /tmp/xlsx/profile-documentation.md
+cp /tmp/xlsx/ro-crate-metadata.xlsx docs/
+```
+
+The rules can also be edited in the spreadsheet and synced back to the JSON by
+running the same command with the edited spreadsheet newer than the JSON, but
+`generate-masp-docs` 0.1.0 then rewrites the whole JSON: it declares RO-Crate
+1.2 and adds `@vocab` to the context, writes counts as strings, adds `isPartOf`
+to every rule and an `identifier` to the metadata descriptor, and replaces
+prefixes in the context, such as the module's `dpv` and `risk`, with their
+names. Copy across only the rules that changed, and check the result as above.
 
 ## Feedback
 
