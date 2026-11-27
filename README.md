@@ -51,22 +51,6 @@ sed 's|rel="describedby" href="ro-crate-metadata.json"|rel="describedby" href=".
   /tmp/masp/index.html > site/rules/index.html
 ```
 
-[`docs/shacl/`](docs/shacl/) holds SHACL shapes generated from the MASP rules,
-as [rocrate-validator](https://github.com/crs4/rocrate-validator) profile
-folders, so a crate can be checked with
-`rocrate-validator validate --extra-profiles-path docs/shacl -p five-safes-1.0 <crate>`
-(or `-p five-safes-statistical-output-checking-1.0`, which also checks the core
-rules). They are generated with `masp_to_shacl.py` from the `ro-crate-masp`
-skill of [ro-crate-skills](https://github.com/stain/ro-crate-skills); regenerate
-them whenever the rules change:
-
-```sh
-python3 masp_to_shacl.py docs/ro-crate-metadata.json docs/shacl \
-  --token five-safes --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
-python3 masp_to_shacl.py docs/modules/statistical-output-checking/ro-crate-metadata.json docs/shacl \
-  --token five-safes-statistical-output-checking --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
-```
-
 For a live local preview, run
 `python -m mkdocs serve` and open <http://127.0.0.1:8000/>.
 
@@ -93,6 +77,51 @@ The workflow also checks Markdown for common mistakes and retains the generated
 site as a `documentation-preview` artifact for three days. Download and extract
 the artifact from the workflow run, then serve it locally, for example with
 `python3 -m http.server 8000 --directory documentation-preview`.
+
+## Validating RO-Crates
+
+An RO-Crate can be checked against the profile with the SHACL shapes in
+[`docs/shacl/`](docs/shacl/), generated from the Profile Crates' MASP rules, and
+[rocrate-validator](https://github.com/crs4/rocrate-validator) (tested with
+0.14.0). rocrate-validator does not yet find these shapes from the Profile
+Crate (its `validation` resource) or from the profile identifier, so give a
+local copy of the folder with `--extra-profiles-path`:
+
+```sh
+git clone https://github.com/eScienceLab/Five-Safes-RO-Crate.git
+python3 -m pip install roc-validator
+rocrate-validator validate --extra-profiles-path Five-Safes-RO-Crate/docs/shacl path/to/crate/
+```
+
+The validator chooses the profile from the crate's root `conformsTo`: a crate
+that declares the Statistical Output Checking module is checked against the
+module's rules and the core rules, and one that declares only the core profile
+against the core rules. To choose the profile yourself, add
+`-p five-safes-1.0` or `-p five-safes-statistical-output-checking-1.0` (the
+identifiers have no `-DRAFT`, as the validator takes the version number from the
+profile identifier). Other useful options are `-l REQUIRED` to report only
+failed requirements, `--no-paging` to print the report without a pager and
+`-f json` for a machine-readable report. The crate folder must include its
+data files, as the validator checks that every file described is present.
+
+Every rule becomes a REQUIRED check. The shapes check every entity of a class,
+so they are stricter than `masp-validate`, which checks entities only as far as
+it counts them (see [`tests/masp/`](tests/masp/)). A rule that an `@id` must be
+an absolute IRI cannot be checked, as a local `#identifier` is absolute once
+parsed as RDF.
+
+The shapes are generated with `masp_to_shacl.py` from the `ro-crate-masp` skill
+of [ro-crate-skills](https://github.com/stain/ro-crate-skills). Regenerate them
+whenever the MASP rules change, using the
+[RO-Crate 1.3 context](https://w3id.org/ro/crate/1.3/context) to map terms:
+
+```sh
+curl -sL -o ro-crate-1.3-context.jsonld https://w3id.org/ro/crate/1.3/context
+python3 masp_to_shacl.py docs/ro-crate-metadata.json docs/shacl \
+  --token five-safes --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+python3 masp_to_shacl.py docs/modules/statistical-output-checking/ro-crate-metadata.json docs/shacl \
+  --token five-safes-statistical-output-checking --version 1.0-DRAFT --context ro-crate-1.3-context.jsonld
+```
 
 ## Feedback
 
