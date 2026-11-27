@@ -30,6 +30,11 @@ jobs:
           cache: pip
       - run: python -m pip install -r requirements.txt
       - run: python -m mkdocs build
+      - name: Generate RO-Crate previews of the Profile Crates
+        run: |
+          for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json; do
+            npx --yes --package ro-crate-html@0.1.6 rochtml "$crate"
+          done
       - name: Upload pull request preview
         uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
