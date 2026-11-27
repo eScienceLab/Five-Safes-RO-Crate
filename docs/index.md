@@ -12,6 +12,7 @@ Authors:
 This document specifies a profile of [RO-Crate](https://w3id.org/ro/crate) for recording and exchanging the activity of Trusted Research Environments (TREs).
 
 * Permalink: <https://w3id.org/5s-crate/1.0-DRAFT>
+* Profile Crate: [ro-crate-metadata.json](ro-crate-metadata.json) (<a href="ro-crate-preview.html">preview</a>)
 * Version: 1.0-DRAFT
 * Previous version: <https://w3id.org/5s-crate/0.4>
 * Status: Working Draft

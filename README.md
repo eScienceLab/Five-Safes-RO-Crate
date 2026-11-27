@@ -24,7 +24,19 @@ python -m pip install -r requirements.txt
 python -m mkdocs build
 ```
 
-The generated site is in `site/`. For a live local preview, run
+The generated site is in `site/`. It includes the Profile Crate
+(`ro-crate-metadata.json` at the site root). The
+GitHub Actions build also adds its `ro-crate-preview.html`; to generate it
+locally, run with Node.js:
+
+```sh
+for crate in site/ro-crate-metadata.json; do
+  npx --yes --package ro-crate-html@0.1.6 rochtml "$crate"
+  sed -i '1s/^/<!DOCTYPE html>\n/' "$(dirname "$crate")/ro-crate-preview.html"
+done
+```
+
+For a live local preview, run
 `python -m mkdocs serve` and open <http://127.0.0.1:8000/>.
 
 Alternatively, build with Docker from the repository root:
@@ -57,4 +69,4 @@ Comments and suggestions are welcome as [GitHub issues](https://github.com/eScie
 
 ## License
 
-The Profile Specification is licensed under the [MIT License](LICENSE.md). Example RO-Crates and Profile Crates are in the public domain under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+The Profile Specification and its Profile Crates are licensed under the [MIT License](LICENSE.md). Example RO-Crates are in the public domain under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/).
