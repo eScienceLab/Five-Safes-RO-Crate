@@ -122,7 +122,7 @@ A working record or snapshot that declares this module MUST record at least one 
 
 | Property | Requirement | Description |
 |---|---|---|
-| `additionalType` | MUST include the module term <br><br> SHOULD include `https://w3id.org/dpv/risk#RiskAssessment` where the check identified, analysed or evaluated disclosure risk | The module term marks the check and is how it is selected. `https://w3id.org/dpv/risk#RiskAssessment` is the DPV Risk extension's term for an activity of assessing risk, not DPV core's `https://w3id.org/dpv#RiskAssessment`, which is an organisational measure (see: [Output Checks](../index.md#output-checks)). Further published terms MAY be added. |
+| `additionalType` | MUST include the module term <br><br> SHOULD include `https://w3id.org/dpv/risk#RiskAssessment` where the check identified, analysed or evaluated disclosure risk | The module term marks the check and is how it is selected. Further published terms MAY be added. |
 | `@type` | MUST include `AssessAction` | [Process Shape](../index.md#process-shape) and [Output Checks](../index.md#output-checks) in the Five Safes RO-Crate core then apply. |
 | `result` | SHOULD identify at least one finding for each `object`, where `actionStatus` is `CompletedActionStatus`; <br><br> MAY identify a report; <br><br> MUST NOT identify an `AuthorizeAction` or `RejectAction` | An active or failed check is not expected to have findings. A check with no `actionStatus` fails the Process Shape requirements. |
 | `instrument` | SHOULD identify the exact version of the policy or configuration that set the check's criteria, and any software, where either helped perform the check | A copy of a configuration file is packaged as described in [Packaging Outputs](#packaging-outputs). |
@@ -242,7 +242,7 @@ Terms from two published vocabularies are used as values, written as full IRIs i
 | Vocabulary | Namespace | Used for |
 |---|---|---|
 | [StatbarnSDC](https://w3id.org/statbarnsdc) 1.0 | `https://w3id.org/statbarnsdc#` | The kind of statistic (its statbarn and analysis classes), and the risk, evaluation and control classes under the optional properties. |
-| [Data Privacy Vocabulary](https://w3id.org/dpv) 2.3 and its [Risk extension](https://w3id.org/dpv/risk) | `https://w3id.org/dpv#`, `https://w3id.org/dpv/risk#` | `https://w3id.org/dpv/risk#RiskAssessment` as a kind of check, and the three optional properties. |
+| [Data Privacy Vocabulary](https://w3id.org/dpv) 2.3 and its [Risk extension](https://w3id.org/dpv/risk) | `https://w3id.org/dpv#`, `https://w3id.org/dpv/risk#` | `RiskAssessment` as a kind of check, and the three optional properties. |
 
 As every module, outcome and StatbarnSDC term is a value, no context is needed beyond RO-Crate 1.3. The RO-Crate context does not bind `dpv` or `risk`, so an RO-Crate that writes a DPV property with either prefix includes the module context, as required under [Optional Published Terms](#optional-published-terms). The context binds those two prefixes:
 
@@ -268,7 +268,7 @@ An [egress snapshot](../index.md#ro-crates-and-egress) may retain the checks, fi
 
 The example continues from the Five Safes RO-Crate core's [Review 42](../index.md#worked-example-one-review-of-three-outputs):
 
-- Output check 1, run by a tool and attributed to The University of Manchester, which operates TRE72, found that output A passed, output B failed and output C needed review. The researcher asked for an exception for B before any decision was made. 
+- Output check 1, run by a tool and attributed to TRE72, found that output A passed, output B failed and output C needed review. The researcher asked for an exception for B before any decision was made. 
 - In Review 42 a checker approved A, refused B after considering the exception, and asked for C to be revised. 
 - The researcher asked again about B with new information from the data provider, then recomputed C with combined age bands as a new asset; a tool check and the checker's own check both passed the revised output. 
 - In Review 43 the checker approved the revised C and approved B on exception, reversing the refusal.
@@ -298,14 +298,10 @@ flowchart TD
 
 <br>
 
-Output check 1 and its findings are shown under [Entities](#entities). The following fragment describes the remainder of the unhappy path for output B and the revision of output C. Review 42, its approval of A and its request to revise C are unchanged from the [Five Safes RO-Crate core's worked example](../index.md#worked-example-one-review-of-three-outputs); the refusal gains the exception request under `prov:wasInformedBy` and a `description` stating that the request was considered. Because the revision and the revised asset carry DPV properties written with the `dpv:` and `risk:` prefixes, the fragment includes the module context:
+Output check 1 and its findings are shown under [Entities](#entities). The following fragment describes the remainder of the unhappy path for output B and the revision of output C. Review 42, its approval of A and its request to revise C are unchanged from the [Five Safes RO-Crate core's worked example](../index.md#worked-example-one-review-of-three-outputs); the refusal gains the exception request under `prov:wasInformedBy` and a `description` stating that the request was considered. The fragment uses the module context because the revision and the revised asset carry DPV properties:
 
 ```json
-{ "@context": [
-    "https://w3id.org/ro/crate/1.3/context",
-    {"dpv": "https://w3id.org/dpv#", "risk": "https://w3id.org/dpv/risk#"}
-  ],
-  "@graph": [
+[
   {
     "@id": "https://tre72.example.org/activities/A123/requests/exception-count-by-site",
     "@type": ["AskAction", "prov:Activity"],
@@ -415,8 +411,7 @@ Output check 1 and its findings are shown under [Entities](#entities). The follo
     "endTime": "2027-03-17T09:28:00Z",
     "actionStatus": {"@id": "http://schema.org/CompletedActionStatus"}
   }
-  ]
-}
+]
 ```
 
 Note that output check 2, Review 43 and the approval of the revised output follow the same patterns and are omitted here for brevity. The complete RO-Crate for this example, including the Root Data Entity, the packaged copies and every process, is published alongside this module.

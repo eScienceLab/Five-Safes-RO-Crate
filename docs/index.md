@@ -161,7 +161,7 @@ The following is a complete, minimal conforming working record of a feasibility 
       "dateCreated": "2027-03-13T09:00:00Z",
       "dateModified": "2027-03-14T09:20:31Z",
       "datePublished": "2027-03-13T09:01:00Z",
-      "license": {"@id": "http://spdx.org/licenses/CC0-1.0"},
+      "license": {"@id": "https://creativecommons.org/publicdomain/zero/1.0/"},
       "publisher": {"@id": "https://ror.org/027m9bs27"},
       "hasPart": [{"@id": "query.sql"}, {"@id": "outputs/counts.csv"}],
       "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
@@ -205,13 +205,7 @@ The following is a complete, minimal conforming working record of a feasibility 
     {
       "@id": "https://ror.org/027m9bs27",
       "@type": "Organization",
-      "name": "The University of Manchester"
-    },
-    {
-      "@id": "http://spdx.org/licenses/CC0-1.0",
-      "@type": "CreativeWork",
-      "name": "Creative Commons Zero v1.0 Universal",
-      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      "name": "TRE72"
     }
   ]
 }
@@ -385,18 +379,14 @@ A held or produced software or trained-model asset SHOULD carry `name` and `vers
 
 Processes are the things that happen. For example, a researcher executing an SQL query on some data; software applying a deidentification protocol on free-text data; or an output checker verifying outputs during the disclosure control process. Each MUST be a [Contextual Entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html), referenced from the Root Data Entity's `mentions`.
 
-Every process is listed in `mentions`, including one that other processes already link to, for example as a constituent action of a review. The Root Data Entity is therefore where a consumer finds all the processes of an RO-Crate, and a producer adding a process links it there; links between processes record how they relate, and are not the way a process is reached.
-
 ### Process Shape
 
 Every process MUST be an [Action](http://schema.org/Action) whose `@type` includes one of the types in [Kinds of Process](#kinds-of-process) and also `prov:Activity`.
 
-`prov:Activity` marks an entity as a process, whatever its kind, so that consumers and validators can recognise every process by one type. It is also the type PROV-O expects for the processes that `prov:wasInformedBy`, `prov:used` and `prov:qualifiedAssociation` relate. The profile does not otherwise describe processes with PROV-O: who performed a process, when, and what it acted on and produced are recorded with the schema.org `Action` properties below. An action taken from an RO-Crate that does not follow this profile, such as a plain `CreateAction` from a Process Run Crate, is a process of this profile only once `prov:Activity` is added to its `@type`.
-
 | Property | Requirement | Description |
 |---|---|---|
 | `@id` | MUST | An absolute IRI identifying this process occurrence. |
-| `@type` | MUST | One of the types in [Kinds of Process](#kinds-of-process), and `prov:Activity`. |
+| `@type` | MUST | See [Kinds of Process](#kinds-of-process). |
 | `agent` | MUST | The people or organisations that directly performed or operated the process, each described in the RO-Crate as a `Person` or `Organization`. |
 | `actionStatus` | MUST, exactly one | See [Status](#status); written as `{"@id": ...}`. |
 | `name` | SHOULD | What happened, in words. |
@@ -426,7 +416,7 @@ Asset references from `object`, `result`, `instrument`, and `prov:used` follow [
 | Moving something between parties | `SendAction`, `ReceiveAction` |
 
 
-The `@type` array MUST also include `prov:Activity` (see: [Process Shape](#process-shape)), and MAY include further, more specific types alongside a listed type.
+The `@type` array MAY include further, more specific types alongside a listed type.
 
 An `AssessAction` records a check or assessment but does not itself assert permission or refusal. Any such decision MUST be recorded as an `AuthorizeAction` or `RejectAction`; the outcome is distinguished by that type. The check and decision may be constituent actions of the same overall process.
 
@@ -1061,10 +1051,7 @@ A check performed by software is attributed as in [Who Performed a Process](#who
 | `instrument` | SHOULD identify the tool or policy version that helped perform the check, where one did, as specified in [Process Shape](#process-shape). |
 | `result` | MAY identify a report the check produced. |
 
-The `additionalType` value describes the kind of check. For example, a check that identifies, analyses and evaluates risk can use [`https://w3id.org/dpv/risk#RiskAssessment`](https://w3id.org/dpv/risk#RiskAssessment) from the DPV Risk extension (as in the disclosure risk assessment below). Note that this is an example classification and the base profile does not require this term for output checks.
-
-!!! note "Which `RiskAssessment`?"
-    DPV has two terms named `RiskAssessment`. The Risk extension's `https://w3id.org/dpv/risk#RiskAssessment` is an activity of risk management (following ISO 31073), which is what an `AssessAction` records: one occasion of assessing risk. DPV core's `https://w3id.org/dpv#RiskAssessment` is an organisational measure, such as an organisation's practice of assessing risks, and is not used to type a check.
+The `additionalType` value describes the kind of check. For example, a check that identifies, analyses and evaluates risk [can use DPV's `RiskAssessment`](https://w3id.org/dpv/risk#RiskAssessment) (as in the disclosure risk assessment below). Note that this is an example classification and the base profile does not require this term for output checks.
 
 A single file may contain several separately identified outputs. For example, a spreadsheet containing several tables. Each table is a separate output, each with its own absolute IRI, with the file linked to each using `encodesCreativeWork` (see: [Packaged Copies of Identified Assets](#packaged-copies-of-identified-assets)).
 
@@ -1250,7 +1237,7 @@ The following JSON-LD fragment represents the entities and relationships shown i
     {
       "@id": "https://ror.org/027m9bs27",
       "@type": "Organization",
-      "name": "The University of Manchester"
+      "name": "TRE72"
     }
   ]
 }
