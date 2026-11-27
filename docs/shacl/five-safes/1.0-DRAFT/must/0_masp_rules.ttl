@@ -727,6 +727,41 @@
         sh:message """Request: recipient (MASP rule #prop_recipient_AskAction)""" ;
     ] .
 
+<urn:masp-shacl:five-safes:class_Action> a sh:NodeShape ;
+    sh:name """Overall process""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/Action> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://purl.org/dc/terms/hasPart> ;
+        sh:name """Overall process: dct:hasPart""" ;
+        sh:description """For an overall review, the recorded constituent actions: checks, decisions and requests made within it.""" ;
+        sh:class <http://www.w3.org/ns/prov#Activity> ;
+        sh:message """Overall process: dct:hasPart (MASP rule #prop_dct-hasPart_Action)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_AssessAction> a sh:NodeShape ;
+    sh:name """Check""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AssessAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Check: object""" ;
+        sh:description """For an output check, MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined.""" ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Check: object (MASP rule #prop_object_AssessAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/result> ;
+        sh:name """Check: result""" ;
+        sh:description """MAY identify a report the check produced.""" ;
+        sh:or ( [ sh:class <http://schema.org/MediaObject> ] [ sh:class <http://schema.org/CreativeWork> ] ) ;
+        sh:message """Check: result (MASP rule #prop_result_AssessAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/additionalType> ;
+        sh:name """Check: additionalType""" ;
+        sh:description """For an output check, SHOULD refer to a published term for the kind of check, such as https://w3id.org/dpv/risk#RiskAssessment.""" ;
+        sh:message """Check: additionalType (MASP rule #prop_additionalType_AssessAction)""" ;
+    ] .
+
 <urn:masp-shacl:five-safes:class_AuthorizeAction> a sh:NodeShape ;
     sh:name """Permission""" ;
     sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AuthorizeAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;

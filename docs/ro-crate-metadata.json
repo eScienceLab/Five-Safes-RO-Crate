@@ -1153,6 +1153,12 @@
           "@id": "#class_CreateAction"
         },
         {
+          "@id": "#class_Action"
+        },
+        {
+          "@id": "#class_AssessAction"
+        },
+        {
           "@id": "#class_AuthorizeAction"
         },
         {
@@ -1181,6 +1187,18 @@
         },
         {
           "@id": "#prop_result_AuthorizeAction"
+        },
+        {
+          "@id": "#prop_object_AssessAction"
+        },
+        {
+          "@id": "#prop_result_AssessAction"
+        },
+        {
+          "@id": "#prop_additionalType_AssessAction"
+        },
+        {
+          "@id": "#prop_dct-hasPart_Action"
         },
         {
           "@id": "#prop_hasPart_RootDataEntity"
@@ -3107,6 +3125,44 @@
       }
     },
     {
+      "@id": "#class_Action",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Action",
+      "name": "Overall process",
+      "rdfs:comment": "An overall process with constituent actions, such as an output review, or other work with no more specific type.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-process",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/Action"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_AssessAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AssessAction",
+      "name": "Check",
+      "rdfs:comment": "A check or assessment of an asset. It does not itself assert permission or refusal.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#output-checks",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AssessAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
       "@id": "#class_AuthorizeAction",
       "@type": "rdfs:Class",
       "rdfs:label": "AuthorizeAction",
@@ -3366,6 +3422,92 @@
       },
       "rangeIncludes": {
         "@id": "#class_Credential"
+      }
+    },
+    {
+      "@id": "#prop_object_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "For an output check, MUST identify each output checked through an entity with an absolute IRI identifying the asset and version examined.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_result_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "MAY identify a report the check produced.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_additionalType_AssessAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "For an output check, SHOULD refer to a published term for the kind of check, such as https://w3id.org/dpv/risk#RiskAssessment.",
+      "domainIncludes": {
+        "@id": "#class_AssessAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "#prop_dct-hasPart_Action",
+      "@type": "rdf:Property",
+      "rdfs:label": "dct:hasPart",
+      "name": "Has part",
+      "rdfs:comment": "For an overall review, the recorded constituent actions: checks, decisions and requests made within it.",
+      "domainIncludes": {
+        "@id": "#class_Action"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/dc/terms/hasPart"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Process"
       }
     },
     {
