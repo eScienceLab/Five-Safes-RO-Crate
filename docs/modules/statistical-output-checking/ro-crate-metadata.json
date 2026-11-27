@@ -1,6 +1,10 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.3/context"
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "dpv": "https://w3id.org/dpv#",
+      "risk": "https://w3id.org/dpv/risk#"
+    }
   ],
   "@graph": [
     {
@@ -207,7 +211,6 @@
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck",
       "@type": "DefinedTerm",
-      "termCode": "StatisticalOutputCheck",
       "name": "Statistical output check",
       "description": "An assessment of one or more statistical outputs, such as tables, figures or summary statistics, for disclosure risk before release from a TRE, performed by a person, by software, or by both. Used as an additionalType value of an AssessAction.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-check",
@@ -218,7 +221,6 @@
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass",
       "@type": "DefinedTerm",
-      "termCode": "Pass",
       "name": "Pass",
       "description": "The output met every criterion the check applied to it. It is not permission to release.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
@@ -234,7 +236,6 @@
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail",
       "@type": "DefinedTerm",
-      "termCode": "Fail",
       "name": "Fail",
       "description": "The output did not meet at least one criterion the check applied to it. It is not a refusal.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
@@ -250,7 +251,6 @@
     {
       "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview",
       "@type": "DefinedTerm",
-      "termCode": "NeedsReview",
       "name": "Needs review",
       "description": "The check could not settle the output without human judgement, or referred it to a person. It is not a decision, or a record that a review took place.",
       "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
@@ -301,9 +301,8 @@
     {
       "@id": "https://w3id.org/dpv/risk#RiskAssessment",
       "@type": "DefinedTerm",
-      "termCode": "risk:RiskAssessment",
       "name": "Risk assessment",
-      "description": "An additionalType value a statistical output check SHOULD carry where it identified, analysed or evaluated disclosure risk.",
+      "description": "An additionalType value a statistical output check SHOULD carry where it identified, analysed or evaluated disclosure risk. The DPV Risk extension's term for an activity of assessing risk (ISO 31073), not DPV core's dpv:RiskAssessment, which is an organisational measure.",
       "url": "https://w3id.org/dpv/risk#RiskAssessment",
       "inDefinedTermSet": {
         "@id": "https://w3id.org/dpv/risk#"
