@@ -270,6 +270,13 @@
       "contentSize": "133"
     },
     {
+      "@id": "https://w3id.org/dpv/risk#RiskAssessment",
+      "@type": "DefinedTerm",
+      "name": "Risk Assessment",
+      "description": "Assessment of risk involving its identification, analysis, and evaluation (DPV Risk extension, following ISO 31073).",
+      "url": "https://w3id.org/dpv/risk#RiskAssessment"
+    },
+    {
       "@id": "https://doi.org/10.5281/zenodo.18456450",
       "@type": "SoftwareApplication",
       "name": "ACRO",
