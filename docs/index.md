@@ -378,6 +378,8 @@ A held or produced software or trained-model asset SHOULD carry `name` and `vers
 
 Processes are the things that happen. For example, a researcher executing an SQL query on some data; software applying a deidentification protocol on free-text data; or an output checker verifying outputs during the disclosure control process. Each MUST be a [Contextual Entity](https://www.researchobject.org/ro-crate/specification/1.3/contextual-entities.html), referenced from the Root Data Entity's `mentions`.
 
+Every process is listed in `mentions`, including one that other processes already link to, for example as a constituent action of a review. The Root Data Entity is therefore where a consumer finds all the processes of an RO-Crate, and a producer adding a process links it there; links between processes record how they relate, and are not the way a process is reached.
+
 ### Process Shape
 
 Every process MUST be an [Action](http://schema.org/Action) whose `@type` includes one of the types in [Kinds of Process](#kinds-of-process) and also `prov:Activity`.
