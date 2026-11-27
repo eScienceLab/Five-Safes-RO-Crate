@@ -1,0 +1,649 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.3/context",
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "about": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
+      "@type": [
+        "Dataset",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate",
+      "description": "An RO-Crate profile for recording and exchanging the activity and provenance of work in Trusted Research Environments (TREs): the assets they hold, the processes applied to them, and the people, organisations and agreements involved.",
+      "identifier": "https://w3id.org/5s-crate/1.0-DRAFT",
+      "version": "1.0-DRAFT",
+      "creativeWorkStatus": "Working Draft",
+      "datePublished": "2026-11-27",
+      "license": {
+        "@id": "http://spdx.org/licenses/MIT"
+      },
+      "author": [
+        {
+          "@id": "https://orcid.org/0000-0003-1193-6632"
+        },
+        {
+          "@id": "https://orcid.org/0000-0003-3307-9432"
+        },
+        {
+          "@id": "https://orcid.org/0000-0002-1248-3594"
+        },
+        {
+          "@id": "https://orcid.org/0000-0002-9308-9889"
+        },
+        {
+          "@id": "https://orcid.org/0000-0002-0035-6475"
+        },
+        {
+          "@id": "https://orcid.org/0000-0001-9842-9718"
+        }
+      ],
+      "isProfileOf": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
+      "pav:previousVersion": {
+        "@id": "https://w3id.org/5s-crate/0.4"
+      },
+      "discussionUrl": "https://github.com/eScienceLab/Five-Safes-RO-Crate/issues",
+      "hasPart": [
+        {
+          "@id": "index.html"
+        },
+        {
+          "@id": "authoring-modules/index.html"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT#"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+        }
+      ],
+      "hasResource": [
+        {
+          "@id": "#hasSpecification"
+        },
+        {
+          "@id": "#hasGuidance"
+        },
+        {
+          "@id": "#hasVocabulary"
+        },
+        {
+          "@id": "#usesPROV"
+        },
+        {
+          "@id": "#usesPAV"
+        },
+        {
+          "@id": "#usesDCT"
+        },
+        {
+          "@id": "#usesDPV"
+        },
+        {
+          "@id": "#usesDPVRisk"
+        }
+      ]
+    },
+    {
+      "@id": "index.html",
+      "@type": "File",
+      "name": "Five Safes RO-Crate 1.0-DRAFT profile specification",
+      "encodingFormat": "text/html",
+      "about": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "license": {
+        "@id": "http://spdx.org/licenses/MIT"
+      },
+      "description": "Human-readable specification of the Five Safes RO-Crate core profile, generated from docs/index.md."
+    },
+    {
+      "@id": "authoring-modules/index.html",
+      "@type": "File",
+      "name": "Authoring Modules",
+      "description": "Guidance on when and how to write a module of the Five Safes RO-Crate profile.",
+      "encodingFormat": "text/html",
+      "about": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "license": {
+        "@id": "http://spdx.org/licenses/MIT"
+      }
+    },
+    {
+      "@id": "#hasSpecification",
+      "@type": "ResourceDescriptor",
+      "name": "has specification",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/specification"
+      },
+      "hasArtifact": {
+        "@id": "index.html"
+      }
+    },
+    {
+      "@id": "#hasGuidance",
+      "@type": "ResourceDescriptor",
+      "name": "has guidance: Authoring Modules",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/guidance"
+      },
+      "hasArtifact": {
+        "@id": "authoring-modules/index.html"
+      }
+    },
+    {
+      "@id": "#hasVocabulary",
+      "@type": "ResourceDescriptor",
+      "name": "has vocabulary: Five Safes RO-Crate terms",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT#"
+      }
+    },
+    {
+      "@id": "#usesPROV",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: PROV-O",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "#usesPAV",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: PAV",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "http://purl.org/pav/"
+      }
+    },
+    {
+      "@id": "#usesDCT",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: DCMI Metadata Terms",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "http://purl.org/dc/terms/"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT#",
+      "@type": "DefinedTermSet",
+      "name": "Five Safes RO-Crate 1.0-DRAFT terms",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT",
+      "hasDefinedTerm": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot"
+      },
+      "description": "Terms defined by the Five Safes RO-Crate core profile."
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
+      "@type": "DefinedTerm",
+      "name": "Egress snapshot",
+      "description": "A separate, immutable representation of an activity record, prepared from an internal snapshot for release from the TRE. Used as an additionalType value on the Root Data Entity of an egress snapshot, and never on a working record or internal snapshot.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#EgressSnapshot",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#",
+      "@type": "DefinedTermSet",
+      "name": "PROV-O: The PROV Ontology",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "hasDefinedTerm": [
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Plan"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Association"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Location"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#qualifiedAssociation"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#agent"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#hadPlan"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#used"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#wasInformedBy"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#atLocation"
+        }
+      ]
+    },
+    {
+      "@id": "http://purl.org/pav/",
+      "@type": "DefinedTermSet",
+      "name": "PAV: Provenance, Authoring and Versioning",
+      "url": "https://pav-ontology.github.io/pav/",
+      "hasDefinedTerm": {
+        "@id": "http://purl.org/pav/previousVersion"
+      }
+    },
+    {
+      "@id": "http://purl.org/dc/terms/",
+      "@type": "DefinedTermSet",
+      "name": "DCMI Metadata Terms",
+      "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+      "hasDefinedTerm": [
+        {
+          "@id": "http://purl.org/dc/terms/isVersionOf"
+        },
+        {
+          "@id": "http://purl.org/dc/terms/hasPart"
+        },
+        {
+          "@id": "http://purl.org/dc/terms/valid"
+        }
+      ]
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#Activity",
+      "@type": "DefinedTerm",
+      "termCode": "prov:Activity",
+      "name": "Activity",
+      "description": "Added to the @type of every process, alongside its schema.org Action type.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#process-shape",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#Plan",
+      "@type": "DefinedTerm",
+      "termCode": "prov:Plan",
+      "name": "Plan",
+      "description": "Added to the @type of an asset that represents intended work, such as a submitted analysis plan.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#Association",
+      "@type": "DefinedTerm",
+      "termCode": "prov:Association",
+      "name": "Association",
+      "description": "Links an execution to one agent and the exact plan version it followed.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#Location",
+      "@type": "DefinedTerm",
+      "termCode": "prov:Location",
+      "name": "Location",
+      "description": "Added to the @type of a runtime location, such as a workspace or virtual machine.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#the-tre-and-its-nodes",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#qualifiedAssociation",
+      "@type": "DefinedTerm",
+      "termCode": "prov:qualifiedAssociation",
+      "name": "qualified association",
+      "description": "From an execution to the prov:Association linking it to a plan.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#agent",
+      "@type": "DefinedTerm",
+      "termCode": "prov:agent",
+      "name": "agent",
+      "description": "The one agent of a prov:Association, which is also an agent of the execution.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#hadPlan",
+      "@type": "DefinedTerm",
+      "termCode": "prov:hadPlan",
+      "name": "had plan",
+      "description": "The exact plan version of a prov:Association.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#used",
+      "@type": "DefinedTerm",
+      "termCode": "prov:used",
+      "name": "used",
+      "description": "What a process, such as a decision, actually used, including a snapshot it consulted.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#wasInformedBy",
+      "@type": "DefinedTerm",
+      "termCode": "prov:wasInformedBy",
+      "name": "was informed by",
+      "description": "An earlier process that informed this one, such as the request a decision answers, a decision it reverses, a check it drew on, or the dispatch a receipt resulted from.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type": "DefinedTerm",
+      "termCode": "prov:wasDerivedFrom",
+      "name": "was derived from",
+      "description": "On a derived asset, its source where derivation was observed or attested; on an egress snapshot's Root Data Entity, its source internal snapshot.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#derived-data",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/prov#atLocation",
+      "@type": "DefinedTerm",
+      "termCode": "prov:atLocation",
+      "name": "at location",
+      "description": "The runtime location where a process ran.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#process-shape",
+      "inDefinedTermSet": {
+        "@id": "http://www.w3.org/ns/prov#"
+      }
+    },
+    {
+      "@id": "http://purl.org/pav/previousVersion",
+      "@type": "DefinedTerm",
+      "termCode": "pav:previousVersion",
+      "name": "previous version",
+      "description": "On an internal snapshot after the first, the canonical identifier of the preceding internal snapshot; on a plan, its immediate predecessor.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#representation-state",
+      "inDefinedTermSet": {
+        "@id": "http://purl.org/pav/"
+      }
+    },
+    {
+      "@id": "http://purl.org/dc/terms/isVersionOf",
+      "@type": "DefinedTerm",
+      "termCode": "dct:isVersionOf",
+      "name": "is version of",
+      "description": "On the Root Data Entity, the activity record identifier, shared by every representation of the record.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#record-and-ro-crate-identifiers",
+      "inDefinedTermSet": {
+        "@id": "http://purl.org/dc/terms/"
+      }
+    },
+    {
+      "@id": "http://purl.org/dc/terms/hasPart",
+      "@type": "DefinedTerm",
+      "termCode": "dct:hasPart",
+      "name": "has part",
+      "description": "From an overall process, such as an output review, to its constituent actions. Distinct from schema.org hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#the-overall-review",
+      "inDefinedTermSet": {
+        "@id": "http://purl.org/dc/terms/"
+      }
+    },
+    {
+      "@id": "http://purl.org/dc/terms/valid",
+      "@type": "DefinedTerm",
+      "termCode": "dct:valid",
+      "name": "valid",
+      "description": "On a credential, one closed validity interval in start/end form.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#credentials",
+      "inDefinedTermSet": {
+        "@id": "http://purl.org/dc/terms/"
+      }
+    },
+    {
+      "@id": "#usesDPV",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: Data Privacy Vocabulary (for examples of additionalType values)",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "#usesDPVRisk",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: DPV Risk extension (for examples of additionalType values)",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#",
+      "@type": "DefinedTermSet",
+      "name": "Data Privacy Vocabulary (DPV)",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv",
+      "hasDefinedTerm": [
+        {
+          "@id": "https://w3id.org/dpv#DataProcessingAgreement"
+        },
+        {
+          "@id": "https://w3id.org/dpv#StatisticalConfidentialityAgreement"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#",
+      "@type": "DefinedTermSet",
+      "name": "DPV Risk extension",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv/risk",
+      "hasDefinedTerm": {
+        "@id": "https://w3id.org/dpv/risk#RiskAssessment"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#DataProcessingAgreement",
+      "@type": "DefinedTerm",
+      "name": "Data Processing Agreement",
+      "description": "Example additionalType value for an agreement setting processing terms between organisations.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#StatisticalConfidentialityAgreement",
+      "@type": "DefinedTerm",
+      "name": "Statistical Confidentiality Agreement",
+      "description": "Example additionalType value for an agreement covering disclosure control.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#agreements-and-policies",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#RiskAssessment",
+      "@type": "DefinedTerm",
+      "name": "Risk Assessment",
+      "description": "Example additionalType value for an output check that identifies, analyses and evaluates risk. The DPV Risk extension's term for an activity of assessing risk (ISO 31073), not DPV core's dpv:RiskAssessment, which is an organisational measure.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#output-checks",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking",
+      "@type": [
+        "Dataset",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate Module: Statistical Output Checking",
+      "version": "1.0-DRAFT",
+      "isProfileOf": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "description": "Records checks of statistical outputs, such as tables, figures and summary statistics, before release from a TRE."
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/0.4",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate profile",
+      "version": "0.4"
+    },
+    {
+      "@id": "https://w3id.org/ro/crate/1.3",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate Metadata Specification",
+      "version": "1.3"
+    },
+    {
+      "@id": "https://w3id.org/ro/crate",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate (any version)"
+    },
+    {
+      "@id": "http://spdx.org/licenses/MIT",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "identifier": "MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-1193-6632",
+      "@type": "Person",
+      "name": "Alexander Hambley",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-3307-9432",
+      "@type": "Person",
+      "name": "Warren Del-Pinto",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-1248-3594",
+      "@type": "Person",
+      "name": "Douglas Lowe",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-9308-9889",
+      "@type": "Person",
+      "name": "Ettore Murabito",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-0035-6475",
+      "@type": "Person",
+      "name": "Eli Chadwick",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0001-9842-9718",
+      "@type": "Person",
+      "name": "Stian Soiland-Reyes",
+      "affiliation": {
+        "@id": "https://ror.org/027m9bs27"
+      }
+    },
+    {
+      "@id": "https://ror.org/027m9bs27",
+      "@type": "Organization",
+      "name": "The University of Manchester",
+      "url": "https://www.manchester.ac.uk/"
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/specification",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Specification",
+      "description": "Defining the profile in human-readable form"
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/guidance",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Guidance",
+      "description": "Documents, in human-readable form, how to use the profile"
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Vocabulary",
+      "description": "Defines terms used in the profile specification"
+    }
+  ]
+}
