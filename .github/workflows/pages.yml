@@ -42,7 +42,7 @@ jobs:
             "$RUNNER_TEMP/masp/index.html" > site/rules/index.html
       - name: Generate RO-Crate previews of the Profile Crates
         run: |
-          for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json; do
+          for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json site/examples/*/ro-crate-metadata.json; do
             npx --yes --package ro-crate-html@0.1.6 rochtml "$crate"
             # rochtml 0.1.6 omits the HTML5 doctype that RO-Crate 1.3 requires
             sed -i '1s/^/<!DOCTYPE html>\n/' "$(dirname "$crate")/ro-crate-preview.html"

@@ -70,6 +70,15 @@
         },
         {
           "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+        },
+        {
+          "@id": "examples/feasibility-working-record/"
+        },
+        {
+          "@id": "examples/feasibility-first-snapshot/"
+        },
+        {
+          "@id": "examples/review-42/"
         }
       ],
       "hasResource": [
@@ -102,6 +111,15 @@
         },
         {
           "@id": "#hasConformanceIndicators"
+        },
+        {
+          "@id": "#hasExampleWorkingRecord"
+        },
+        {
+          "@id": "#hasExampleFirstSnapshot"
+        },
+        {
+          "@id": "#hasExampleReview42"
         }
       ],
       "conformsTo": {
@@ -664,6 +682,84 @@
       ],
       "name": "Vocabulary",
       "description": "Defines terms used in the profile specification"
+    },
+    {
+      "@id": "examples/feasibility-working-record/",
+      "@type": "Dataset",
+      "name": "Example: feasibility query, working record",
+      "description": "The specification's Complete Example: a minimal working record of a feasibility query executed in a TRE, with the query and its output held in the RO-Crate. Payload files are illustrative.",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "license": {
+        "@id": "https://spdx.org/licenses/CC0-1.0"
+      }
+    },
+    {
+      "@id": "#hasExampleWorkingRecord",
+      "@type": "ResourceDescriptor",
+      "name": "has example: feasibility query, working record",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/example"
+      },
+      "hasArtifact": {
+        "@id": "examples/feasibility-working-record/"
+      }
+    },
+    {
+      "@id": "examples/feasibility-first-snapshot/",
+      "@type": "Dataset",
+      "name": "Example: feasibility query, first internal snapshot",
+      "description": "The Complete Example published as the first internal snapshot: its own identifier, version 1, and no dateModified. Payload files are illustrative.",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "license": {
+        "@id": "https://spdx.org/licenses/CC0-1.0"
+      }
+    },
+    {
+      "@id": "#hasExampleFirstSnapshot",
+      "@type": "ResourceDescriptor",
+      "name": "has example: feasibility query, first internal snapshot",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/example"
+      },
+      "hasArtifact": {
+        "@id": "examples/feasibility-first-snapshot/"
+      }
+    },
+    {
+      "@id": "examples/review-42/",
+      "@type": "Dataset",
+      "name": "Example: output review 42",
+      "description": "The specification's worked example of one review of three outputs: an automated disclosure risk check, approval of one output, refusal of another and a request to revise the third. Payload files are illustrative.",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "license": {
+        "@id": "https://spdx.org/licenses/CC0-1.0"
+      }
+    },
+    {
+      "@id": "#hasExampleReview42",
+      "@type": "ResourceDescriptor",
+      "name": "has example: output review 42",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/example"
+      },
+      "hasArtifact": {
+        "@id": "examples/review-42/"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/example",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Example",
+      "description": "Sample instance data conforming to the profile"
     },
     {
       "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile",
