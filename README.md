@@ -175,4 +175,4 @@ Comments and suggestions are welcome as [GitHub issues](https://github.com/eScie
 
 ## License
 
-The Profile Specification is licensed under the [MIT License](LICENSE.md). Example RO-Crates and Profile Crates are in the public domain under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+The Profile Specification and its Profile Crates are licensed under the [MIT License](LICENSE.md). Example RO-Crates are in the public domain under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/).
