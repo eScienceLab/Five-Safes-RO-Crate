@@ -29,7 +29,7 @@
       "creativeWorkStatus": "Working Draft",
       "datePublished": "2026-11-27",
       "license": {
-        "@id": "https://spdx.org/licenses/CC0-1.0"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       },
       "author": [
         {
@@ -135,7 +135,7 @@
         "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
       },
       "license": {
-        "@id": "https://spdx.org/licenses/MIT"
+        "@id": "http://spdx.org/licenses/MIT"
       },
       "description": "Human-readable specification of the Five Safes RO-Crate core profile, generated from docs/index.md."
     },
@@ -149,7 +149,7 @@
         "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
       },
       "license": {
-        "@id": "https://spdx.org/licenses/MIT"
+        "@id": "http://spdx.org/licenses/MIT"
       }
     },
     {
@@ -590,17 +590,18 @@
       "name": "RO-Crate (any version)"
     },
     {
-      "@id": "https://spdx.org/licenses/CC0-1.0",
+      "@id": "http://spdx.org/licenses/CC0-1.0",
       "@type": "CreativeWork",
       "name": "Creative Commons Zero v1.0 Universal",
       "identifier": "CC0-1.0",
       "url": "https://creativecommons.org/publicdomain/zero/1.0/"
     },
     {
-      "@id": "https://spdx.org/licenses/MIT",
+      "@id": "http://spdx.org/licenses/MIT",
       "@type": "CreativeWork",
       "name": "MIT License",
-      "identifier": "MIT"
+      "identifier": "MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
     },
     {
       "@id": "https://orcid.org/0000-0003-1193-6632",
@@ -692,7 +693,7 @@
         "@id": "https://w3id.org/ro/crate"
       },
       "license": {
-        "@id": "https://spdx.org/licenses/CC0-1.0"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       }
     },
     {
@@ -715,7 +716,7 @@
         "@id": "https://w3id.org/ro/crate"
       },
       "license": {
-        "@id": "https://spdx.org/licenses/CC0-1.0"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       }
     },
     {
@@ -738,7 +739,7 @@
         "@id": "https://w3id.org/ro/crate"
       },
       "license": {
-        "@id": "https://spdx.org/licenses/CC0-1.0"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       }
     },
     {

@@ -36,7 +36,7 @@
       "dateModified": "2027-03-14T09:20:31Z",
       "datePublished": "2027-03-13T09:01:00Z",
       "license": {
-        "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       },
       "publisher": {
         "@id": "https://tre72.example.org/"

@@ -160,7 +160,7 @@ The following is a complete, minimal conforming working record of a feasibility 
       "dateCreated": "2027-03-13T09:00:00Z",
       "dateModified": "2027-03-14T09:20:31Z",
       "datePublished": "2027-03-13T09:01:00Z",
-      "license": {"@id": "https://creativecommons.org/publicdomain/zero/1.0/"},
+      "license": {"@id": "http://spdx.org/licenses/CC0-1.0"},
       "publisher": {"@id": "https://tre72.example.org/"},
       "hasPart": [{"@id": "query.sql"}, {"@id": "outputs/counts.csv"}],
       "mentions": [{"@id": "urn:uuid:6b1eaa63-25b0-4dd2-9c92-a35a3f5cd58a"}]
@@ -205,6 +205,12 @@ The following is a complete, minimal conforming working record of a feasibility 
       "@id": "https://tre72.example.org/",
       "@type": "Organization",
       "name": "TRE72"
+    },
+    {
+      "@id": "http://spdx.org/licenses/CC0-1.0",
+      "@type": "CreativeWork",
+      "name": "Creative Commons Zero v1.0 Universal",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
     }
   ]
 }

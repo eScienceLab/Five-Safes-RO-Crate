@@ -32,7 +32,7 @@
       "dateCreated": "2027-03-13T09:00:00Z",
       "datePublished": "2027-03-13T09:01:00Z",
       "license": {
-        "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+        "@id": "http://spdx.org/licenses/CC0-1.0"
       },
       "publisher": {
         "@id": "https://tre72.example.org/"
@@ -110,6 +110,13 @@
       "@id": "https://tre72.example.org/",
       "@type": "Organization",
       "name": "TRE72"
+    },
+    {
+      "@id": "http://spdx.org/licenses/CC0-1.0",
+      "@type": "CreativeWork",
+      "name": "Creative Commons Zero v1.0 Universal",
+      "identifier": "CC0-1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
     }
   ]
 }
