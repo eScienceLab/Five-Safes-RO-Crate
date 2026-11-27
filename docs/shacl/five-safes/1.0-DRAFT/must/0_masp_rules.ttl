@@ -706,3 +706,66 @@
         sh:class <http://schema.org/CreativeWork> ;
         sh:message """Association: prov:hadPlan (MASP rule #prop_prov-hadPlan_Association)""" ;
     ] .
+
+<urn:masp-shacl:five-safes:class_AskAction> a sh:NodeShape ;
+    sh:name """Request""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AskAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Request: object""" ;
+        sh:description """Submitting a plan or asking for a decision on an asset: exactly one object, the exact plan version or asset. A request for further action identifies each output concerned by an absolute IRI.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Request: object (MASP rule #prop_object_AskAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/recipient> ;
+        sh:name """Request: recipient""" ;
+        sh:description """The person or organisation asked to act: exactly one when submitting a plan, at least one for a request for further action.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Request: recipient (MASP rule #prop_recipient_AskAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_AuthorizeAction> a sh:NodeShape ;
+    sh:name """Permission""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/AuthorizeAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Permission: object""" ;
+        sh:description """What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Permission: object (MASP rule #prop_object_AuthorizeAction)""" ;
+    ] ;
+    sh:property [
+        sh:path <http://schema.org/result> ;
+        sh:name """Permission: result""" ;
+        sh:description """For an accreditation decision, the credential awarded to the person who is the object.""" ;
+        sh:class <http://schema.org/EducationalOccupationalCredential> ;
+        sh:message """Permission: result (MASP rule #prop_result_AuthorizeAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_RejectAction> a sh:NodeShape ;
+    sh:name """Refusal""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/RejectAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Refusal: object""" ;
+        sh:description """What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Refusal: object (MASP rule #prop_object_RejectAction)""" ;
+    ] .
+
+<urn:masp-shacl:five-safes:class_CancelAction> a sh:NodeShape ;
+    sh:name """Withdrawal""" ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """SELECT ?this WHERE { ?this a <http://schema.org/CancelAction> . ?this a <http://www.w3.org/ns/prov#Activity> . }""" ] ;
+    sh:property [
+        sh:path <http://schema.org/object> ;
+        sh:name """Withdrawal: object""" ;
+        sh:description """The exact request subject withdrawn, following the pattern for decisions.""" ;
+        sh:minCount 1 ;
+        sh:or ( [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/CreativeWork> ] [ sh:class <http://schema.org/SoftwareApplication> ] [ sh:class <http://schema.org/SoftwareSourceCode> ] [ sh:node <urn:masp-shacl:five-safes:class_ReferencedCrate> ] [ sh:class <http://schema.org/Person> ] [ sh:class <http://schema.org/Organization> ] ) ;
+        sh:message """Withdrawal: object (MASP rule #prop_object_CancelAction)""" ;
+    ] .

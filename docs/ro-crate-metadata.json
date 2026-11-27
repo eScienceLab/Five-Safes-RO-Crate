@@ -1147,10 +1147,40 @@
           "@id": "#prop_prov-qualifiedAssociation_Process"
         },
         {
+          "@id": "#class_AskAction"
+        },
+        {
           "@id": "#class_CreateAction"
         },
         {
+          "@id": "#class_AuthorizeAction"
+        },
+        {
+          "@id": "#class_RejectAction"
+        },
+        {
+          "@id": "#class_CancelAction"
+        },
+        {
           "@id": "#class_UpdateAction"
+        },
+        {
+          "@id": "#prop_object_AskAction"
+        },
+        {
+          "@id": "#prop_recipient_AskAction"
+        },
+        {
+          "@id": "#prop_object_AuthorizeAction"
+        },
+        {
+          "@id": "#prop_object_RejectAction"
+        },
+        {
+          "@id": "#prop_object_CancelAction"
+        },
+        {
+          "@id": "#prop_result_AuthorizeAction"
         },
         {
           "@id": "#prop_hasPart_RootDataEntity"
@@ -3039,6 +3069,25 @@
       }
     },
     {
+      "@id": "#class_AskAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AskAction",
+      "name": "Request",
+      "rdfs:comment": "Submitting a plan, asking for a decision, or requesting further action on an asset. CompletedActionStatus means the request was made, not that the work was completed.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AskAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
       "@id": "#class_CreateAction",
       "@type": "rdfs:Class",
       "rdfs:label": "CreateAction",
@@ -3048,6 +3097,63 @@
       "prov:specializationOf": [
         {
           "@id": "http://schema.org/CreateAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_AuthorizeAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "AuthorizeAction",
+      "name": "Permission",
+      "rdfs:comment": "A decision that permits something, such as release of an output, a submitted plan, or a credential.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/AuthorizeAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_RejectAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "RejectAction",
+      "name": "Refusal",
+      "rdfs:comment": "A decision that refuses something.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#decision-subjects-and-provenance",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/RejectAction"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "rdfs:subClassOf": {
+        "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#class_CancelAction",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CancelAction",
+      "name": "Withdrawal",
+      "rdfs:comment": "Withdrawing a request before the work begins.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CancelAction"
         },
         {
           "@id": "http://www.w3.org/ns/prov#Activity"
@@ -3074,6 +3180,192 @@
       ],
       "rdfs:subClassOf": {
         "@id": "#class_Process"
+      }
+    },
+    {
+      "@id": "#prop_object_AskAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "Submitting a plan or asking for a decision on an asset: exactly one object, the exact plan version or asset. A request for further action identifies each output concerned by an absolute IRI.",
+      "domainIncludes": {
+        "@id": "#class_AskAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_recipient_AskAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "recipient",
+      "name": "Recipient",
+      "rdfs:comment": "The person or organisation asked to act: exactly one when submitting a plan, at least one for a request for further action.",
+      "domainIncludes": {
+        "@id": "#class_AskAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/recipient"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_AuthorizeAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.",
+      "domainIncludes": {
+        "@id": "#class_AuthorizeAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_RejectAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "What was decided upon; every decision MUST have at least one. A decision answering a submitted plan or a request for a decision on one asset has exactly one object, the same as the request's.",
+      "domainIncludes": {
+        "@id": "#class_RejectAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_object_CancelAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "object",
+      "name": "Object",
+      "rdfs:comment": "The exact request subject withdrawn, following the pattern for decisions.",
+      "domainIncludes": {
+        "@id": "#class_CancelAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/object"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#class_ReferencedCrate"
+        },
+        {
+          "@id": "#class_Person"
+        },
+        {
+          "@id": "#class_Organization"
+        }
+      ],
+      "sh:minCount": 1
+    },
+    {
+      "@id": "#prop_result_AuthorizeAction",
+      "@type": "rdf:Property",
+      "rdfs:label": "result",
+      "name": "Result",
+      "rdfs:comment": "For an accreditation decision, the credential awarded to the person who is the object.",
+      "domainIncludes": {
+        "@id": "#class_AuthorizeAction"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/result"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Credential"
       }
     },
     {
