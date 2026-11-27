@@ -805,6 +805,9 @@
       },
       "hasPart": [
         {
+          "@id": "#value_absolute_iri"
+        },
+        {
           "@id": "#value_metadata_id"
         },
         {
@@ -883,6 +886,105 @@
           "@id": "#prop_isProfileOf_Profile"
         },
         {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_id_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        },
+        {
+          "@id": "#prop_id_Plan"
+        },
+        {
+          "@id": "#class_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_id_SoftwareApplication"
+        },
+        {
+          "@id": "#class_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_name_File"
+        },
+        {
+          "@id": "#prop_name_Dataset"
+        },
+        {
+          "@id": "#prop_name_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_name_Plan"
+        },
+        {
+          "@id": "#prop_name_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_name_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_version_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_version_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_version_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_version_File"
+        },
+        {
+          "@id": "#prop_version_Dataset"
+        },
+        {
+          "@id": "#prop_author_SoftwareApplication"
+        },
+        {
+          "@id": "#prop_author_SoftwareSourceCode"
+        },
+        {
+          "@id": "#prop_author_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_author_File"
+        },
+        {
+          "@id": "#prop_author_Dataset"
+        },
+        {
+          "@id": "#prop_encodesCreativeWork_File"
+        },
+        {
+          "@id": "#prop_exampleOfWork_Dataset"
+        },
+        {
+          "@id": "#prop_hasPart_Dataset"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_File"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_Dataset"
+        },
+        {
+          "@id": "#prop_prov-wasDerivedFrom_IdentifiedAsset"
+        },
+        {
+          "@id": "#prop_pav-previousVersion_Plan"
+        },
+        {
+          "@id": "#prop_additionalType_IdentifiedAsset"
+        },
+        {
           "@id": "#prop_hasPart_RootDataEntity"
         },
         {
@@ -898,6 +1000,14 @@
       ],
       "name": "Schema",
       "description": "Machine-readable structural descriptions of data defined by the profile"
+    },
+    {
+      "@id": "#value_absolute_iri",
+      "@type": "PropertyValue",
+      "name": "Absolute IRI",
+      "value": "/^[A-Za-z][A-Za-z0-9+.-]*:/",
+      "sh:minCount": 1,
+      "description": "An absolute IRI, such as an https URL or a UUID URN; a relative path or local #fragment does not match."
     },
     {
       "@id": "#value_metadata_id",
@@ -1297,6 +1407,533 @@
       }
     },
     {
+      "@id": "#class_File",
+      "@type": "rdfs:Class",
+      "rdfs:label": "File",
+      "name": "File",
+      "rdfs:comment": "A file held in the RO-Crate, by its relative payload path, or data represented by reference with an absolute IRI. It MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/MediaObject"
+      }
+    },
+    {
+      "@id": "#class_Dataset",
+      "@type": "rdfs:Class",
+      "rdfs:label": "Dataset",
+      "name": "Dataset",
+      "rdfs:comment": "A directory held in the RO-Crate, by its relative payload path, or data represented by reference with an absolute IRI. It MUST be reachable from the Root Data Entity through hasPart.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/Dataset"
+      }
+    },
+    {
+      "@id": "#class_IdentifiedAsset",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Identified asset",
+      "rdfs:comment": "An asset with an absolute IRI identifying one exact asset version independently of this RO-Crate, such as an output named by a decision, an agreement, a policy or a protocol. Packaged copies link to it.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#packaged-copies-of-identified-assets",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/CreativeWork"
+      }
+    },
+    {
+      "@id": "#prop_id_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "An identified asset MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_Plan",
+      "@type": "rdfs:Class",
+      "rdfs:label": "CreativeWork",
+      "name": "Plan",
+      "rdfs:comment": "Intended work represented before it begins, such as a submitted analysis plan. A change after submission creates a new plan with a new @id.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#requests-plans-and-execution",
+      "prov:specializationOf": [
+        {
+          "@id": "http://schema.org/CreativeWork"
+        },
+        {
+          "@id": "http://www.w3.org/ns/prov#Plan"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_id_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "A plan MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_SoftwareApplication",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SoftwareApplication",
+      "name": "Software application",
+      "rdfs:comment": "An exact software version referred to by a process, typically as its instrument.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/SoftwareApplication"
+      }
+    },
+    {
+      "@id": "#prop_id_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "@id",
+      "name": "Identifier",
+      "rdfs:comment": "Software referred to by a process MUST have an absolute IRI as its @id. A UUID URN is sufficient and does not need to resolve.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "rangeIncludes": {
+        "@id": "#value_absolute_iri"
+      },
+      "sh:minCount": 1,
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#class_SoftwareSourceCode",
+      "@type": "rdfs:Class",
+      "rdfs:label": "SoftwareSourceCode",
+      "name": "Software source code",
+      "rdfs:comment": "Software source code: a packaged source file (also typed File) or an exact version referred to by a process.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT#kinds-of-asset",
+      "prov:specializationOf": {
+        "@id": "http://schema.org/SoftwareSourceCode"
+      }
+    },
+    {
+      "@id": "#prop_name_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The file or data SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The directory or data SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The asset SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The plan SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The software SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_name_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "name",
+      "name": "Name",
+      "rdfs:comment": "The software SHOULD carry a name.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/name"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset, such as a protocol, software or a released extract, SHOULD carry version as text, using the label the asset already has.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": {
+        "@id": "http://schema.org/Text"
+      }
+    },
+    {
+      "@id": "#prop_version_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Text"
+        },
+        {
+          "@id": "http://schema.org/Integer"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_version_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "version",
+      "name": "Version",
+      "rdfs:comment": "A versioned asset SHOULD carry version as text, using the label it already has. (A Dataset that is an RO-Crate's root or a reference to another RO-Crate carries an integer instead.)",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/version"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "http://schema.org/Text"
+        },
+        {
+          "@id": "http://schema.org/Integer"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_author_SoftwareApplication",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareApplication"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      }
+    },
+    {
+      "@id": "#prop_author_SoftwareSourceCode",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_SoftwareSourceCode"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      }
+    },
+    {
+      "@id": "#prop_author_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      }
+    },
+    {
+      "@id": "#prop_author_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      }
+    },
+    {
+      "@id": "#prop_author_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "author",
+      "name": "Author",
+      "rdfs:comment": "A held or produced software or trained-model asset SHOULD carry author where known.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/author"
+      }
+    },
+    {
+      "@id": "#prop_encodesCreativeWork_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "encodesCreativeWork",
+      "name": "Encodes creative work",
+      "rdfs:comment": "On a packaged copy of an identified asset, MUST identify the exact asset version it encodes, typed CreativeWork or a subtype. A file holding several separately identified outputs lists each.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/encodesCreativeWork"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_IdentifiedAsset"
+        },
+        {
+          "@id": "#class_Plan"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_exampleOfWork_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "exampleOfWork",
+      "name": "Example of work",
+      "rdfs:comment": "On a packaged directory copy of an identified asset, MUST identify the exact asset version it holds, typed CreativeWork or a subtype.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/exampleOfWork"
+      },
+      "rangeIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      }
+    },
+    {
+      "@id": "#prop_hasPart_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "hasPart",
+      "name": "Has part",
+      "rdfs:comment": "Data entities nested in this directory.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/hasPart"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_File",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_File"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_Dataset",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_Dataset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_prov-wasDerivedFrom_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "prov:wasDerivedFrom",
+      "name": "Was derived from",
+      "rdfs:comment": "On a derived asset, SHOULD identify its source where derivation was observed or attested, and MUST be used only on that basis. MUST NOT link a packaged copy to the asset it encodes.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://www.w3.org/ns/prov#wasDerivedFrom"
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        },
+        {
+          "@id": "#class_IdentifiedAsset"
+        }
+      ]
+    },
+    {
+      "@id": "#prop_pav-previousVersion_Plan",
+      "@type": "rdf:Property",
+      "rdfs:label": "pav:previousVersion",
+      "name": "Previous version",
+      "rdfs:comment": "A plan changed after submission links to its immediate predecessor.",
+      "domainIncludes": {
+        "@id": "#class_Plan"
+      },
+      "prov:specializationOf": {
+        "@id": "http://purl.org/pav/previousVersion"
+      },
+      "rangeIncludes": {
+        "@id": "#class_Plan"
+      },
+      "sh:maxCount": 1
+    },
+    {
+      "@id": "#prop_additionalType_IdentifiedAsset",
+      "@type": "rdf:Property",
+      "rdfs:label": "additionalType",
+      "name": "Additional type",
+      "rdfs:comment": "Where the kind of agreement or policy matters, SHOULD refer to a published term, such as a Data Privacy Vocabulary agreement class.",
+      "domainIncludes": {
+        "@id": "#class_IdentifiedAsset"
+      },
+      "prov:specializationOf": {
+        "@id": "http://schema.org/additionalType"
+      }
+    },
+    {
       "@id": "#prop_hasPart_RootDataEntity",
       "@type": "rdf:Property",
       "rdfs:label": "hasPart",
@@ -1307,7 +1944,15 @@
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/hasPart"
-      }
+      },
+      "rangeIncludes": [
+        {
+          "@id": "#class_File"
+        },
+        {
+          "@id": "#class_Dataset"
+        }
+      ]
     },
     {
       "@id": "#prop_mentions_RootDataEntity",
