@@ -807,6 +807,9 @@
           "@id": "#value_ro_crate_1_3"
         },
         {
+          "@id": "#value_core_profile"
+        },
+        {
           "@id": "#class_MetadataDescriptor"
         },
         {
@@ -1080,7 +1083,7 @@
           "@id": "#prop_id_Process"
         },
         {
-          "@id": "#actionStatus_values"
+          "@id": "#value_action_status"
         },
         {
           "@id": "#prop_agent_Process"
@@ -1253,6 +1256,15 @@
       "sh:minCount": 1
     },
     {
+      "@id": "#value_core_profile",
+      "@type": "PropertyValue",
+      "name": "Five Safes RO-Crate core profile",
+      "value": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      },
+      "sh:minCount": 1
+    },
+    {
       "@id": "#class_MetadataDescriptor",
       "@type": "rdfs:Class",
       "rdfs:label": "CreativeWork",
@@ -1351,9 +1363,14 @@
       "prov:specializationOf": {
         "@id": "http://purl.org/dc/terms/conformsTo"
       },
-      "rangeIncludes": {
-        "@id": "#class_Profile"
-      },
+      "rangeIncludes": [
+        {
+          "@id": "#value_core_profile"
+        },
+        {
+          "@id": "#class_Profile"
+        }
+      ],
       "sh:minCount": 1
     },
     {
@@ -2712,10 +2729,10 @@
       "sh:maxCount": 1
     },
     {
-      "@id": "#actionStatus_values",
-      "@type": "ItemList",
+      "@id": "#value_action_status",
+      "@type": "PropertyValue",
       "name": "Process status",
-      "itemListElement": [
+      "value": [
         {
           "@id": "http://schema.org/ActiveActionStatus"
         },
@@ -2726,7 +2743,8 @@
           "@id": "http://schema.org/FailedActionStatus"
         }
       ],
-      "description": "PotentialActionStatus MUST NOT be used."
+      "sh:minCount": 1,
+      "description": "One of ActiveActionStatus, CompletedActionStatus or FailedActionStatus. PotentialActionStatus MUST NOT be used."
     },
     {
       "@id": "#prop_agent_Process",
@@ -2755,9 +2773,12 @@
       "@type": "rdf:Property",
       "rdfs:label": "actionStatus",
       "name": "Action status",
-      "rdfs:comment": "Exactly one of http://schema.org/ActiveActionStatus, CompletedActionStatus or FailedActionStatus (the list #actionStatus_values), written as {\"@id\": ...}; PotentialActionStatus MUST NOT be used. A process keeps its @id as it moves from active to completed or failed.",
+      "rdfs:comment": "Exactly one of http://schema.org/ActiveActionStatus, CompletedActionStatus or FailedActionStatus, written as {\"@id\": ...}; PotentialActionStatus MUST NOT be used. A process keeps its @id as it moves from active to completed or failed.",
       "domainIncludes": {
         "@id": "#class_Process"
+      },
+      "rangeIncludes": {
+        "@id": "#value_action_status"
       },
       "prov:specializationOf": {
         "@id": "http://schema.org/actionStatus"
@@ -3716,7 +3737,7 @@
       "@type": "rdf:Property",
       "rdfs:label": "mentions",
       "name": "Mentions",
-      "rdfs:comment": "MUST be present if the RO-Crate records any processes: the processes recorded in this RO-Crate.",
+      "rdfs:comment": "MUST be present if the RO-Crate records any processes: every process recorded in this RO-Crate, including one that other processes already link to. The Root Data Entity is where a consumer finds all the processes.",
       "domainIncludes": {
         "@id": "#class_RootDataEntity"
       },

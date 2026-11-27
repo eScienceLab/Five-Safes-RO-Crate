@@ -14,7 +14,4 @@ for f in docs/examples/*/ro-crate-metadata.json tests/masp/valid/*.json tests/ma
 done
 ```
 
-Valid files exit 0, invalid files exit 2, except
-`91-bad-potential-status.json`: `masp-validate` 0.1.0 requires every
-`{"@id": ...}` value to be described in the crate, so `actionStatus` has no
-range in the rules and `PotentialActionStatus` is not detected.
+Valid files exit 0 and invalid files exit 2.
