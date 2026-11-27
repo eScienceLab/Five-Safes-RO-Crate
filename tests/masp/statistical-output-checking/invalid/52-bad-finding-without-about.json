@@ -1,0 +1,390 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context"
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "about": {
+        "@id": "https://tre72.example.org/activities/A123/current"
+      },
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/current",
+      "@type": "Dataset",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+        }
+      ],
+      "identifier": {
+        "@id": "https://tre72.example.org/activities/A123/current"
+      },
+      "dct:isVersionOf": {
+        "@id": "https://tre72.example.org/activities/A123"
+      },
+      "name": "Feasibility enquiry A123 (TRE72): statistical output review 42",
+      "description": "Output review 42 of the cohort counts for enquiry A123, recorded with the Statistical Output Checking module: an automated disclosure risk check with a finding for each output, and the checker's decisions and requests.",
+      "dateCreated": "2027-03-13T09:00:00Z",
+      "dateModified": "2027-03-15T09:14:00Z",
+      "datePublished": "2027-03-13T09:01:00Z",
+      "hasPart": [
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
+        },
+        {
+          "@id": "checks/check-1/results.json"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "https://tre72.example.org/activities/A123/reviews/42"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/decisions/release-7a1e"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/requests/revise-count-by-age"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+        }
+      ],
+      "license": {
+        "@id": "http://spdx.org/licenses/CC0-1.0"
+      },
+      "publisher": {
+        "@id": "https://tre72.example.org/"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate",
+      "version": "1.0-DRAFT"
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate Module: Statistical Output Checking",
+      "version": "1.0-DRAFT",
+      "isProfileOf": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/reviews/42",
+      "@type": [
+        "Action",
+        "prov:Activity"
+      ],
+      "name": "Review 42",
+      "agent": {
+        "@id": "https://tre72.example.org/staff/0417"
+      },
+      "provider": {
+        "@id": "https://tre72.example.org/"
+      },
+      "object": [
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
+        }
+      ],
+      "dct:hasPart": [
+        {
+          "@id": "https://tre72.example.org/activities/A123/decisions/release-7a1e"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/requests/revise-count-by-age"
+        }
+      ],
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "startTime": "2027-03-15T09:00:00Z",
+      "endTime": "2027-03-15T09:14:00Z",
+      "actionStatus": {
+        "@id": "http://schema.org/CompletedActionStatus"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/decisions/release-7a1e",
+      "@type": [
+        "AuthorizeAction",
+        "prov:Activity"
+      ],
+      "name": "Cohort count result approved for release",
+      "agent": {
+        "@id": "https://tre72.example.org/staff/0417"
+      },
+      "provider": {
+        "@id": "https://tre72.example.org/"
+      },
+      "object": {
+        "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
+      },
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "startTime": "2027-03-15T09:05:00Z",
+      "endTime": "2027-03-15T09:10:00Z",
+      "actionStatus": {
+        "@id": "http://schema.org/CompletedActionStatus"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/decisions/refuse-7a1f",
+      "@type": [
+        "RejectAction",
+        "prov:Activity"
+      ],
+      "name": "Cohort count by site refused",
+      "description": "Release of site-level counts was refused under the TRE's release policy.",
+      "agent": {
+        "@id": "https://tre72.example.org/staff/0417"
+      },
+      "provider": {
+        "@id": "https://tre72.example.org/"
+      },
+      "object": {
+        "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
+      },
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "startTime": "2027-03-15T09:10:00Z",
+      "endTime": "2027-03-15T09:12:00Z",
+      "actionStatus": {
+        "@id": "http://schema.org/CompletedActionStatus"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/requests/revise-count-by-age",
+      "@type": [
+        "AskAction",
+        "prov:Activity"
+      ],
+      "name": "Request revisions to cohort counts by age",
+      "description": "Combine the small age categories and submit a revised table for review.",
+      "agent": {
+        "@id": "https://tre72.example.org/staff/0417"
+      },
+      "provider": {
+        "@id": "https://tre72.example.org/"
+      },
+      "object": {
+        "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
+      },
+      "recipient": {
+        "@id": "https://orcid.org/0000-0002-1825-0097"
+      },
+      "prov:wasInformedBy": {
+        "@id": "https://tre72.example.org/activities/A123/checks/check-1"
+      },
+      "startTime": "2027-03-15T09:12:00Z",
+      "endTime": "2027-03-15T09:14:00Z",
+      "actionStatus": {
+        "@id": "http://schema.org/CompletedActionStatus"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/checks/check-1",
+      "@type": [
+        "AssessAction",
+        "prov:Activity"
+      ],
+      "additionalType": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck"
+        },
+        {
+          "@id": "https://w3id.org/dpv/risk#RiskAssessment"
+        }
+      ],
+      "name": "Output check 1: automated disclosure risk assessment",
+      "agent": {
+        "@id": "https://tre72.example.org/"
+      },
+      "provider": {
+        "@id": "https://tre72.example.org/"
+      },
+      "instrument": [
+        {
+          "@id": "https://doi.org/10.5281/zenodo.18456450"
+        },
+        {
+          "@id": "https://tre72.example.org/policies/sdc/v4"
+        }
+      ],
+      "object": [
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
+        }
+      ],
+      "result": [
+        {
+          "@id": "checks/check-1/results.json"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count-by-site"
+        },
+        {
+          "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count-by-age"
+        }
+      ],
+      "startTime": "2027-03-14T14:00:00Z",
+      "endTime": "2027-03-14T14:00:12Z",
+      "actionStatus": {
+        "@id": "http://schema.org/CompletedActionStatus"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count",
+      "@type": "CreativeWork",
+      "additionalType": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass"
+      },
+      "description": "All cells at or above the minimum threshold."
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count-by-site",
+      "@type": "CreativeWork",
+      "additionalType": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail"
+      },
+      "about": {
+        "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1"
+      },
+      "description": "Minimum threshold check failed: four cells below the threshold. A linked table check needs a person."
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/checks/check-1/findings/count-by-age",
+      "@type": "CreativeWork",
+      "additionalType": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview"
+      },
+      "about": {
+        "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1"
+      },
+      "description": "A linked table check needs a person: the age bands overlap an earlier release."
+    },
+    {
+      "@id": "https://tre72.example.org/policies/sdc/v4",
+      "@type": "CreativeWork",
+      "name": "TRE72 statistical disclosure control policy, version 4",
+      "version": "4"
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count/v1",
+      "@type": "Dataset",
+      "name": "Cohort count result, version 1",
+      "version": "1",
+      "description": "Total number of people in the cohort."
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count-by-site/v1",
+      "@type": "Dataset",
+      "name": "Cohort count by site, version 1",
+      "version": "1",
+      "description": "Number of people in the cohort at each participating site.",
+      "additionalType": {
+        "@id": "https://w3id.org/statbarnsdc#Crosstabs"
+      }
+    },
+    {
+      "@id": "https://tre72.example.org/activities/A123/assets/count-by-age/v1",
+      "@type": "Dataset",
+      "name": "Cohort count by age, version 1",
+      "version": "1",
+      "description": "Number of people in the cohort in each age band."
+    },
+    {
+      "@id": "checks/check-1/results.json",
+      "@type": "File",
+      "name": "ACRO results for check 1",
+      "encodingFormat": "application/json",
+      "description": "Report of the automated disclosure risk check of the three outputs.",
+      "contentSize": "133"
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#RiskAssessment",
+      "@type": "DefinedTerm",
+      "name": "Risk Assessment",
+      "description": "Assessment of risk involving its identification, analysis, and evaluation (DPV Risk extension, following ISO 31073).",
+      "url": "https://w3id.org/dpv/risk#RiskAssessment"
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.18456450",
+      "@type": "SoftwareApplication",
+      "name": "ACRO",
+      "version": "0.4.12",
+      "url": "https://github.com/AI-SDC/ACRO"
+    },
+    {
+      "@id": "https://tre72.example.org/staff/0417",
+      "@type": "Person",
+      "name": "Example output checker",
+      "affiliation": {
+        "@id": "https://tre72.example.org/"
+      }
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-1825-0097",
+      "@type": "Person",
+      "name": "Example researcher"
+    },
+    {
+      "@id": "https://tre72.example.org/",
+      "@type": "Organization",
+      "name": "TRE72",
+      "url": "https://tre72.example.org/"
+    },
+    {
+      "@id": "http://spdx.org/licenses/CC0-1.0",
+      "@type": "CreativeWork",
+      "name": "Creative Commons Zero v1.0 Universal",
+      "identifier": "CC0-1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  ]
+}

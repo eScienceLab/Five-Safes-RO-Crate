@@ -15,3 +15,21 @@ done
 ```
 
 Valid files exit 0 and invalid files exit 2.
+
+## Statistical Output Checking module
+
+[`docs/examples/statistical-review-42/`](../../docs/examples/statistical-review-42/)
+is the valid case, and each file in `statistical-output-checking/invalid/`
+breaks one requirement of the module. Check them against the module's Profile
+Crate, and the valid one against the core Profile Crate as well:
+
+```sh
+for f in docs/examples/statistical-review-42/ro-crate-metadata.json tests/masp/statistical-output-checking/invalid/*.json; do
+  npx masp-validate "$f" docs/modules/statistical-output-checking/ro-crate-metadata.json > /dev/null 2>&1
+  echo "$? $f"
+done
+```
+
+`53-bad-refusal-with-outcome-term.json` exits 0 with `masp-validate` 0.1.0,
+which reports a failing rule only for entities it counts or reaches through a
+range; validators that check every entity, such as wpsld, report it.

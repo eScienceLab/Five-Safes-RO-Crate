@@ -79,6 +79,9 @@
         },
         {
           "@id": "examples/review-42/"
+        },
+        {
+          "@id": "examples/statistical-review-42/"
         }
       ],
       "hasResource": [
@@ -120,6 +123,9 @@
         },
         {
           "@id": "#hasExampleReview42"
+        },
+        {
+          "@id": "#hasExampleStatisticalReview42"
         }
       ],
       "conformsTo": {
@@ -761,6 +767,29 @@
       ],
       "name": "Example",
       "description": "Sample instance data conforming to the profile"
+    },
+    {
+      "@id": "examples/statistical-review-42/",
+      "@type": "Dataset",
+      "name": "Example: statistical output review 42",
+      "description": "The core's Review 42 worked example recorded with the Statistical Output Checking module: output check 1 carries the module term, with a Pass, Fail or NeedsReview finding for each output, and names the disclosure control policy as an instrument. Payload files are illustrative.",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "license": {
+        "@id": "http://spdx.org/licenses/CC0-1.0"
+      }
+    },
+    {
+      "@id": "#hasExampleStatisticalReview42",
+      "@type": "ResourceDescriptor",
+      "name": "has example: statistical output review 42",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/example"
+      },
+      "hasArtifact": {
+        "@id": "examples/statistical-review-42/"
+      }
     },
     {
       "@id": "https://language-research-technology.github.io/ro-crate-masp/profiles/ro-crate-masp/profile-crate/#profile",
