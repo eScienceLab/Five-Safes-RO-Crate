@@ -38,7 +38,10 @@ done
 
 The core Profile Crate also holds [MASP](https://github.com/Language-Research-Technology/ro-crate-masp)
 rules, from which the build generates `rules/index.html` using the template
-[`masp/profile-text.md`](masp/profile-text.md). To generate it locally:
+[`masp/profile-text.md`](masp/profile-text.md); the Statistical Output Checking
+module's rules likewise become `modules/statistical-output-checking/rules/index.html`
+from [`masp/statistical-output-checking-text.md`](masp/statistical-output-checking-text.md).
+To generate the core page locally:
 
 ```sh
 mkdir -p /tmp/masp site/rules && cp site/ro-crate-metadata.json /tmp/masp/
