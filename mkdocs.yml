@@ -36,6 +36,12 @@ extra:
       - {rel: author, href: 'https://orcid.org/0000-0002-9308-9889'}
       - {rel: author, href: 'https://orcid.org/0000-0002-0035-6475'}
       - {rel: author, href: 'https://orcid.org/0000-0001-9842-9718'}
+    modules/statistical-output-checking.md:
+      - {rel: describedby, href: ro-crate-metadata.json, type: application/ld+json, profile: 'https://w3id.org/ro/crate'}
+      - {rel: cite-as, href: 'https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking'}
+      - {rel: license, href: 'http://spdx.org/licenses/MIT'}
+      - {rel: type, href: 'https://schema.org/CreativeWork'}
+      - {rel: type, href: 'https://schema.org/AboutPage'}
 plugins:
   - search
   - mermaid2:

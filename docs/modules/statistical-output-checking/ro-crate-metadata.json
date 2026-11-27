@@ -1,0 +1,433 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "dpv": "https://w3id.org/dpv#",
+      "risk": "https://w3id.org/dpv/risk#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "about": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+      },
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking",
+      "@type": [
+        "Dataset",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate Module: Statistical Output Checking",
+      "description": "A module of the Five Safes RO-Crate profile for recording checks of statistical outputs, such as tables, figures and summary statistics, before release from a TRE: a term marking the check, a finding per output with one of three outcomes, the kind of statistic, and optional published terms for risks, evaluations and controls.",
+      "identifier": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking",
+      "version": "1.0-DRAFT",
+      "creativeWorkStatus": "Working Draft",
+      "datePublished": "2026-11-27",
+      "license": {
+        "@id": "http://spdx.org/licenses/MIT"
+      },
+      "isProfileOf": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT"
+        },
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        }
+      ],
+      "discussionUrl": "https://github.com/eScienceLab/Five-Safes-RO-Crate/issues",
+      "hasPart": [
+        {
+          "@id": "index.html"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking/context"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/examples/statistical-review-42/"
+        }
+      ],
+      "hasResource": [
+        {
+          "@id": "#hasSpecification"
+        },
+        {
+          "@id": "#hasVocabulary"
+        },
+        {
+          "@id": "#hasContext"
+        },
+        {
+          "@id": "#usesStatbarnSDC"
+        },
+        {
+          "@id": "#usesDPV"
+        },
+        {
+          "@id": "#usesDPVRisk"
+        },
+        {
+          "@id": "#hasExampleStatisticalReview42"
+        }
+      ]
+    },
+    {
+      "@id": "index.html",
+      "@type": "File",
+      "name": "Five Safes RO-Crate Module: Statistical Output Checking, specification",
+      "encodingFormat": "text/html",
+      "about": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking"
+      },
+      "license": {
+        "@id": "http://spdx.org/licenses/MIT"
+      },
+      "description": "Human-readable specification of the Statistical Output Checking module, generated from docs/modules/statistical-output-checking.md."
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking/context",
+      "@type": "CreativeWork",
+      "name": "Five Safes RO-Crate Statistical Output Checking JSON-LD context",
+      "description": "Binds the dpv and risk prefixes, for RO-Crates that write DPV properties in prefixed form. Used after the RO-Crate 1.3 context.",
+      "encodingFormat": "application/ld+json",
+      "conformsTo": {
+        "@id": "http://www.w3.org/ns/json-ld#Context"
+      },
+      "version": "1.0-DRAFT"
+    },
+    {
+      "@id": "http://www.w3.org/ns/json-ld#Context",
+      "@type": "DefinedTerm",
+      "name": "JSON-LD Context",
+      "url": "https://www.w3.org/TR/json-ld/"
+    },
+    {
+      "@id": "#hasSpecification",
+      "@type": "ResourceDescriptor",
+      "name": "has specification",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/specification"
+      },
+      "hasArtifact": {
+        "@id": "index.html"
+      }
+    },
+    {
+      "@id": "#hasVocabulary",
+      "@type": "ResourceDescriptor",
+      "name": "has vocabulary: Statistical Output Checking terms",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+      }
+    },
+    {
+      "@id": "#hasContext",
+      "@type": "ResourceDescriptor",
+      "name": "has JSON-LD context",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking/context"
+      }
+    },
+    {
+      "@id": "#usesStatbarnSDC",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: StatbarnSDC",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/statbarnsdc#"
+      }
+    },
+    {
+      "@id": "#usesDPV",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: Data Privacy Vocabulary",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "#usesDPVRisk",
+      "@type": "ResourceDescriptor",
+      "name": "uses vocabulary: DPV Risk extension",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#",
+      "@type": "DefinedTermSet",
+      "name": "Five Safes RO-Crate Statistical Output Checking terms",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#terms-and-context",
+      "hasDefinedTerm": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview"
+        }
+      ],
+      "description": "Terms defined by the Statistical Output Checking module: the check term and the three outcome terms."
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
+      "@type": "DefinedTermSet",
+      "name": "Statistical output check outcomes",
+      "description": "The closed set of outcome terms. A finding carries exactly one of them in additionalType.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
+      "hasDefinedTerm": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#StatisticalOutputCheck",
+      "@type": "DefinedTerm",
+      "name": "Statistical output check",
+      "description": "An assessment of one or more statistical outputs, such as tables, figures or summary statistics, for disclosure risk before release from a TRE, performed by a person, by software, or by both. Used as an additionalType value of an AssessAction.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#the-check",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Pass",
+      "@type": "DefinedTerm",
+      "name": "Pass",
+      "description": "The output met every criterion the check applied to it. It is not permission to release.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
+      "inDefinedTermSet": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#Fail",
+      "@type": "DefinedTerm",
+      "name": "Fail",
+      "description": "The output did not meet at least one criterion the check applied to it. It is not a refusal.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
+      "inDefinedTermSet": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#NeedsReview",
+      "@type": "DefinedTerm",
+      "name": "Needs review",
+      "description": "The check could not settle the output without human judgement, or referred it to a person. It is not a decision, or a record that a review took place.",
+      "url": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes",
+      "inDefinedTermSet": [
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#"
+        },
+        {
+          "@id": "https://w3id.org/5s-crate/1.0-DRAFT/modules/statistical-output-checking#outcomes"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/statbarnsdc#",
+      "@type": "DefinedTermSet",
+      "name": "StatbarnSDC",
+      "version": "1.0",
+      "url": "https://w3id.org/statbarnsdc"
+    },
+    {
+      "@id": "https://w3id.org/dpv#",
+      "@type": "DefinedTermSet",
+      "name": "Data Privacy Vocabulary (DPV)",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv",
+      "hasDefinedTerm": {
+        "@id": "https://w3id.org/dpv#hasRisk"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#",
+      "@type": "DefinedTermSet",
+      "name": "DPV Risk extension",
+      "version": "2.3",
+      "url": "https://w3id.org/dpv/risk",
+      "hasDefinedTerm": [
+        {
+          "@id": "https://w3id.org/dpv/risk#RiskAssessment"
+        },
+        {
+          "@id": "https://w3id.org/dpv/risk#hasRiskEvaluation"
+        },
+        {
+          "@id": "https://w3id.org/dpv/risk#hasControl"
+        }
+      ]
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#RiskAssessment",
+      "@type": "DefinedTerm",
+      "name": "Risk assessment",
+      "description": "An additionalType value a statistical output check SHOULD carry where it identified, analysed or evaluated disclosure risk. The DPV Risk extension's term for an activity of assessing risk (ISO 31073), not DPV core's dpv:RiskAssessment, which is an organisational measure.",
+      "url": "https://w3id.org/dpv/risk#RiskAssessment",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv#hasRisk",
+      "@type": "DefinedTerm",
+      "termCode": "dpv:hasRisk",
+      "name": "has risk",
+      "description": "Optional, on an output: a published risk class, such as a StatbarnSDC risk, that applies to it.",
+      "url": "https://w3id.org/dpv#hasRisk",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#hasRiskEvaluation",
+      "@type": "DefinedTerm",
+      "termCode": "risk:hasRiskEvaluation",
+      "name": "has risk evaluation",
+      "description": "Optional, on a check or a finding: a published kind of evaluation the check applied, or the finding reports on.",
+      "url": "https://w3id.org/dpv/risk#hasRiskEvaluation",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dpv/risk#hasControl",
+      "@type": "DefinedTerm",
+      "termCode": "risk:hasControl",
+      "name": "has control",
+      "description": "Optional, on the CreateAction that applied a control, or on the output where no such process is recorded: a published control class actually applied.",
+      "url": "https://w3id.org/dpv/risk#hasControl",
+      "inDefinedTermSet": {
+        "@id": "https://w3id.org/dpv/risk#"
+      }
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "Five Safes RO-Crate",
+      "version": "1.0-DRAFT"
+    },
+    {
+      "@id": "https://w3id.org/ro/crate/1.3",
+      "@type": [
+        "CreativeWork",
+        "Profile"
+      ],
+      "name": "RO-Crate Metadata Specification",
+      "version": "1.3"
+    },
+    {
+      "@id": "http://spdx.org/licenses/CC0-1.0",
+      "@type": "CreativeWork",
+      "name": "Creative Commons Zero v1.0 Universal",
+      "identifier": "CC0-1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+      "@id": "http://spdx.org/licenses/MIT",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "identifier": "MIT",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/specification",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Specification",
+      "description": "Defining the profile in human-readable form"
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/vocabulary",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Vocabulary",
+      "description": "Defines terms used in the profile specification"
+    },
+    {
+      "@id": "https://w3id.org/5s-crate/1.0-DRAFT/examples/statistical-review-42/",
+      "@type": "Dataset",
+      "name": "Example: statistical output review 42",
+      "description": "The core's Review 42 worked example recorded with the Statistical Output Checking module: output check 1 carries the module term, with a Pass, Fail or NeedsReview finding for each output, and names the disclosure control policy as an instrument. Payload files are illustrative.",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate"
+      },
+      "license": {
+        "@id": "http://spdx.org/licenses/CC0-1.0"
+      }
+    },
+    {
+      "@id": "#hasExampleStatisticalReview42",
+      "@type": "ResourceDescriptor",
+      "name": "has example: statistical output review 42",
+      "hasRole": {
+        "@id": "http://www.w3.org/ns/dx/prof/role/example"
+      },
+      "hasArtifact": {
+        "@id": "https://w3id.org/5s-crate/1.0-DRAFT/examples/statistical-review-42/"
+      }
+    },
+    {
+      "@id": "http://www.w3.org/ns/dx/prof/role/example",
+      "@type": [
+        "DefinedTerm",
+        "ResourceRole"
+      ],
+      "name": "Example",
+      "description": "Sample instance data conforming to the profile"
+    }
+  ]
+}

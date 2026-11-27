@@ -24,13 +24,13 @@ python -m pip install -r requirements.txt
 python -m mkdocs build
 ```
 
-The generated site is in `site/`. It includes the Profile Crate
-(`ro-crate-metadata.json` at the site root). The
-GitHub Actions build also adds its `ro-crate-preview.html`; to generate it
+The generated site is in `site/`. It includes the Profile Crates
+(`ro-crate-metadata.json` at the site root and in each module folder). The
+GitHub Actions build also adds their `ro-crate-preview.html`; to generate them
 locally, run with Node.js:
 
 ```sh
-for crate in site/ro-crate-metadata.json site/examples/*/ro-crate-metadata.json; do
+for crate in site/ro-crate-metadata.json site/modules/*/ro-crate-metadata.json site/examples/*/ro-crate-metadata.json; do
   npx --yes --package ro-crate-html@0.1.6 rochtml "$crate"
   sed -i '1s/^/<!DOCTYPE html>\n/' "$(dirname "$crate")/ro-crate-preview.html"
 done
